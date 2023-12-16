@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
 import "./globals.css"
 import Nav from "@/components/header/Nav"
-import { ReduxProvider } from "@/redux/provider"
+import { ReduxProvider } from "@/redux/Provider"
 
 const barlow = Barlow({ subsets: ["latin"], weight: ["300", "400", "700"] })
 
@@ -20,7 +20,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={barlow.className}>
 				<ReduxProvider>
-					<Nav />
+					<header>
+						<Nav />
+					</header>
 					{children}
 				</ReduxProvider>
 			</body>
