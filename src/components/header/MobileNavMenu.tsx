@@ -38,7 +38,7 @@ export default function MobileNavMenu() {
 						</li>
 						<li className="border-b border-gray-300 pb-4 w-full">
 							<Link
-								href="creators"
+								href="/creators"
 								className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent"
 							>
 								Creators
@@ -46,7 +46,7 @@ export default function MobileNavMenu() {
 						</li>
 						<li className="border-b border-gray-300 pb-4 w-full">
 							<Link
-								href="stores"
+								href="/stores"
 								className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent"
 							>
 								Stores
@@ -54,7 +54,7 @@ export default function MobileNavMenu() {
 						</li>
 						<li className="border-b border-gray-300 pb-4 w-full">
 							<Link
-								href="games"
+								href="/games"
 								className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent"
 							>
 								Games

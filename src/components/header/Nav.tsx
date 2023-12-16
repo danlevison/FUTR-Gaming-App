@@ -22,7 +22,7 @@ export default function Nav() {
 					</li>
 					<li>
 						<Link
-							href="creators"
+							href="/creators"
 							className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent py-1"
 						>
 							Creators
@@ -30,7 +30,7 @@ export default function Nav() {
 					</li>
 					<li>
 						<Link
-							href="store"
+							href="/store"
 							className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent py-1"
 						>
 							Store
@@ -38,7 +38,7 @@ export default function Nav() {
 					</li>
 					<li>
 						<Link
-							href="games"
+							href="/games"
 							className="hover:text-secondaryAccent hover:border-b-2 border-secondaryAccent py-1"
 						>
 							Games
