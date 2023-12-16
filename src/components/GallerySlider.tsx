@@ -16,10 +16,9 @@ import "swiper/css/pagination"
 
 export default function GallerySlider() {
 	const sliderGames = useSelector(games)
-	console.log(sliderGames)
-	//TODO:
+
 	return (
-		<div className="w-full max-w-[1440px] mx-auto px-8 py-20">
+		<section className="w-full max-w-[1440px] mx-auto px-8 py-20">
 			<Heading
 				heading={{ firstText: "New and", secondText: "Upcoming games" }}
 			/>
@@ -67,6 +66,6 @@ export default function GallerySlider() {
 					</SwiperSlide>
 				))}
 			</Swiper>
-		</div>
+		</section>
 	)
 }

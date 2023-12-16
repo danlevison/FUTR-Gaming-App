@@ -4,10 +4,11 @@ import PopularGames from "@/components/home/PopularGames"
 
 export default function Home() {
 	return (
-		<main>
+		<main className="w-full">
 			<Hero />
 			<PopularGames />
 			<GallerySlider />
+			<section></section>
 		</main>
 	)
 }
