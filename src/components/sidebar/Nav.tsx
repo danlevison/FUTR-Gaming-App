@@ -55,7 +55,7 @@ export default function Nav() {
 					damping: 10
 				}
 			}}
-			className={`fixed top-0 z-50 flex justify-between items-center bg-[#131927] p-4 shadow-2xl backdrop-blur-2xl backdrop-filter md:static md:left-6 md:h-screen md:flex-col md:justify-start md:gap-4 ${
+			className={`fixed top-0 h-14 z-50 flex justify-between items-center bg-[#131927] p-4 shadow-2xl backdrop-blur-2xl backdrop-filter md:sticky md:h-screen md:flex-col md:justify-start md:gap-4 ${
 				sidebarStatus ? "md:w-fit md:items-start" : "md:w-20 md:items-center"
 			}`}
 		>

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { pageRoutes } from "@/lib/routes"
+import { pageRoutes } from "@/routes/routes"
 
 export default function NavLinks({
 	sidebarStatus
