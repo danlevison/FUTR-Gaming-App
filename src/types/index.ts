@@ -1,4 +1,22 @@
-export type DataType = {
+export type GamesApiResponse = {
+	count: number
+	description: string
+	filters: {
+		years: Array<number>
+	}
+	next: string | null
+	nofollow: boolean
+	nofollow_collections: string[]
+	noindex: boolean
+	previous: string | null
+	results: GameT[]
+	seo_description: string
+	seo_h1: string
+	seo_keywords: string
+	seo_title: string
+}
+
+export type Genres = {
 	id?: number
 	name: string
 	slug: string
@@ -30,7 +48,7 @@ export type GameT = {
 	released: string
 	background_image: string
 	description?: string
-	genres?: DataType[]
+	genres?: Genres[]
 	website?: string
 	redditurl?: string
 	ratings?: Ratings

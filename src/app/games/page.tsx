@@ -1,53 +1,39 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { STATUS } from "@/utils/status"
-import {
-	games,
-	gamesStatus,
-	gamesNextPage,
-	gamesPrevPage
-} from "@/redux/features/gameSlice"
-import { fetchGames } from "@/redux/utils/gameUtils"
+import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
+import { useState } from "react"
 import Heading from "@/components/Heading"
 import Spinner from "@/components/Spinner"
 import GamesList from "@/components/home/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"
 import Pagination from "@/components/Pagnination"
-//types
-import { AppDispatch } from "@/redux/store"
 
 export default function Games() {
-	const dispatch = useDispatch<AppDispatch>()
-	const allGames = useSelector(games)
-	const allGamesStatus = useSelector(gamesStatus)
+	const endPoints = [
+		{
+			name: "All Games",
+			path: "games?page_size=40"
+		},
+		{
+			name: "Best of the Year",
+			path: "games/lists/greatest?&page_size=40"
+		},
+		{
+			name: "All Time Top 250",
+			path: "games/lists/popular?page_size=40"
+		}
+	]
+
 	const [categoryIndex, setCategoryIndex] = useState(0)
 	const [page, setPage] = useState(1)
-	const nextPage = useSelector(gamesNextPage)
-	const prevPage = useSelector(gamesPrevPage)
-
-	const endPoints = useMemo(
-		() => [
-			{
-				name: "All Games",
-				path: "games?page_size=40"
-			},
-			{
-				name: "Best of the Year",
-				path: "games/lists/greatest?&page_size=40"
-			},
-			{
-				name: "All Time Top 250",
-				path: "games/lists/popular?page_size=40"
-			}
-		],
-		[]
-	)
-
-	useEffect(() => {
-		dispatch(fetchGames({ urlEndpoint: endPoints[categoryIndex].path, page }))
-	}, [dispatch, endPoints, categoryIndex, page])
+	const {
+		data: allGamesData,
+		isLoading,
+		isError
+	} = useGetAllGamesQuery({
+		urlEndpoint: endPoints[categoryIndex].path,
+		page
+	})
 
 	const handleGameCategory = (index: number) => {
 		setCategoryIndex(index)
@@ -66,23 +52,21 @@ export default function Games() {
 				categoryIndex={categoryIndex}
 				handleGameCategory={handleGameCategory}
 			/>
-			{allGamesStatus === STATUS.LOADING ? (
-				<div className="mt-10">
-					<Spinner />
-				</div>
-			) : allGames && allGames?.length > 0 ? (
-				<>
-					<GamesList games={allGames} />
-					<Pagination
-						pageHandler={pageHandler}
-						nextPage={nextPage}
-						prevPage={prevPage}
-						currentPage={page}
-					/>
-				</>
-			) : (
-				<p className="text-3xl font-bold mt-10">Unable to load games!</p>
-			)}
+			<div className="flex flex-col items-center mt-5">
+				{isLoading && <Spinner />}
+				{allGamesData && allGamesData.results?.length > 0 && (
+					<>
+						<GamesList games={allGamesData.results} />
+						<Pagination
+							pageHandler={pageHandler}
+							nextPage={allGamesData.next}
+							prevPage={allGamesData.previous}
+							currentPage={page}
+						/>
+					</>
+				)}
+				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+			</div>
 		</section>
 	)
 }

@@ -13,6 +13,7 @@ export default function Pagination({
 	prevPage,
 	currentPage
 }: PaginationT) {
+	console.log(prevPage)
 	const pageNextHandler = () => {
 		if (nextPage !== null) pageHandler(++currentPage)
 	}
