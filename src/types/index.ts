@@ -23,7 +23,7 @@ export type GameT = {
 	released: string
 	background_image: string
 	description?: string
-	genres?: GenresT[]
+	genres?: PageItemT[]
 	website?: string
 	redditurl?: string
 	ratings?: Ratings
@@ -40,16 +40,25 @@ export type GenresApiResponse = {
 	count: number
 	next: null
 	prev: null
-	results: GenresT[]
+	results: PageItemT[]
 }
 
-export type GenresT = {
-	id?: number
+// types for a genre/store
+export type PageItemT = {
+	id: string
+	image_background: string
 	name: string
 	slug: string
-	description: string
 	games_count: number
-	image_background: string
+	description?: string
+	domain?: string
+}
+
+export type StoresApiResponse = {
+	count: number
+	next: null
+	prev: null
+	results: PageItemT[]
 }
 
 export type Ratings = {

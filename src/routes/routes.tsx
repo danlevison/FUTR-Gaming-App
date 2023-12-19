@@ -18,8 +18,8 @@ export const pageRoutes = [
 		icon: <FaMasksTheater size={25} />
 	},
 	{
-		name: "Store",
-		path: "/store",
+		name: "Stores",
+		path: "/stores",
 		icon: <HiBuildingStorefront size={25} />
 	},
 	{

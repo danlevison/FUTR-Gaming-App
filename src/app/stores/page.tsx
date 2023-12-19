@@ -1,32 +1,32 @@
 "use client"
 
-import { useGetAllGenresQuery } from "@/redux/features/apiSlice"
-import Spinner from "@/components/Spinner"
+import { useGetAllStoresQuery } from "@/redux/features/apiSlice"
 import PageItemList from "@/components/PageItemList"
+import Spinner from "@/components/Spinner"
 
-export default function Genres() {
+export default function Stores() {
 	const {
-		data: allGenresData,
+		data: allStoresData,
 		isLoading,
 		isFetching,
 		isError
-	} = useGetAllGenresQuery({})
+	} = useGetAllStoresQuery({})
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-8 py-20">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-				Genres
+				Stores
 			</h1>
 			<div className="flex justify-center">
 				{(isLoading || isFetching) && <Spinner />}
 			</div>
 
-			{allGenresData && allGenresData.results?.length > 0 && (
-				<PageItemList data={allGenresData.results} />
+			{allStoresData && allStoresData.results?.length > 0 && (
+				<PageItemList data={allStoresData.results} />
 			)}
 
 			{isError && (
-				<p className="text-3xl font-bold text-center">Unable to load genres.</p>
+				<p className="text-3xl font-bold text-center">Unable to load stores.</p>
 			)}
 		</main>
 	)
