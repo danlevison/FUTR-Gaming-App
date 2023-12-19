@@ -16,7 +16,34 @@ export type GamesApiResponse = {
 	seo_title: string
 }
 
-export type Genres = {
+export type GameT = {
+	id?: string
+	slug: string
+	name: string
+	released: string
+	background_image: string
+	description?: string
+	genres?: GenresT[]
+	website?: string
+	redditurl?: string
+	ratings?: Ratings
+	rating?: string
+	rating_top?: string
+	ratings_count?: string
+	updated?: string
+	metacritic?: number
+	parent_platforms?: ParentPlatform
+	tags?: Tags
+}
+
+export type GenresApiResponse = {
+	count: number
+	next: null
+	prev: null
+	results: GenresT[]
+}
+
+export type GenresT = {
 	id?: number
 	name: string
 	slug: string
@@ -40,23 +67,3 @@ export type Tags = {
 	slug: string
 	name: string
 }[]
-
-export type GameT = {
-	id?: string
-	slug: string
-	name: string
-	released: string
-	background_image: string
-	description?: string
-	genres?: Genres[]
-	website?: string
-	redditurl?: string
-	ratings?: Ratings
-	rating?: string
-	rating_top?: string
-	ratings_count?: string
-	updated?: string
-	metacritic?: number
-	parent_platforms?: ParentPlatform
-	tags?: Tags
-}

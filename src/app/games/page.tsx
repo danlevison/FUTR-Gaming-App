@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
 import Spinner from "@/components/Spinner"
 import GamesList from "@/components/home/GamesList"
@@ -81,7 +80,7 @@ export default function Games() {
 	}
 
 	return (
-		<section className="min-h-screen w-full mx-auto px-8 py-20">
+		<main className="min-h-screen w-full mx-auto px-8 py-20">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Games
 			</h1>
@@ -112,6 +111,6 @@ export default function Games() {
 
 				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
 			</div>
-		</section>
+		</main>
 	)
 }
