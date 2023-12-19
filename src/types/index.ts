@@ -36,10 +36,11 @@ export type GameT = {
 	tags?: Tags
 }
 
-export type GenresApiResponse = {
+// types for genres/stores/publishers
+export type GeneralApiResponse = {
 	count: number
-	next: null
-	prev: null
+	next: string | null
+	previous: string | null
 	results: PageItemT[]
 }
 
@@ -52,13 +53,6 @@ export type PageItemT = {
 	games_count: number
 	description?: string
 	domain?: string
-}
-
-export type StoresApiResponse = {
-	count: number
-	next: null
-	prev: null
-	results: PageItemT[]
 }
 
 export type Ratings = {

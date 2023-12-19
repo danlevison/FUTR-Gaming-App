@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { GamesApiResponse, GenresApiResponse, StoresApiResponse } from "@/types"
+import { GamesApiResponse, GeneralApiResponse } from "@/types"
 
 const rawgApiKey = process.env.NEXT_PUBLIC_RAWG_API_KEY
 
@@ -25,12 +25,17 @@ export const gamesApi = createApi({
 			query: () => ``
 		}),
 
-		getAllGenres: builder.query<GenresApiResponse, {}>({
+		getAllGenres: builder.query<GeneralApiResponse, {}>({
 			query: () => `genres?key=${rawgApiKey}`
 		}),
 
-		getAllStores: builder.query<StoresApiResponse, {}>({
+		getAllStores: builder.query<GeneralApiResponse, {}>({
 			query: () => `stores?key=${rawgApiKey}`
+		}),
+
+		getAllPublishers: builder.query<GeneralApiResponse, { page: number }>({
+			query: ({ page }: { page: number }) =>
+				`publishers?page_size=40&page=${page}&key=${rawgApiKey}`
 		})
 	})
 })
@@ -38,7 +43,8 @@ export const gamesApi = createApi({
 export const {
 	useGetAllGamesQuery,
 	useGetAllGenresQuery,
-	useGetAllStoresQuery
+	useGetAllStoresQuery,
+	useGetAllPublishersQuery
 } = gamesApi
 
 export default gamesApi.reducer
