@@ -96,8 +96,8 @@ export default function Games() {
 				handleOption={handleOption}
 			/>
 			<div className="flex flex-col items-center">
-				{isLoading && <Spinner />}
-				{isFetching && <Spinner />}
+				{(isLoading || isFetching) && <Spinner />}
+
 				{allGamesData && allGamesData.results?.length > 0 && (
 					<>
 						<GamesList games={allGamesData.results} />
