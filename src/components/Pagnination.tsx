@@ -24,7 +24,7 @@ export default function Pagination({
 		<div className="flex items-center gap-4 mt-10">
 			<button
 				type="button"
-				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-yellow-500 duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
+				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-accentSecondary duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
 				disabled={prevPage === null ? true : false}
 				onClick={pagePrevHandler}
 			>
@@ -32,7 +32,7 @@ export default function Pagination({
 			</button>
 			<button
 				type="button"
-				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-yellow-500 duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
+				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-accentSecondary duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
 				disabled={nextPage === null ? true : false}
 				onClick={pageNextHandler}
 			>

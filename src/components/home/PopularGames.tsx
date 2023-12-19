@@ -13,6 +13,7 @@ export default function PopularGames() {
 		isError
 	} = useGetAllGamesQuery({
 		urlEndpoint: "games/lists/greatest?&page_size=12",
+		option: "relevance",
 		page: 1
 	})
 

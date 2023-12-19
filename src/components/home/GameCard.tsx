@@ -1,15 +1,17 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
+//types
 import { GameT } from "@/types"
 
 export default function GameCard({ game }: { game: GameT }) {
 	return (
-		<Card className="bg-[#15142e] text-primaryText">
+		<Card className="flex flex-col justify-between bg-[#15142e] text-primaryText">
 			<div className="relative">
 				<Image
-					src={game?.background_image}
+					src={game?.background_image || placeholder}
 					alt={game?.name}
 					width={400}
 					height={250}
@@ -48,8 +50,10 @@ export default function GameCard({ game }: { game: GameT }) {
 					</div>
 				</div>
 			</CardContent>
-			<CardFooter>
-				<p>Card Footer</p>
+			<CardFooter className="p-0 m-0">
+				<button className="w-full bg-accentPrimary rounded-b-lg p-2 font-bold">
+					Add to collection
+				</button>
 			</CardFooter>
 		</Card>
 	)

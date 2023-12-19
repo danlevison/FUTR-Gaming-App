@@ -20,7 +20,8 @@ export default function GameCategoryMenu({
 						type="button"
 						onClick={() => handleGameCategory(idx)}
 						className={`text-sm sm:text-base text-gray-400 font-bold border-t-2 border-transparent p-4 transition-all duration-300 hover:border-primaryText hover:text-primaryText ${
-							idx === categoryQuery && "border-t-yellow-500 text-yellow-500"
+							idx === categoryQuery &&
+							"border-t-accentSecondary text-accentSecondary"
 						}`}
 					>
 						{link.name}

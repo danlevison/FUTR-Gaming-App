@@ -29,7 +29,7 @@ export default function Hero() {
 					</p>
 					<Link
 						href="games"
-						className="flex items-center gap-4 w-full max-w-[170px] bg-transparent uppercase border-cyan-600 border-2 rounded-md p-2"
+						className="flex items-center gap-4 w-full max-w-[170px] bg-transparent uppercase border-accentPrimary border-2 rounded-md p-2"
 					>
 						<FaGamepad size={30} />
 						Search now

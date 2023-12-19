@@ -1,12 +1,17 @@
 "use client"
 
+import { useState } from "react"
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
-import Heading from "@/components/Heading"
 import Spinner from "@/components/Spinner"
 import GamesList from "@/components/home/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"
 import Pagination from "@/components/Pagnination"
-import { useQueryState, parseAsInteger } from "next-usequerystate"
+import {
+	useQueryState,
+	parseAsInteger,
+	parseAsString
+} from "next-usequerystate"
+import OrderByMenu from "./components/OrderByMenu"
 
 export default function Games() {
 	const endPoints = [
@@ -23,7 +28,6 @@ export default function Games() {
 			path: "games/lists/popular?page_size=40"
 		}
 	]
-
 	const [pageQuery, setPageQuery] = useQueryState(
 		"page",
 		parseAsInteger.withDefault(1)
@@ -32,19 +36,38 @@ export default function Games() {
 		"category",
 		parseAsInteger.withDefault(0)
 	)
-
+	const [optionQuery, setOptionQuery] = useQueryState(
+		"order-by",
+		parseAsString.withDefault("relevance")
+	)
+	const options = [
+		"relevance",
+		"name",
+		"released",
+		"added",
+		"created",
+		"updated",
+		"rating",
+		"metacritic"
+	]
 	const {
 		data: allGamesData,
 		isLoading,
-		isError
+		isError,
+		isFetching
 	} = useGetAllGamesQuery({
 		urlEndpoint: endPoints[categoryQuery]?.path,
+		option: optionQuery,
 		page: pageQuery
 	})
 
 	const handleGameCategory = (index: number) => {
 		setCategoryQuery(index)
 		setPageQuery(1)
+	}
+
+	const handleOption = (opt: string) => {
+		setOptionQuery(opt)
 	}
 
 	const pageHandler = (pageValue: number) => {
@@ -58,7 +81,7 @@ export default function Games() {
 	}
 
 	return (
-		<section className="flex flex-col items-center min-h-screen w-full mx-auto px-8 py-28">
+		<section className="min-h-screen w-full mx-auto px-8 py-20">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Games
 			</h1>
@@ -67,8 +90,14 @@ export default function Games() {
 				categoryQuery={categoryQuery}
 				handleGameCategory={handleGameCategory}
 			/>
-			<div className="flex flex-col items-center mt-5">
+			<OrderByMenu
+				options={options}
+				optionQuery={optionQuery}
+				handleOption={handleOption}
+			/>
+			<div className="flex flex-col items-center">
 				{isLoading && <Spinner />}
+				{isFetching && <Spinner />}
 				{allGamesData && allGamesData.results?.length > 0 && (
 					<>
 						<GamesList games={allGamesData.results} />
@@ -80,6 +109,7 @@ export default function Games() {
 						/>
 					</>
 				)}
+
 				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
 			</div>
 		</section>

@@ -21,6 +21,7 @@ export default function GallerySlider() {
 		isError
 	} = useGetAllGamesQuery({
 		urlEndpoint: "games?",
+		option: "relevance",
 		page: 1
 	})
 
@@ -72,7 +73,7 @@ export default function GallerySlider() {
 											width={400}
 											height={500}
 											style={{ objectFit: "cover" }}
-											className="w-full h-[500px] border-yellow-500 border-4 rounded-md"
+											className="w-full h-[500px] border-accentSecondary border-4 rounded-md"
 										/>
 									</Link>
 								</SwiperSlide>

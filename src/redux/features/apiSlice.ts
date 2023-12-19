@@ -9,10 +9,17 @@ export const gamesApi = createApi({
 	endpoints: (builder) => ({
 		getAllGames: builder.query<
 			GamesApiResponse,
-			{ urlEndpoint: string; page: number }
+			{ urlEndpoint: string; option: string; page: number }
 		>({
-			query: ({ urlEndpoint, page }: { urlEndpoint: string; page: number }) =>
-				`${urlEndpoint}&page=${page}&key=${rawgApiKey}`
+			query: ({
+				urlEndpoint,
+				option,
+				page
+			}: {
+				urlEndpoint: string
+				option: string
+				page: number
+			}) => `${urlEndpoint}&ordering=-${option}&page=${page}&key=${rawgApiKey}`
 		}),
 		getGame: builder.query({
 			query: () => ``
