@@ -1,12 +1,12 @@
 "use client"
 
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
-import { useState } from "react"
 import Heading from "@/components/Heading"
 import Spinner from "@/components/Spinner"
 import GamesList from "@/components/home/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"
 import Pagination from "@/components/Pagnination"
+import { useQueryState, parseAsInteger } from "next-usequerystate"
 
 export default function Games() {
 	const endPoints = [
@@ -24,32 +24,47 @@ export default function Games() {
 		}
 	]
 
-	const [categoryIndex, setCategoryIndex] = useState(0)
-	const [page, setPage] = useState(1)
+	const [pageQuery, setPageQuery] = useQueryState(
+		"page",
+		parseAsInteger.withDefault(1)
+	)
+	const [categoryQuery, setCategoryQuery] = useQueryState(
+		"category",
+		parseAsInteger.withDefault(0)
+	)
+
 	const {
 		data: allGamesData,
 		isLoading,
 		isError
 	} = useGetAllGamesQuery({
-		urlEndpoint: endPoints[categoryIndex].path,
-		page
+		urlEndpoint: endPoints[categoryQuery]?.path,
+		page: pageQuery
 	})
 
 	const handleGameCategory = (index: number) => {
-		setCategoryIndex(index)
-		setPage(1)
+		setCategoryQuery(index)
+		setPageQuery(1)
 	}
 
 	const pageHandler = (pageValue: number) => {
-		setPage(pageValue)
+		setCategoryQuery(categoryQuery)
+		setPageQuery(pageValue)
+
+		window.scrollTo({
+			top: 0,
+			behavior: "instant"
+		})
 	}
 
 	return (
 		<section className="flex flex-col items-center min-h-screen w-full mx-auto px-8 py-28">
-			<Heading heading={{ firstText: "All", secondText: "Games" }} />
+			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
+				Games
+			</h1>
 			<GameCategoryMenu
 				endPoints={endPoints}
-				categoryIndex={categoryIndex}
+				categoryQuery={categoryQuery}
 				handleGameCategory={handleGameCategory}
 			/>
 			<div className="flex flex-col items-center mt-5">
@@ -61,7 +76,7 @@ export default function Games() {
 							pageHandler={pageHandler}
 							nextPage={allGamesData.next}
 							prevPage={allGamesData.previous}
-							currentPage={page}
+							currentPage={pageQuery}
 						/>
 					</>
 				)}

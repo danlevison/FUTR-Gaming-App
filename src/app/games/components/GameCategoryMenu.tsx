@@ -3,24 +3,24 @@ type GameCategoryMenuT = {
 		name: string
 		path: string
 	}[]
-	categoryIndex: number
+	categoryQuery: number
 	handleGameCategory: (index: number) => void
 }
 
 export default function GameCategoryMenu({
 	endPoints,
-	categoryIndex,
+	categoryQuery,
 	handleGameCategory
 }: GameCategoryMenuT) {
 	return (
-		<ul className="flex items-center w-full mt-4">
+		<ul className="flex justify-center sm:justify-start items-center w-full mt-10">
 			{endPoints.map((link, idx) => (
 				<li key={link.name}>
 					<button
 						type="button"
 						onClick={() => handleGameCategory(idx)}
-						className={`text-gray-400 font-bold border-t-2 border-transparent p-4 transition-all duration-300 hover:border-primaryText hover:text-primaryText ${
-							idx === categoryIndex && "border-t-yellow-500 text-yellow-500"
+						className={`text-sm sm:text-base text-gray-400 font-bold border-t-2 border-transparent p-4 transition-all duration-300 hover:border-primaryText hover:text-primaryText ${
+							idx === categoryQuery && "border-t-yellow-500 text-yellow-500"
 						}`}
 					>
 						{link.name}
