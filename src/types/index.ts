@@ -63,6 +63,7 @@ export type Ratings = {
 export type ParentPlatform = {
 	platform: {
 		name: string
+		id: number
 	}
 }[]
 

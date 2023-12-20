@@ -3,10 +3,32 @@ import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
+import {
+	FaWindows,
+	FaPlaystation,
+	FaXbox,
+	FaApple,
+	FaLinux,
+	FaAndroid,
+	FaAppStoreIos
+} from "react-icons/fa"
+import { SiNintendo, SiSega } from "react-icons/si"
 //types
 import { GameT } from "@/types"
 
 export default function GameCard({ game }: { game: GameT }) {
+	const platformIcons: { [key: string]: JSX.Element } = {
+		PC: <FaWindows size={15} />,
+		PlayStation: <FaPlaystation size={15} />,
+		Xbox: <FaXbox size={15} />,
+		"Apple Macintosh": <FaApple size={15} />,
+		Nintendo: <SiNintendo size={13} />,
+		Linux: <FaLinux size={15} />,
+		Android: <FaAndroid size={15} />,
+		iOS: <FaAppStoreIos size={15} />,
+		SEGA: <SiSega size={15} />
+	}
+
 	return (
 		<Card className="flex flex-col justify-between bg-[#15142e] text-primaryText">
 			<div className="relative">
@@ -28,7 +50,13 @@ export default function GameCard({ game }: { game: GameT }) {
 			</div>
 
 			<CardContent className="flex flex-col p-4">
-				<h4 className="uppercase text-lg font-bold tracking-wide hover:underline ">
+				<div className="flex items-center gap-1">
+					{game.parent_platforms?.map(({ platform }) => (
+						<span key={platform.id}>{platformIcons[platform.name]}</span>
+					))}
+				</div>
+
+				<h4 className="uppercase text-lg font-bold tracking-wide hover:underline mt-2">
 					<Link
 						href={`/games/${game?.id}`}
 						className=""
