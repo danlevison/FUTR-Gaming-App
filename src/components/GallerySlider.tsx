@@ -6,7 +6,6 @@ import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules"
 import Heading from "./Heading"
-import Spinner from "./Spinner"
 
 //swiper styles
 import "swiper/css"
@@ -31,7 +30,7 @@ export default function GallerySlider() {
 				heading={{ firstText: "New and", secondText: "Upcoming games" }}
 			/>
 			<div className="flex flex-col justify-center items-center w-full mt-5">
-				{isLoading && <Spinner />}
+				{isLoading && <p>Loading...</p>}
 
 				<Swiper
 					modules={[Navigation, Pagination, A11y, Autoplay]}

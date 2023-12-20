@@ -2,7 +2,8 @@
 
 import { useGetAllStoresQuery } from "@/redux/features/apiSlice"
 import PageItemList from "@/components/PageItemList"
-import Spinner from "@/components/Spinner"
+import LoadingItems from "@/components/LoadingItems"
+import SkeletonItemCard from "@/components/SkeletonItemCard"
 
 export default function Stores() {
 	const {
@@ -18,7 +19,7 @@ export default function Stores() {
 				Stores
 			</h1>
 			<div className="flex justify-center">
-				{(isLoading || isFetching) && <Spinner />}
+				{(isLoading || isFetching) && <LoadingItems />}
 			</div>
 
 			{allStoresData && allStoresData.results?.length > 0 && (

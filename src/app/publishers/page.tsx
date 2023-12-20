@@ -3,7 +3,7 @@
 import { useGetAllPublishersQuery } from "@/redux/features/apiSlice"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
 import PageItemList from "@/components/PageItemList"
-import Spinner from "@/components/Spinner"
+import LoadingItems from "@/components/LoadingItems"
 import Pagination from "@/components/Pagnination"
 
 export default function Stores() {
@@ -33,7 +33,7 @@ export default function Stores() {
 				Publishers
 			</h1>
 			<div className="flex justify-center">
-				{(isLoading || isFetching) && <Spinner />}
+				{(isLoading || isFetching) && <LoadingItems />}
 			</div>
 
 			{allPublishersData && allPublishersData.results?.length > 0 && (

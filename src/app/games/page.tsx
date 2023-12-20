@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
-import Spinner from "@/components/Spinner"
+import LoadingGames from "@/components/LoadingGames"
 import GamesList from "@/components/home/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"
 import Pagination from "@/components/Pagnination"
@@ -95,7 +95,7 @@ export default function Games() {
 				handleOption={handleOption}
 			/>
 			<div className="flex flex-col items-center">
-				{(isLoading || isFetching) && <Spinner />}
+				{(isLoading || isFetching) && <LoadingGames />}
 
 				{allGamesData && allGamesData.results?.length > 0 && (
 					<>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetAllGenresQuery } from "@/redux/features/apiSlice"
-import Spinner from "@/components/Spinner"
+import LoadingItems from "@/components/LoadingItems"
 import PageItemList from "@/components/PageItemList"
 
 export default function Genres() {
@@ -18,7 +18,7 @@ export default function Genres() {
 				Genres
 			</h1>
 			<div className="flex justify-center">
-				{(isLoading || isFetching) && <Spinner />}
+				{(isLoading || isFetching) && <LoadingItems />}
 			</div>
 
 			{allGenresData && allGenresData.results?.length > 0 && (
