@@ -94,7 +94,7 @@ export default function Games() {
 				optionQuery={optionQuery}
 				handleOption={handleOption}
 			/>
-			<div className="flex flex-col items-center">
+			<div className="flex flex-col items-center mt-5">
 				{(isLoading || isFetching) && <LoadingGames />}
 
 				{allGamesData && allGamesData.results?.length > 0 && (

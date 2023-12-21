@@ -21,7 +21,7 @@ export default function PopularGames() {
 	return (
 		<section className="flex flex-col items-center min-h-screen w-full py-20 px-8">
 			<Heading heading={{ firstText: "Games of the", secondText: "year" }} />
-			<div className="mt-5 w-full">
+			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
 				{gamesData && gamesData.results?.length > 0 && (
 					<div className="flex flex-col items-center gap-10">

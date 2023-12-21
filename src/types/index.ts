@@ -23,6 +23,7 @@ export type GameT = {
 	released: string
 	background_image: string
 	description?: string
+	developers?: DeveloperT[]
 	genres?: PageItemT[]
 	website?: string
 	redditurl?: string
@@ -33,6 +34,7 @@ export type GameT = {
 	updated?: string
 	metacritic?: number
 	parent_platforms?: ParentPlatform
+	playtime?: number
 	tags?: Tags
 }
 
@@ -56,6 +58,7 @@ export type PageItemT = {
 }
 
 export type Ratings = {
+	id: number
 	title: string
 	percent: number
 }[]
@@ -67,7 +70,31 @@ export type ParentPlatform = {
 	}
 }[]
 
+export type DeveloperT = {
+	games_count: number
+	id: number
+	image_background: string
+	name: string
+	slug: string
+}
+
 export type Tags = {
+	id: number
 	slug: string
 	name: string
 }[]
+
+export type ScreenshotsT = {
+	count: number
+	next: string | null
+	previous: string | null
+	results: ScreenshotT[]
+}
+
+export type ScreenshotT = {
+	height: number
+	id: number
+	image: string
+	is_deleted: boolean
+	width: number
+}

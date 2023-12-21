@@ -3,32 +3,11 @@ import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
-import {
-	FaWindows,
-	FaPlaystation,
-	FaXbox,
-	FaApple,
-	FaLinux,
-	FaAndroid,
-	FaAppStoreIos
-} from "react-icons/fa"
-import { SiNintendo, SiSega } from "react-icons/si"
+import { platformIcons } from "@/utils/platformIcons"
 //types
 import { GameT } from "@/types"
 
 export default function GameCard({ game }: { game: GameT }) {
-	const platformIcons: { [key: string]: JSX.Element } = {
-		PC: <FaWindows size={15} />,
-		PlayStation: <FaPlaystation size={15} />,
-		Xbox: <FaXbox size={15} />,
-		"Apple Macintosh": <FaApple size={15} />,
-		Nintendo: <SiNintendo size={13} />,
-		Linux: <FaLinux size={15} />,
-		Android: <FaAndroid size={15} />,
-		iOS: <FaAppStoreIos size={15} />,
-		SEGA: <SiSega size={15} />
-	}
-
 	return (
 		<Card className="flex flex-col justify-between bg-[#15142e] text-primaryText">
 			<div className="relative">
