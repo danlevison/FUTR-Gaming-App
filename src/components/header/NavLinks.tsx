@@ -20,7 +20,7 @@ export default function NavLinks({
 			{pageRoutes.map((route) => (
 				<li
 					key={route.path}
-					className="group"
+					className="group w-fit"
 				>
 					<Link
 						href={route.path}

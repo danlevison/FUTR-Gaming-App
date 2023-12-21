@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { MdClose } from "react-icons/md"
 import NavLinks from "../NavLinks"
-import SocialLinks from "../../SocialLinks"
+import SocialLinks from "../SocialLinks"
 
 type MobileNavMenuProps = {
 	nav: boolean

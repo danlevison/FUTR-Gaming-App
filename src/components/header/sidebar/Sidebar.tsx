@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux"
 import { setSidebarClose } from "@/redux/features/sidebarSlice"
 import { RootState } from "@/redux/store"
 import Logo from "../Logo"
-import SocialLinks from "../../SocialLinks"
+import SocialLinks from "../SocialLinks"
 import NavLinks from "../NavLinks"
 import CollapseSidebarBtn from "./CollapseSidebarBtn"
 

@@ -32,7 +32,7 @@ export default function SocialLinks({
 			{socialIcons.map(({ name, icon }) => (
 				<li
 					key={name}
-					className="group"
+					className="group w-fit"
 				>
 					<Link
 						href="/"
