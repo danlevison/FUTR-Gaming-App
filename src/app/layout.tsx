@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
 import "./globals.css"
-import Nav from "@/components/sidebar/Nav"
 import { ReduxProvider } from "@/redux/Provider"
+import MobileNav from "@/components/header/mobileNav/MobileNav"
+import Sidebar from "@/components/header/sidebar/Sidebar"
 
 const barlow = Barlow({ subsets: ["latin"], weight: ["300", "400", "700"] })
 
@@ -22,7 +23,8 @@ export default function RootLayout({
 				<ReduxProvider>
 					<div className="md:flex">
 						<header>
-							<Nav />
+							<Sidebar />
+							<MobileNav />
 						</header>
 						{children}
 					</div>

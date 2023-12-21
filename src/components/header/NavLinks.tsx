@@ -1,16 +1,22 @@
+"use client"
+
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { pageRoutes } from "@/routes/routes"
 
 export default function NavLinks({
-	sidebarStatus
+	sidebarStatus,
+	nav,
+	handleNav
 }: {
-	sidebarStatus: boolean
+	sidebarStatus?: boolean
+	nav?: boolean
+	handleNav?: () => void
 }) {
 	const pathname = usePathname()
 	return (
-		<ul className="flex justify-between items-center gap-5 md:gap-10 md:flex-col md:items-start md:mt-8">
+		<ul className="flex flex-col justify-between gap-5 md:gap-10 mt-8">
 			{pageRoutes.map((route) => (
 				<li
 					key={route.path}
@@ -18,7 +24,8 @@ export default function NavLinks({
 				>
 					<Link
 						href={route.path}
-						className="md:flex md:items-center md:gap-2"
+						className="flex items-center gap-2"
+						onClick={handleNav}
 					>
 						<span
 							className={`${
@@ -31,12 +38,12 @@ export default function NavLinks({
 						</span>
 
 						<AnimatePresence>
-							{sidebarStatus && (
+							{(sidebarStatus || nav) && (
 								<motion.span
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className={`hidden font-bold text-lg transition-all group-hover:text-primaryText duration-300 ${
-										sidebarStatus ? "md:block" : "md:hidden"
+									className={`font-bold text-lg transition-all group-hover:text-primaryText duration-300 ${
+										sidebarStatus || nav ? "block" : "hidden"
 									} ${
 										pathname === route.path ? "text-white" : "text-gray-400"
 									}`}

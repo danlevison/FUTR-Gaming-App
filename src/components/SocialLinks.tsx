@@ -3,9 +3,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import { BsDiscord, BsSteam, BsTwitch, BsYoutube } from "react-icons/bs"
 
 export default function SocialLinks({
-	sidebarStatus
+	sidebarStatus,
+	nav
 }: {
-	sidebarStatus: boolean
+	sidebarStatus?: boolean
+	nav?: boolean
 }) {
 	const socialIcons = [
 		{
@@ -26,7 +28,7 @@ export default function SocialLinks({
 		}
 	]
 	return (
-		<ul className="hidden md:flex flex-col gap-10 md:mt-auto text-primaryText">
+		<ul className="flex flex-col gap-5 md:gap-10 mt-auto text-primaryText">
 			{socialIcons.map(({ name, icon }) => (
 				<li
 					key={name}
@@ -34,18 +36,18 @@ export default function SocialLinks({
 				>
 					<Link
 						href="/"
-						className="md:flex md:items-center md:gap-2"
+						className="flex items-center gap-2"
 					>
 						<span className="text-gray-400 group-hover:text-primaryText duration-300">
 							{icon}
 						</span>
 						<AnimatePresence>
-							{sidebarStatus && (
+							{(sidebarStatus || nav) && (
 								<motion.span
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className={`hidden font-bold text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
-										sidebarStatus ? "md:block" : "md:hidden"
+									className={`font-bold text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
+										sidebarStatus || nav ? "block" : "hidden"
 									}`}
 								>
 									{name}
