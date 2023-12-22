@@ -1,19 +1,15 @@
-import { useDispatch } from "react-redux"
-import { setSidebarClose, setSidebarOpen } from "@/redux/features/sidebarSlice"
+type CollapseSidebarBtnProps = {
+	sidebarStatus: boolean
+	setSidebar: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 export default function CollapseSidebarBtn({
-	sidebarStatus
-}: {
-	sidebarStatus: boolean
-}) {
-	const dispatch = useDispatch()
+	sidebarStatus,
+	setSidebar
+}: CollapseSidebarBtnProps) {
 	return (
 		<button
-			onClick={
-				sidebarStatus
-					? () => dispatch(setSidebarClose())
-					: () => dispatch(setSidebarOpen())
-			}
+			onClick={() => setSidebar(!sidebarStatus)}
 			className={`hidden transition-all duration-300 md:mt-auto md:gap-2 ${
 				sidebarStatus ? "md:flex md:items-center" : "md:inline-block"
 			} `}
