@@ -68,6 +68,16 @@ export const gamesApi = createApi({
 		getAllPublishers: builder.query<GeneralApiResponse, { page: number }>({
 			query: ({ page }: { page: number }) =>
 				`publishers?page_size=40&page=${page}&key=${rawgApiKey}`
+		}),
+		getPublisher: builder.query<PageItemT, { id: string }>({
+			query: ({ id }) => `publishers/${id}?key=${rawgApiKey}`
+		}),
+		getAllPublisherGames: builder.query<
+			GamesApiResponse,
+			{ page: number; slug: string }
+		>({
+			query: ({ page, slug }) =>
+				`games?key=${rawgApiKey}&ordering=popularity&page_size=40&page=${page}&publishers=${slug}`
 		})
 	})
 })
@@ -86,7 +96,10 @@ export const {
 	useGetAllGenreGamesQuery,
 
 	useGetStoreQuery,
-	useGetAllStoreGamesQuery
+	useGetAllStoreGamesQuery,
+
+	useGetPublisherQuery,
+	useGetAllPublisherGamesQuery
 } = gamesApi
 
 export default gamesApi.reducer
