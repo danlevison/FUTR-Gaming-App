@@ -6,7 +6,7 @@ import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 import Pagination from "@/components/Pagnination"
 
-export default function Stores() {
+export default function Publishers() {
 	const [pageQuery, setPageQuery] = useQueryState(
 		"page",
 		parseAsInteger.withDefault(1)

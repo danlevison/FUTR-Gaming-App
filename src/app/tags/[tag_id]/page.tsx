@@ -2,8 +2,8 @@
 
 import Banner from "@/components/Banner"
 import {
-	useGetStoreQuery,
-	useGetAllStoreGamesQuery
+	useGetTagQuery,
+	useGetAllTagGamesQuery
 } from "@/redux/features/apiSlice"
 import { useParams } from "next/navigation"
 import GamesList from "@/components/GamesList"
@@ -12,27 +12,27 @@ import LoadingGames from "@/components/loading/LoadingGames"
 import SkeletonBanner from "@/components/skeletons/SkeletonBanner"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
 
-export default function Store() {
-	const { store_id } = useParams()
+export default function Tag() {
+	const { tag_id } = useParams()
 	const [pageQuery, setPageQuery] = useQueryState(
 		"page",
 		parseAsInteger.withDefault(1)
 	)
 	const {
-		data: storeData,
-		isLoading: isStoreDataLoading,
-		isFetching: isStoreDataFetching,
-		isError: isStoreDataError
-	} = useGetStoreQuery({ id: store_id as string })
+		data: tagData,
+		isLoading: istagDataLoading,
+		isFetching: istagDataFetching,
+		isError: istagDataError
+	} = useGetTagQuery({ id: tag_id as string })
 
 	const {
-		data: storeGamesData,
+		data: tagGamesData,
 		isLoading,
 		isFetching,
 		isError
-	} = useGetAllStoreGamesQuery({
+	} = useGetAllTagGamesQuery({
 		page: pageQuery,
-		id: storeData?.id!
+		slug: tag_id as string
 	})
 
 	const pageHandler = (pageValue: number) => {
@@ -46,25 +46,27 @@ export default function Store() {
 
 	return (
 		<main className="flex flex-col min-h-screen w-full px-5 py-20">
-			{(isStoreDataLoading || isStoreDataFetching) && <SkeletonBanner />}
-			{storeData && <Banner data={storeData} />}
-			{isStoreDataError && (
+			{(istagDataLoading || istagDataFetching) && <SkeletonBanner />}
+			{tagData && <Banner data={tagData} />}
+			{istagDataError && (
 				<p className="text-3xl font-bold">An error occurred</p>
 			)}
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
-				{storeGamesData && storeGamesData.results?.length > 0 && (
+				{tagGamesData && tagGamesData.results?.length > 0 && (
 					<div className="flex flex-col items-center gap-10">
-						<GamesList games={storeGamesData.results} />
+						<GamesList games={tagGamesData.results} />
 						<Pagination
 							pageHandler={pageHandler}
-							nextPage={storeGamesData.next}
-							prevPage={storeGamesData.previous}
+							nextPage={tagGamesData.next}
+							prevPage={tagGamesData.previous}
 							currentPage={pageQuery}
 						/>
 					</div>
 				)}
-				{isError && <p className="text-3xl font-bold">Unable to load store</p>}
+				{isError && (
+					<p className="text-3xl font-bold">Unable to load tag data</p>
+				)}
 			</div>
 		</main>
 	)

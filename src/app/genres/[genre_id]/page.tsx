@@ -63,7 +63,7 @@ export default function Genre() {
 						/>
 					</div>
 				)}
-				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+				{isError && <p className="text-3xl font-bold">Unable to load genre</p>}
 			</div>
 		</main>
 	)

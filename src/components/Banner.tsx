@@ -20,8 +20,15 @@ export default function Banner({ data }: { data: PageItemT }) {
 				<h1 className="max-w-[1000px] text-3xl md:text-6xl lg:text-7xl font-bold mt-4">
 					{data?.name}
 				</h1>
-				<h3 className="font-bold text-gray-500 text-3xl mt-4">About</h3>
-				{data?.description && <Description description={data.description} />}
+
+				{data?.description && (
+					<>
+						<h3 className="font-bold text-gray-500 text-xl md:text-3xl mt-4">
+							About
+						</h3>
+						<Description description={data.description} />
+					</>
+				)}
 			</div>
 		</section>
 	)

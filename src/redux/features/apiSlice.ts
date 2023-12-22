@@ -51,6 +51,20 @@ export const gamesApi = createApi({
 				`games?key=${rawgApiKey}&ordering=popularity&page_size=40&page=${page}&genres=${slug}`
 		}),
 
+		getAllTags: builder.query<GeneralApiResponse, {}>({
+			query: () => `tags?key=${rawgApiKey}`
+		}),
+		getTag: builder.query<PageItemT, { id: string }>({
+			query: ({ id }) => `tags/${id}?key=${rawgApiKey}`
+		}),
+		getAllTagGames: builder.query<
+			GamesApiResponse,
+			{ page: number; slug: string }
+		>({
+			query: ({ page, slug }) =>
+				`games?key=${rawgApiKey}&ordering=popularity&page_size=40&page=${page}&tags=${slug}`
+		}),
+
 		getAllStores: builder.query<GeneralApiResponse, {}>({
 			query: () => `stores?key=${rawgApiKey}`
 		}),
@@ -85,6 +99,7 @@ export const gamesApi = createApi({
 export const {
 	useGetAllGamesQuery,
 	useGetAllGenresQuery,
+	useGetAllTagsQuery,
 	useGetAllStoresQuery,
 	useGetAllPublishersQuery,
 
@@ -94,6 +109,9 @@ export const {
 
 	useGetGenreQuery,
 	useGetAllGenreGamesQuery,
+
+	useGetTagQuery,
+	useGetAllTagGamesQuery,
 
 	useGetStoreQuery,
 	useGetAllStoreGamesQuery,

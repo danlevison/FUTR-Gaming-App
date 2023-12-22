@@ -1,4 +1,4 @@
-import { FaHouse, FaGamepad, FaMasksTheater } from "react-icons/fa6"
+import { FaHouse, FaGamepad, FaMasksTheater, FaHashtag } from "react-icons/fa6"
 import { HiNewspaper, HiBuildingStorefront } from "react-icons/hi2"
 
 export const pageRoutes = [
@@ -16,6 +16,11 @@ export const pageRoutes = [
 		name: "Genres",
 		path: "/genres",
 		icon: <FaMasksTheater size={25} />
+	},
+	{
+		name: "Tags",
+		path: "/tags",
+		icon: <FaHashtag size={25} />
 	},
 	{
 		name: "Stores",
