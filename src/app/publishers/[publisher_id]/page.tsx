@@ -35,8 +35,6 @@ export default function Publisher() {
 		slug: publisher_id as string
 	})
 
-	console.log(publisherGamesData)
-
 	const pageHandler = (pageValue: number) => {
 		setPageQuery(pageValue)
 

@@ -5,7 +5,10 @@ import Link from "next/link"
 
 export default function Home() {
 	return (
-		<main className="w-full">
+		<main
+			className="w-full"
+			style={{ width: "calc(100% - 70px)" }}
+		>
 			<Hero />
 			<PopularGames />
 			<GallerySlider />

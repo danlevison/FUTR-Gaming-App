@@ -5,6 +5,7 @@ import { ReduxProvider } from "@/redux/Provider"
 import MobileNav from "@/components/header/mobileNav/MobileNav"
 import Sidebar from "@/components/header/sidebar/Sidebar"
 import PageTransitionEffect from "@/components/PageTransitionEffect"
+import AuthWrapper from "@/utils/AuthWrapper"
 
 const barlow = Barlow({ subsets: ["latin"], weight: ["300", "400", "700"] })
 
@@ -22,14 +23,16 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={barlow.className}>
 				<ReduxProvider>
-					<div className="md:flex">
-						<header>
-							<Sidebar />
-							<MobileNav />
-						</header>
-						{/* <PageTransitionEffect>{children}</PageTransitionEffect> */}
-						{children}
-					</div>
+					<AuthWrapper>
+						<div className="md:flex">
+							<header>
+								<Sidebar />
+								<MobileNav />
+							</header>
+							{/* <PageTransitionEffect>{children}</PageTransitionEffect> */}
+							{children}
+						</div>
+					</AuthWrapper>
 				</ReduxProvider>
 			</body>
 		</html>

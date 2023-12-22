@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = {
+type AuthState = {
+	user: { uid: string; displayName: string; email: string } | null
+	isLoading: boolean
+}
+
+const initialState: AuthState = {
 	user: null,
 	isLoading: true
 }
