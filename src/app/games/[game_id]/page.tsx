@@ -7,7 +7,7 @@ import Screenshots from "./components/Screenshots"
 import Details from "./components/Details"
 import Series from "./components/Series"
 import RatingBar from "./components/RatingBar"
-import SkeletonGameDetailsPage from "@/components/SkeletonGameDetailsPage"
+import SkeletonGameDetailsPage from "@/components/skeletons/SkeletonGameDetailsPage"
 
 export default function GameDetails() {
 	const { game_id } = useParams()

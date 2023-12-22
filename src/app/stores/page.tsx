@@ -3,7 +3,6 @@
 import { useGetAllStoresQuery } from "@/redux/features/apiSlice"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
-import SkeletonItemCard from "@/components/SkeletonItemCard"
 
 export default function Stores() {
 	const {

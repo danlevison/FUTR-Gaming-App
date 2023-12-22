@@ -1,10 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonGameScreenshots from "./SkeletonGameScreenshots"
+import SkeletonBanner from "./SkeletonBanner"
 
 export default function SkeletonItemCard() {
 	return (
 		<>
-			<Skeleton className="w-full min-h-[350px] rounded-lg" />
+			<SkeletonBanner />
 
 			<SkeletonGameScreenshots />
 

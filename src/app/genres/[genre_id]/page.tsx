@@ -10,6 +10,7 @@ import GamesList from "@/components/GamesList"
 import Pagination from "@/components/Pagnination"
 import LoadingGames from "@/components/loading/LoadingGames"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
+import SkeletonBanner from "@/components/skeletons/SkeletonBanner"
 
 export default function Genre() {
 	const { genre_id } = useParams()
@@ -17,7 +18,12 @@ export default function Genre() {
 		"page",
 		parseAsInteger.withDefault(1)
 	)
-	const { data: genreData } = useGetGenreQuery({ id: genre_id as string })
+	const {
+		data: genreData,
+		isLoading: isGenreDataLoading,
+		isFetching: isGenreDataFetching,
+		isError: isGenreDataError
+	} = useGetGenreQuery({ id: genre_id as string })
 	const {
 		data: genreGamesData,
 		isLoading,
@@ -39,7 +45,11 @@ export default function Genre() {
 
 	return (
 		<main className="flex flex-col min-h-screen w-full px-5 py-20">
+			{(isGenreDataLoading || isGenreDataFetching) && <SkeletonBanner />}
 			{genreData && <Banner data={genreData} />}
+			{isGenreDataError && (
+				<p className="text-3xl font-bold">An error occurred</p>
+			)}
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
 				{genreGamesData && genreGamesData.results?.length > 0 && (

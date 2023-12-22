@@ -9,7 +9,7 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 //types
 import { GameT } from "@/types"
-import SkeletonGameScreenshots from "@/components/SkeletonGameScreenshots"
+import SkeletonGameScreenshots from "@/components/skeletons/SkeletonGameScreenshots"
 
 export default function Screenshots({ gameData }: { gameData: GameT }) {
 	const {

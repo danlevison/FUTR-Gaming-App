@@ -27,7 +27,8 @@ export default function RootLayout({
 							<Sidebar />
 							<MobileNav />
 						</header>
-						<PageTransitionEffect>{children}</PageTransitionEffect>
+						{/* <PageTransitionEffect>{children}</PageTransitionEffect> */}
+						{children}
 					</div>
 				</ReduxProvider>
 			</body>

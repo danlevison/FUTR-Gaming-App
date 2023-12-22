@@ -1,4 +1,4 @@
-import SkeletonGameCard from "../SkeletonGameCard"
+import SkeletonGameCard from "../skeletons/SkeletonGameCard"
 
 export default function LoadingGames() {
 	return (
