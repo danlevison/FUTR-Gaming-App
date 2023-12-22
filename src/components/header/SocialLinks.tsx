@@ -41,19 +41,16 @@ export default function SocialLinks({
 						<span className="text-gray-400 group-hover:text-primaryText duration-300">
 							{icon}
 						</span>
-						<AnimatePresence>
-							{(sidebarStatus || nav) && (
-								<motion.span
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									className={`font-bold text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
-										sidebarStatus || nav ? "block" : "hidden"
-									}`}
-								>
-									{name}
-								</motion.span>
-							)}
-						</AnimatePresence>
+
+						{(sidebarStatus || nav) && (
+							<span
+								className={`font-bold text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
+									sidebarStatus || nav ? "block" : "hidden"
+								}`}
+							>
+								{name}
+							</span>
+						)}
 					</Link>
 				</li>
 			))}

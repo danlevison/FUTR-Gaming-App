@@ -13,16 +13,14 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 		open: {
 			x: 0,
 			opacity: 1,
-			boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
 			transition: {
 				duration: 0.4,
 				ease: "easeInOut"
 			}
 		},
 		closed: {
-			x: "100%", // Slide out to the right
+			x: "100%",
 			opacity: 0,
-			boxShadow: "none",
 			transition: {
 				duration: 0.4,
 				ease: "easeInOut"
@@ -36,7 +34,7 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 				variants={navAnimation}
 				initial={"closed"}
 				animate={nav ? "open" : "closed"}
-				className={`fixed top-0 right-0 w-full max-w-[300px] h-screen overflow-y-auto bg-transparent backdrop-blur-lg px-8 pt-2 border-l border-gray-500
+				className={`fixed top-0 right-0 w-full max-w-[300px] h-screen overflow-y-auto bg-[#131826]/60 backdrop-blur-lg px-8 pt-2 border-l border-gray-500
 				}`}
 			>
 				<div className="flex items-center justify-between border-b pb-2 mb-4">

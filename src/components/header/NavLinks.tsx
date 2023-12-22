@@ -37,21 +37,15 @@ export default function NavLinks({
 							{route.icon}
 						</span>
 
-						<AnimatePresence>
-							{(sidebarStatus || nav) && (
-								<motion.span
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									className={`font-bold text-lg transition-all group-hover:text-primaryText duration-300 ${
-										sidebarStatus || nav ? "block" : "hidden"
-									} ${
-										pathname === route.path ? "text-white" : "text-gray-400"
-									}`}
-								>
-									{route.name}
-								</motion.span>
-							)}
-						</AnimatePresence>
+						{(sidebarStatus || nav) && (
+							<span
+								className={`font-bold text-gray-400 text-lg transition-all group-hover:text-primaryText duration-300 ${
+									pathname === route.path && "text-white"
+								} ${sidebarStatus || nav ? "block" : "hidden"} `}
+							>
+								{route.name}
+							</span>
+						)}
 					</Link>
 				</li>
 			))}
