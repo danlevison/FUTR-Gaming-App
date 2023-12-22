@@ -28,7 +28,7 @@ export default function SocialLinks({
 		}
 	]
 	return (
-		<ul className="flex flex-col gap-5 md:gap-10 mt-auto text-primaryText">
+		<ul className="flex flex-col gap-5 md:gap-7 mt-auto text-primaryText">
 			{socialIcons.map(({ name, icon }) => (
 				<li
 					key={name}

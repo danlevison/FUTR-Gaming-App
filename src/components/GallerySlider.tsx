@@ -12,36 +12,36 @@ import "swiper/css"
 import "@/styles/swiperStyles.css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import SkeletonGameScreenshots from "./skeletons/SkeletonGameScreenshots"
 
 export default function GallerySlider() {
 	const {
 		data: gamesData,
 		isLoading,
+		isFetching,
 		isError
 	} = useGetAllGamesQuery({
-		urlEndpoint: "games?",
-		option: "relevance",
+		urlEndpoint: "games/lists/main?",
+		option: "released",
 		page: 1
 	})
 
 	return (
-		<section className="w-full max-w-[1440px] mx-auto px-8 py-20">
+		<section className="w-full px-5">
 			<Heading
 				heading={{ firstText: "New and", secondText: "Upcoming games" }}
 			/>
-			<div className="flex flex-col justify-center items-center w-full mt-5">
-				{isLoading && <p>Loading...</p>}
-
+			<div className="flex flex-col justify-center items-center w-full mt-4">
 				<Swiper
-					modules={[Navigation, Pagination, A11y, Autoplay]}
+					modules={[Navigation, A11y, Autoplay]}
 					slidesPerView={1}
-					spaceBetween={30}
+					spaceBetween={20}
 					autoplay={{
-						delay: 2500,
+						delay: 4000,
 						disableOnInteraction: false
 					}}
+					loop={true}
 					navigation
-					pagination={{ clickable: true }}
 					breakpoints={{
 						640: {
 							slidesPerView: 1,
@@ -49,31 +49,36 @@ export default function GallerySlider() {
 						},
 						768: {
 							slidesPerView: 2,
-							spaceBetween: 40
+							spaceBetween: 20
 						},
 						1024: {
 							slidesPerView: 3,
-							spaceBetween: 50
+							spaceBetween: 20
 						}
 					}}
-					className="w-full mt-10"
+					className="w-full mt-4"
 				>
+					{(isLoading || isFetching) && <SkeletonGameScreenshots />}
 					{gamesData && gamesData.results.length > 0 && (
 						<div>
 							{gamesData.results.map((game) => (
 								<SwiperSlide
 									key={game.id}
-									className="w-full h-full select-none rounded-md"
+									className="relative w-full h-full select-none rounded-md"
 								>
-									<Link href={`games/${game.id}`}>
-										<Image
-											src={game?.background_image}
-											alt={game?.name}
-											width={400}
-											height={500}
-											style={{ objectFit: "cover" }}
-											className="w-full h-[500px] border-accentSecondary border-4 rounded-md"
-										/>
+									<Image
+										src={game?.background_image}
+										alt={game?.name}
+										width={400}
+										height={500}
+										style={{ objectFit: "cover" }}
+										className="w-full h-[300px]  rounded-md"
+									/>
+									<Link
+										href={`games/${game.id}`}
+										className="absolute bottom-[-1px] flex items-center w-full h-14 px-4 bg-transparent backdrop-blur-lg uppercase text-lg font-bold tracking-wide hover:underline rounded-b-md"
+									>
+										{game?.name}
 									</Link>
 								</SwiperSlide>
 							))}

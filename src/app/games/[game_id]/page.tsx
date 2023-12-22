@@ -36,7 +36,6 @@ export default function GameDetails() {
 					</>
 				)
 			)}
-			{/* <SkeletonGameDetailsPage /> */}
 		</main>
 	)
 }
