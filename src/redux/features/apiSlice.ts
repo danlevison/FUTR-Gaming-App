@@ -3,7 +3,8 @@ import {
 	GamesApiResponse,
 	GeneralApiResponse,
 	GameT,
-	ScreenshotsT
+	ScreenshotsT,
+	PageItemT
 } from "@/types"
 
 const rawgApiKey = process.env.NEXT_PUBLIC_RAWG_API_KEY
@@ -39,6 +40,16 @@ export const gamesApi = createApi({
 		getAllGenres: builder.query<GeneralApiResponse, {}>({
 			query: () => `genres?key=${rawgApiKey}`
 		}),
+		getGenre: builder.query<PageItemT, { id: string }>({
+			query: ({ id }) => `genres/${id}?key=${rawgApiKey}`
+		}),
+		getAllGenreGames: builder.query<
+			GamesApiResponse,
+			{ page: number; slug: string }
+		>({
+			query: ({ page, slug }) =>
+				`/games?key=${rawgApiKey}&ordering=popularity&page_size=40&page=${page}&genres=${slug}`
+		}),
 
 		getAllStores: builder.query<GeneralApiResponse, {}>({
 			query: () => `stores?key=${rawgApiKey}`
@@ -58,7 +69,9 @@ export const {
 	useGetAllPublishersQuery,
 	useGetGameQuery,
 	useGetGameScreenshotsQuery,
-	useGetGameSeriesQuery
+	useGetGameSeriesQuery,
+	useGetGenreQuery,
+	useGetAllGenreGamesQuery
 } = gamesApi
 
 export default gamesApi.reducer

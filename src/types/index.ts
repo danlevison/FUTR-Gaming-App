@@ -49,10 +49,10 @@ export type GeneralApiResponse = {
 // types for a genre/store
 export type PageItemT = {
 	id: string
-	image_background: string
+	image_background?: string
 	name: string
 	slug: string
-	games_count: number
+	games_count?: number
 	description?: string
 	domain?: string
 }

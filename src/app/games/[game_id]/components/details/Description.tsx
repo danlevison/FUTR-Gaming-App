@@ -2,15 +2,14 @@ import { useState } from "react"
 //types
 import { GameT } from "@/types"
 
-export default function Description({ gameData }: { gameData: GameT }) {
+export default function Description({ description }: { description: string }) {
 	const [showMore, setShowMore] = useState(false)
 
 	const displayDescription = showMore
-		? gameData.description
-		: `${gameData.description!.slice(0, 200)}...`
+		? description
+		: `${description?.slice(0, 200)}...`
 	return (
-		<>
-			<h3 className="font-bold text-gray-500 text-xl">About</h3>
+		<div className="w-full max-w-[700px]">
 			<p
 				dangerouslySetInnerHTML={{ __html: displayDescription || "" }}
 				className="space-y-4"
@@ -21,6 +20,6 @@ export default function Description({ gameData }: { gameData: GameT }) {
 			>
 				{showMore ? "Show Less" : "Read More"}
 			</button>
-		</>
+		</div>
 	)
 }

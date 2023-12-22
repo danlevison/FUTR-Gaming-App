@@ -2,7 +2,7 @@
 
 import { useGetGameQuery } from "@/redux/features/apiSlice"
 import { useParams } from "next/navigation"
-import Banner from "@/components/Banner"
+import GameBanner from "@/components/GameBanner"
 import Screenshots from "./components/Screenshots"
 import Details from "./components/Details"
 import Series from "./components/Series"
@@ -28,7 +28,7 @@ export default function GameDetails() {
 			) : (
 				isSuccess && (
 					<>
-						<Banner gameData={gameData} />
+						<GameBanner gameData={gameData} />
 						<Screenshots gameData={gameData} />
 						<RatingBar gameData={gameData} />
 						<Details gameData={gameData} />

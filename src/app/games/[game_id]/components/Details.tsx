@@ -10,14 +10,17 @@ export default function Details({ gameData }: { gameData: GameT }) {
 			<h2 className="text-3xl font-bold mb-2">Details</h2>
 			<div className="flex flex-col lg:flex-row lg:justify-between gap-5 lg:gap-10 bg-foreground rounded-lg p-5">
 				<div className="w-full max-w-[700px]">
-					<Description gameData={gameData} />
+					<h3 className="font-bold text-gray-500 text-xl">About</h3>
+					{gameData.description && (
+						<Description description={gameData.description} />
+					)}
 					<Tags gameData={gameData} />
 				</div>
 
 				<div className="w-full">
 					<div>
 						<h3 className="font-bold text-gray-500 text-xl">Platforms</h3>
-						<ul className="flex items-center gap-2">
+						<ul className="flex flex-wrap items-center gap-2">
 							{gameData.parent_platforms?.map(({ platform }, idx, array) => (
 								<li key={platform.id}>
 									{platform.name + (idx < array.length - 1 ? "," : "")}
@@ -28,7 +31,7 @@ export default function Details({ gameData }: { gameData: GameT }) {
 					<div className="py-3">
 						<h3 className="font-bold text-gray-500 text-xl">Genre</h3>
 						{gameData.genres?.length! > 0 ? (
-							<ul className="flex items-center gap-2">
+							<ul className="flex flex-wrap items-center gap-2">
 								{gameData.genres?.map((genre, idx, array) => (
 									<li key={genre.id}>
 										<Link
@@ -47,7 +50,7 @@ export default function Details({ gameData }: { gameData: GameT }) {
 					<div>
 						<h3 className="font-bold text-gray-500 text-xl">Developer</h3>
 						{gameData.developers?.length! > 0 ? (
-							<ul className="flex items-center gap-2">
+							<ul className="flex flex-wrap items-center gap-2">
 								{gameData.developers?.map((developer, idx, array) => (
 									<li key={developer.id}>
 										<Link
@@ -85,7 +88,7 @@ export default function Details({ gameData }: { gameData: GameT }) {
 						{gameData.website ? (
 							<a
 								href={gameData.website}
-								className="underline"
+								className="underline break-words"
 								target="_blank"
 							>
 								{gameData.website}
