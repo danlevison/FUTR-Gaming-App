@@ -1,7 +1,11 @@
 import { motion } from "framer-motion"
 import { MdClose } from "react-icons/md"
 import NavLinks from "../NavLinks"
-import SocialLinks from "../SocialLinks"
+import UserLinks from "../UserLinks"
+import LoginBtn from "../LoginBtn"
+import LogoutBtn from "../LogoutBtn"
+import { useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
 
 type MobileNavMenuProps = {
 	nav: boolean
@@ -9,6 +13,7 @@ type MobileNavMenuProps = {
 }
 
 export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
+	const user = useSelector((state: RootState) => state.data.user.user)
 	const navAnimation = {
 		open: {
 			x: 0,
@@ -58,7 +63,10 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 					<h3 className="border-b border-gray-300 text-lg pb-2 whitespace-nowrap my-6">
 						Connect
 					</h3>
-					<SocialLinks nav={nav} />
+					<UserLinks nav={nav} />
+				</div>
+				<div className="mt-10">
+					{user ? <LogoutBtn nav={nav} /> : <LoginBtn nav={nav} />}
 				</div>
 			</motion.div>
 		</div>

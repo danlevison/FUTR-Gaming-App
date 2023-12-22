@@ -31,7 +31,7 @@ export default function GallerySlider() {
 			<Heading
 				heading={{ firstText: "New and", secondText: "Upcoming games" }}
 			/>
-			<div className="flex flex-col justify-center items-center w-full mt-4">
+			<div className="flex flex-col justify-center items-center w-full mt-4 pb-14">
 				<Swiper
 					modules={[Navigation, A11y, Autoplay]}
 					slidesPerView={1}
@@ -40,7 +40,6 @@ export default function GallerySlider() {
 						delay: 4000,
 						disableOnInteraction: false
 					}}
-					loop={true}
 					navigation
 					breakpoints={{
 						640: {

@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
-
+import { rootReducer } from "./reducers"
 import apiReducer, { gamesApi } from "./features/apiSlice"
 
 export const store = configureStore({
 	reducer: {
-		gamesApi: apiReducer
+		gamesApi: apiReducer,
+		data: rootReducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(gamesApi.middleware)
