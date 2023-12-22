@@ -14,7 +14,7 @@ export default function Stores() {
 	} = useGetAllStoresQuery({})
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-8 py-20">
+		<main className="min-h-screen w-full mx-auto px-5 py-20">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Stores
 			</h1>

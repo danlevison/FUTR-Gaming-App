@@ -19,7 +19,7 @@ export default function PopularGames() {
 	})
 
 	return (
-		<section className="flex flex-col items-center min-h-screen w-full py-20 px-8">
+		<section className="flex flex-col items-center min-h-screen w-full py-20 px-5">
 			<Heading heading={{ firstText: "Games of the", secondText: "year" }} />
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
