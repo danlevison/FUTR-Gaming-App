@@ -1,8 +1,8 @@
 "use client"
 
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
-import LoadingGames from "@/components/LoadingGames"
-import GamesList from "@/components/home/GamesList"
+import LoadingGames from "@/components/loading/LoadingGames"
+import GamesList from "@/components/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"
 import Pagination from "@/components/Pagnination"
 import {

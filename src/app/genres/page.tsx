@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetAllGenresQuery } from "@/redux/features/apiSlice"
-import LoadingItems from "@/components/LoadingItems"
+import LoadingItems from "@/components/loading/LoadingItems"
 import PageItemList from "@/components/PageItemList"
 
 export default function Genres() {

@@ -3,8 +3,8 @@
 import Link from "next/link"
 import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
 import Heading from "@/components/Heading"
-import GamesList from "./GamesList"
-import LoadingGames from "../LoadingGames"
+import GamesList from "../GamesList"
+import LoadingGames from "../loading/LoadingGames"
 
 export default function PopularGames() {
 	const {

@@ -35,8 +35,8 @@ export default function Banner({ gameData }: { gameData: GameT }) {
 
 					{averagePlaytime}
 				</div>
-				<h1 className="max-w-5xl text-3xl md:text-6xl lg:text-7xl font-bold mt-4">
-					{gameData.name}
+				<h1 className="max-w-[1000px] text-3xl md:text-6xl lg:text-7xl font-bold mt-4">
+					{gameData?.name}
 				</h1>
 			</div>
 		</section>
