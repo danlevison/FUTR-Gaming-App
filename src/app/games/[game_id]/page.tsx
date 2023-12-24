@@ -20,7 +20,7 @@ export default function GameDetails() {
 	} = useGetGameQuery({ id: game_id as string })
 
 	return (
-		<main className="flex flex-col min-h-screen w-full md:w-[calc(100%-70px)] px-5 py-20">
+		<main className="flex flex-col min-h-screen w-full px-5 py-20">
 			{isLoading || isFetching ? (
 				<SkeletonGameDetailsPage />
 			) : isError ? (
