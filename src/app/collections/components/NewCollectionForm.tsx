@@ -1,6 +1,7 @@
+import { useState } from "react"
+import { MdClose } from "react-icons/md"
 import {
 	Drawer,
-	DrawerClose,
 	DrawerContent,
 	DrawerHeader,
 	DrawerTitle,
@@ -11,11 +12,120 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { db } from "@/config/firebase"
+import {
+	doc,
+	getDoc,
+	collection,
+	setDoc,
+	serverTimestamp
+} from "firebase/firestore"
 
-export default function NewCollectionForm() {
+type NewCollectionFormProps = {
+	user: {
+		uid: string
+		displayName: string
+		email: string
+	}
+	fetchCollectionsData: () => Promise<void>
+}
+
+export default function NewCollectionForm({
+	user,
+	fetchCollectionsData
+}: NewCollectionFormProps) {
+	const [formData, setFormData] = useState({
+		title: "",
+		description: "",
+		visibility: false
+	})
+	const [message, setMessage] = useState("")
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const collectionId = crypto.randomUUID()
+	const { toast } = useToast()
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		setFormData((prevFormData) => {
+			if (e.target.type === "checkbox") {
+				return {
+					...prevFormData,
+					[e.target.name]: (e.target as HTMLInputElement).checked
+				}
+			}
+
+			return { ...prevFormData, [e.target.name]: e.target.value }
+		})
+	}
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		if (!user) {
+			console.error("User not authenticated.")
+			return
+		}
+
+		if (formData.title.trim() === "") {
+			setMessage("You must enter a title")
+			return
+		}
+
+		try {
+			setMessage("")
+
+			const docRef = doc(db, "users", user.uid)
+			const docSnap = await getDoc(docRef)
+
+			if (docSnap.exists()) {
+				const collectionDocRef = doc(
+					collection(docRef, "collections"),
+					collectionId
+				)
+				const collectionDocSnap = await getDoc(collectionDocRef)
+
+				if (!collectionDocSnap.exists()) {
+					// If the document doesn't exist, create it with title and description
+					await setDoc(collectionDocRef, {
+						title: formData.title,
+						description: formData.description,
+						visibility: formData.visibility,
+						games: [],
+						createdAt: serverTimestamp()
+					})
+					toast({
+						variant: "default",
+						description: "Your collection has been successfully created."
+					})
+					setFormData({ title: "", description: "", visibility: false })
+					setOpenDrawer(false)
+					fetchCollectionsData()
+				} else {
+					console.error("Collection already exists.")
+				}
+			} else {
+				console.error("User document does not exist.")
+			}
+		} catch (error) {
+			console.error("Error creating collection", error)
+			toast({
+				variant: "destructive",
+				description: "Unable to create your collection, please try again."
+			})
+		}
+	}
+
 	return (
-		<Drawer>
-			<DrawerTrigger className="underline mb-2">
+		<Drawer
+			open={openDrawer}
+			onRelease={() => setOpenDrawer(!openDrawer)}
+		>
+			<DrawerTrigger
+				onClick={() => setOpenDrawer(true)}
+				className="underline mb-2"
+			>
 				Start a new collection
 			</DrawerTrigger>
 			<DrawerContent className="flex flex-col justify-center items-center">
@@ -23,21 +133,36 @@ export default function NewCollectionForm() {
 					<DrawerTitle className="text-3xl sm:text-4xl md:text-5xl">
 						Start a new collection
 					</DrawerTitle>
+					<Button
+						onClick={() => setOpenDrawer(false)}
+						variant={"ghost"}
+						aria-label="Close drawer"
+						className="absolute top-5 right-5"
+					>
+						<MdClose size={30} />
+					</Button>
 				</DrawerHeader>
-				<div className="flex flex-col gap-4 p-4 w-full max-w-[700px]">
+				<form
+					onSubmit={handleSubmit}
+					className="flex flex-col gap-4 p-4 w-full max-w-[700px]"
+				>
 					<div>
 						<Label
 							htmlFor="title"
 							className="text-xl"
 						>
-							Title
+							Title*
 						</Label>
 						<Input
+							onChange={handleChange}
+							value={formData.title}
+							type="text"
 							name="title"
 							id="title"
 							placeholder="Write a collection title e.g. Horror Games"
 							className="h-16 text-lg mt-1"
 						/>
+						{message && <span className="text-red-500">{message}</span>}
 					</div>
 
 					<div>
@@ -48,25 +173,48 @@ export default function NewCollectionForm() {
 							Description
 						</Label>
 						<Textarea
-							name="title"
-							id="title"
+							onChange={handleChange}
+							value={formData.description}
+							name="description"
+							id="description"
 							placeholder="Write a description"
 							className="h-16 text-lg mt-1"
 						/>
 					</div>
-				</div>
-
-				<DrawerFooter className="w-full max-w-[500px]">
-					<Button className="text-lg">Submit</Button>
-					<DrawerClose asChild>
+					<div className="flex items-center gap-2">
+						<input
+							onChange={handleChange}
+							checked={formData.visibility}
+							type="checkbox"
+							name="visibility"
+							id="visibility"
+							className="h-6 w-6"
+						/>
+						<Label
+							htmlFor="title"
+							className="text-xl"
+						>
+							Collection is only visible to me
+						</Label>
+					</div>
+					<DrawerFooter className="w-full max-w-[500px] mx-auto">
 						<Button
+							className="text-lg"
+							disabled={!formData.title}
+						>
+							Submit
+						</Button>
+
+						<Button
+							onClick={() => setOpenDrawer(false)}
 							variant={"outline"}
+							type="button"
 							className="text-lg"
 						>
 							Cancel
 						</Button>
-					</DrawerClose>
-				</DrawerFooter>
+					</DrawerFooter>
+				</form>
 			</DrawerContent>
 		</Drawer>
 	)

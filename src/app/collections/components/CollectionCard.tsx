@@ -7,8 +7,15 @@ import {
 	CardHeader,
 	CardTitle
 } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { FaRegTrashAlt } from "react-icons/fa"
+import { MdVisibility } from "react-icons/md"
+import { MdVisibilityOff } from "react-icons/md"
 
 type CollectionCardProps = {
+	title: string
+	description: string
+	visibility: boolean
 	user: {
 		uid: string
 		displayName: string
@@ -16,25 +23,43 @@ type CollectionCardProps = {
 	}
 }
 
-export default function CollectionCard({ user }: CollectionCardProps) {
+export default function CollectionCard({
+	title,
+	description,
+	visibility,
+	user
+}: CollectionCardProps) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>
-					<Link
-						href={"/"}
-						className="underline"
-					>
-						Test
-					</Link>
-				</CardTitle>
+				<div className="flex justify-between items-center">
+					<CardTitle>
+						<Link
+							href={"/"}
+							className="underline"
+						>
+							{title}
+						</Link>
+					</CardTitle>
+					<Button variant={"ghost"}>
+						<FaRegTrashAlt size={20} />
+					</Button>
+				</div>
+
 				<CardDescription>
-					<p>
-						Collection <span className="text-gray-400">by:</span>{" "}
-						{user.displayName}
-					</p>
-					<span className="font-bold text-gray-500">Private collection</span>
+					Collection <span className="text-gray-400">by:</span>{" "}
+					{user.displayName}
 				</CardDescription>
+				<CardDescription>{description}</CardDescription>
+				{visibility ? (
+					<p className="flex items-center gap-2 font-bold text-gray-500">
+						Private Collection <MdVisibilityOff />
+					</p>
+				) : (
+					<p className="flex items-center gap-2 font-bold text-gray-500">
+						Public Collection <MdVisibility />
+					</p>
+				)}
 			</CardHeader>
 			<CardContent>
 				<div className="flex items-center gap-5 w-full py-4">

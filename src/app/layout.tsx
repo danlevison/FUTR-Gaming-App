@@ -6,6 +6,7 @@ import MobileNav from "@/components/header/mobileNav/MobileNav"
 import Sidebar from "@/components/header/sidebar/Sidebar"
 import PageTransitionEffect from "@/components/PageTransitionEffect"
 import AuthWrapper from "@/utils/AuthWrapper"
+import { Toaster } from "@/components/ui/toaster"
 
 const barlow = Barlow({ subsets: ["latin"], weight: ["300", "400", "700"] })
 
@@ -31,6 +32,7 @@ export default function RootLayout({
 							</header>
 							{/* <PageTransitionEffect>{children}</PageTransitionEffect> */}
 							{children}
+							<Toaster />
 						</div>
 					</AuthWrapper>
 				</ReduxProvider>
