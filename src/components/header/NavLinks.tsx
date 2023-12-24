@@ -17,33 +17,33 @@ export default function NavLinks({
 	const pathname = usePathname()
 	return (
 		<ul className="flex flex-col justify-between gap-5 md:gap-7 mt-8">
-			{pageRoutes.map((route) => (
+			{pageRoutes.map(({ name, path, icon }) => (
 				<li
-					key={route.path}
+					key={path}
 					className="group w-fit"
 				>
 					<Link
-						href={route.path}
+						href={path}
 						className="flex items-center gap-2"
 						onClick={handleNav}
 					>
 						<span
 							className={`${
-								pathname === route.path
+								pathname === path
 									? "text-white"
 									: "text-gray-400 group-hover:text-primaryText duration-300"
 							}`}
 						>
-							{route.icon}
+							{icon}
 						</span>
 
 						{(sidebarStatus || nav) && (
 							<span
 								className={`font-bold text-gray-400 text-lg transition-all group-hover:text-primaryText duration-300 ${
-									pathname === route.path && "text-white"
+									pathname === path && "text-white"
 								} ${sidebarStatus || nav ? "block" : "hidden"} `}
 							>
-								{route.name}
+								{name}
 							</span>
 						)}
 					</Link>

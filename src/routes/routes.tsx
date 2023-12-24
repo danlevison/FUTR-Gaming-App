@@ -1,5 +1,7 @@
 import { FaHouse, FaGamepad, FaMasksTheater, FaHashtag } from "react-icons/fa6"
 import { HiNewspaper, HiBuildingStorefront } from "react-icons/hi2"
+import { BsCollectionFill } from "react-icons/bs"
+import { FaHeart } from "react-icons/fa"
 
 export const pageRoutes = [
 	{
@@ -31,5 +33,18 @@ export const pageRoutes = [
 		name: "Publishers",
 		path: "/publishers",
 		icon: <HiNewspaper size={25} />
+	}
+]
+
+export const userRoutes = [
+	{
+		name: "Collections",
+		path: "/collections",
+		icon: <BsCollectionFill size={25} />
+	},
+	{
+		name: "Wishlist",
+		path: "/wishlist",
+		icon: <FaHeart size={25} />
 	}
 ]

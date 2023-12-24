@@ -1,13 +1,21 @@
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useSelector } from "react-redux"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
+import { BiChevronDown } from "react-icons/bi"
+import { FaFolderPlus } from "react-icons/fa"
 import { platformIcons } from "@/utils/platformIcons"
 //types
 import { GameT } from "@/types"
+import { RootState } from "@/redux/store"
 
 export default function GameCard({ game }: { game: GameT }) {
+	const user = useSelector((state: RootState) => state.data.user.user)
+	const [showCollections, setShowCollections] = useState(false)
+
 	return (
 		<Card className="flex flex-col justify-between bg-[#15142e] text-primaryText">
 			<div className="relative">
@@ -57,10 +65,35 @@ export default function GameCard({ game }: { game: GameT }) {
 					</div>
 				</div>
 			</CardContent>
-			<CardFooter className="p-0 m-0">
-				<button className="w-full bg-accentPrimary rounded-b-lg p-2 font-bold">
-					Add to collection
+			<CardFooter className="flex flex-col p-0 m-0">
+				<button
+					onClick={() => setShowCollections(!showCollections)}
+					className={`flex justify-center items-center w-full bg-accentPrimary rounded-b-lg ${
+						showCollections && "rounded-b-none"
+					} p-2 font-bold`}
+				>
+					Collections <BiChevronDown size={25} />
 				</button>
+				{showCollections && user && (
+					<div className="px-5 w-full">
+						<button
+							onClick={() => console.log(game.id)}
+							className="flex  items-center gap-2 bg-gray-500 text-start text-lg font-bold w-full p-3 mt-4 rounded-md hover:opacity-70 duration-300"
+						>
+							<FaFolderPlus /> *Collection Name*
+						</button>
+					</div>
+				)}
+				{showCollections && (
+					<div className="p-2">
+						<Link
+							href={"/collections"}
+							className="underline"
+						>
+							Start New Collection
+						</Link>
+					</div>
+				)}
 			</CardFooter>
 		</Card>
 	)

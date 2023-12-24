@@ -1,34 +1,26 @@
 import Link from "next/link"
-import { BsCollectionFill } from "react-icons/bs"
-import { FaHeart } from "react-icons/fa"
+import { userRoutes } from "@/routes/routes"
 
 export default function UserLinks({
 	sidebarStatus,
-	nav
+	nav,
+	handleNav
 }: {
 	sidebarStatus?: boolean
 	nav?: boolean
+	handleNav?: () => void
 }) {
-	const icons = [
-		{
-			name: "Collections",
-			icon: <BsCollectionFill size={25} />
-		},
-		{
-			name: "Wishlist",
-			icon: <FaHeart size={25} />
-		}
-	]
 	return (
 		<ul className="flex flex-col gap-5 md:gap-7 md:mt-16 text-primaryText">
-			{icons.map(({ name, icon }) => (
+			{userRoutes.map(({ name, path, icon }) => (
 				<li
 					key={name}
 					className="group w-fit"
 				>
 					<Link
-						href="/"
+						href={path}
 						className="flex items-center gap-2"
+						onClick={handleNav}
 					>
 						<span className="text-gray-400 group-hover:text-primaryText duration-300">
 							{icon}

@@ -1,8 +1,5 @@
-import { auth } from "@/config/firebase"
-import { useDispatch } from "react-redux"
-import { AppDispatch } from "@/redux/store"
-import { googleLogout } from "@/redux/features/userSlice"
 import { CiLogout } from "react-icons/ci"
+import useAuth from "@/hooks/useAuth"
 
 export default function LogoutBtn({
 	sidebarStatus,
@@ -11,15 +8,7 @@ export default function LogoutBtn({
 	sidebarStatus?: boolean
 	nav?: boolean
 }) {
-	const dispatch = useDispatch<AppDispatch>()
-	const handleLogout = async () => {
-		try {
-			await auth.signOut()
-			dispatch(googleLogout())
-		} catch (error) {
-			console.error(error)
-		}
-	}
+	const { handleLogout } = useAuth()
 	return (
 		<button
 			onClick={handleLogout}

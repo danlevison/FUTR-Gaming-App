@@ -63,7 +63,10 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 					<h3 className="border-b border-gray-300 text-lg pb-2 whitespace-nowrap my-6">
 						Connect
 					</h3>
-					<UserLinks nav={nav} />
+					<UserLinks
+						nav={nav}
+						handleNav={handleNav}
+					/>
 				</div>
 				<div className="mt-10">
 					{user ? <LogoutBtn nav={nav} /> : <LoginBtn nav={nav} />}
