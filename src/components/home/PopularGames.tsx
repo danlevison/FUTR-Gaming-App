@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
+import { useGetAllGamesQuery } from "@/redux/features/gamesApiSlice"
 import Heading from "@/components/Heading"
 import GamesList from "../GamesList"
 import LoadingGames from "../loading/LoadingGames"

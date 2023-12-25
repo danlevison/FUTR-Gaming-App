@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
+import { useGetAllGamesQuery } from "@/redux/features/gamesApiSlice"
 import {
 	Carousel,
 	CarouselContent,

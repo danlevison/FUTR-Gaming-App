@@ -5,7 +5,7 @@ import UserLinks from "../UserLinks"
 import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 import { useSelector } from "react-redux"
-import { RootState } from "@/redux/store"
+import { currentUser } from "@/redux/features/authSlice"
 
 type MobileNavMenuProps = {
 	nav: boolean
@@ -13,7 +13,7 @@ type MobileNavMenuProps = {
 }
 
 export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
-	const user = useSelector((state: RootState) => state.data.user.user)
+	const user = useSelector(currentUser)
 	const navAnimation = {
 		open: {
 			x: 0,

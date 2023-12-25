@@ -4,7 +4,7 @@ import Banner from "@/components/Banner"
 import {
 	useGetGenreQuery,
 	useGetAllGenreGamesQuery
-} from "@/redux/features/apiSlice"
+} from "@/redux/features/gamesApiSlice"
 import { useParams } from "next/navigation"
 import GamesList from "@/components/GamesList"
 import Pagination from "@/components/Pagnination"

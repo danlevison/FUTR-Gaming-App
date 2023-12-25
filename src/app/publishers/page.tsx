@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetAllPublishersQuery } from "@/redux/features/apiSlice"
+import { useGetAllPublishersQuery } from "@/redux/features/gamesApiSlice"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { RootState } from "../store"
 
 type AuthState = {
 	user: { uid: string; displayName: string; email: string } | null
@@ -10,8 +11,8 @@ const initialState: AuthState = {
 	isLoading: true
 }
 
-export const userSlice = createSlice({
-	name: "user",
+export const authSlice = createSlice({
+	name: "auth",
 	initialState,
 	reducers: {
 		googleLogin: (state, action) => {
@@ -26,4 +27,9 @@ export const userSlice = createSlice({
 	}
 })
 
-export const { googleLogin, googleLogout, setLoading } = userSlice.actions
+export const { googleLogin, googleLogout, setLoading } = authSlice.actions
+
+export default authSlice.reducer
+
+export const currentUser = (state: RootState) => state.data.auth.user
+export const isLoading = (state: RootState) => state.data.auth.isLoading

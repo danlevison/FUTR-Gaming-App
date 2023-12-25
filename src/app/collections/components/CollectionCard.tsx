@@ -11,11 +11,15 @@ import { Button } from "@/components/ui/button"
 import { FaRegTrashAlt } from "react-icons/fa"
 import { MdVisibility } from "react-icons/md"
 import { MdVisibilityOff } from "react-icons/md"
+import { useToast } from "@/components/ui/use-toast"
+import { useDeleteCollectionMutation } from "@/redux/features/collectionsApiSlice"
 
 type CollectionCardProps = {
+	id: string
 	title: string
 	description: string
-	visibility: boolean
+	isPublic: boolean
+	games: any[]
 	user: {
 		uid: string
 		displayName: string
@@ -24,24 +28,44 @@ type CollectionCardProps = {
 }
 
 export default function CollectionCard({
+	id,
 	title,
 	description,
-	visibility,
+	isPublic,
+	games,
 	user
 }: CollectionCardProps) {
+	const [deleteCollection] = useDeleteCollectionMutation()
+	const { toast } = useToast()
+
+	const handleDeleteCollection = async (collectionId: string) => {
+		try {
+			await deleteCollection({ userId: user.uid, collectionId: collectionId })
+			toast({
+				variant: "default",
+				description: "Your collection has been successfully deleted."
+			})
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	return (
 		<Card>
 			<CardHeader>
 				<div className="flex justify-between items-center">
 					<CardTitle>
 						<Link
-							href={"/"}
+							href={`/collections/${id}`}
 							className="underline"
 						>
 							{title}
 						</Link>
 					</CardTitle>
-					<Button variant={"ghost"}>
+					<Button
+						variant={"ghost"}
+						onClick={() => handleDeleteCollection(id)}
+					>
 						<FaRegTrashAlt size={20} />
 					</Button>
 				</div>
@@ -51,7 +75,7 @@ export default function CollectionCard({
 					{user.displayName}
 				</CardDescription>
 				<CardDescription>{description}</CardDescription>
-				{visibility ? (
+				{isPublic ? (
 					<p className="flex items-center gap-2 font-bold text-gray-500">
 						Private Collection <MdVisibilityOff />
 					</p>
@@ -64,8 +88,10 @@ export default function CollectionCard({
 			<CardContent>
 				<div className="flex items-center gap-5 w-full py-4">
 					<div>
-						<p>1</p>
-						<p className="font-bold text-gray-500">game</p>
+						<p>{games.length}</p>
+						<p className="font-bold text-gray-500">
+							{games.length === 1 ? "game" : "games"}
+						</p>
 					</div>
 					<div className="border-r-2 h-full border-black" />
 					<div>
@@ -78,5 +104,3 @@ export default function CollectionCard({
 		</Card>
 	)
 }
-
-;<div className="flex flex-col justify-center items-center bg-gray-800 rounded-lg p-5"></div>

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { auth } from "@/config/firebase"
 import { onAuthStateChanged } from "firebase/auth"
-import { googleLogin, googleLogout } from "@/redux/features/userSlice"
+import { googleLogin, setLoading } from "@/redux/features/authSlice"
 import { AppDispatch } from "@/redux/store"
 
 export default function AuthWrapper({
@@ -24,11 +24,10 @@ export default function AuthWrapper({
 						email: user.email
 					})
 				)
-			} else {
-				dispatch(googleLogout())
+				dispatch(setLoading(false))
 			}
 		})
-		return () => unsubscribe()
+		return unsubscribe
 	}, [dispatch])
 
 	return <>{children}</>

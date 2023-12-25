@@ -1,5 +1,5 @@
 import GamesList from "@/components/GamesList"
-import { useGetGameSeriesQuery } from "@/redux/features/apiSlice"
+import { useGetGameSeriesQuery } from "@/redux/features/gamesApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import { GameT } from "@/types"
 

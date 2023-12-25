@@ -13,14 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { db } from "@/config/firebase"
-import {
-	doc,
-	getDoc,
-	collection,
-	setDoc,
-	serverTimestamp
-} from "firebase/firestore"
+import { useAddCollectionMutation } from "@/redux/features/collectionsApiSlice"
 
 type NewCollectionFormProps = {
 	user: {
@@ -28,22 +21,19 @@ type NewCollectionFormProps = {
 		displayName: string
 		email: string
 	}
-	fetchCollectionsData: () => Promise<void>
 }
 
-export default function NewCollectionForm({
-	user,
-	fetchCollectionsData
-}: NewCollectionFormProps) {
+export default function NewCollectionForm({ user }: NewCollectionFormProps) {
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
-		visibility: false
+		isPublic: false
 	})
 	const [message, setMessage] = useState("")
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const collectionId = crypto.randomUUID()
 	const { toast } = useToast()
+	const [addCollection] = useAddCollectionMutation()
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -75,39 +65,18 @@ export default function NewCollectionForm({
 
 		try {
 			setMessage("")
+			await addCollection({
+				data: formData,
+				userId: user.uid,
+				collectionId: collectionId
+			})
 
-			const docRef = doc(db, "users", user.uid)
-			const docSnap = await getDoc(docRef)
-
-			if (docSnap.exists()) {
-				const collectionDocRef = doc(
-					collection(docRef, "collections"),
-					collectionId
-				)
-				const collectionDocSnap = await getDoc(collectionDocRef)
-
-				if (!collectionDocSnap.exists()) {
-					// If the document doesn't exist, create it with title and description
-					await setDoc(collectionDocRef, {
-						title: formData.title,
-						description: formData.description,
-						visibility: formData.visibility,
-						games: [],
-						createdAt: serverTimestamp()
-					})
-					toast({
-						variant: "default",
-						description: "Your collection has been successfully created."
-					})
-					setFormData({ title: "", description: "", visibility: false })
-					setOpenDrawer(false)
-					fetchCollectionsData()
-				} else {
-					console.error("Collection already exists.")
-				}
-			} else {
-				console.error("User document does not exist.")
-			}
+			setFormData({ title: "", description: "", isPublic: false })
+			setOpenDrawer(false)
+			toast({
+				variant: "default",
+				description: "Your collection has been successfully created."
+			})
 		} catch (error) {
 			console.error("Error creating collection", error)
 			toast({
@@ -184,10 +153,10 @@ export default function NewCollectionForm({
 					<div className="flex items-center gap-2">
 						<input
 							onChange={handleChange}
-							checked={formData.visibility}
+							checked={formData.isPublic}
 							type="checkbox"
-							name="visibility"
-							id="visibility"
+							name="isPublic"
+							id="isPublic"
 							className="h-6 w-6"
 						/>
 						<Label

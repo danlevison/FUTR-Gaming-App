@@ -1,14 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { rootReducer } from "./reducers"
-import apiReducer, { gamesApi } from "./features/apiSlice"
+import gamesApiReducer, { gamesApi } from "./features/gamesApiSlice"
+import collectionsApiReducer, {
+	collectionsApi
+} from "./features/collectionsApiSlice"
 
 export const store = configureStore({
 	reducer: {
-		gamesApi: apiReducer,
+		gamesApi: gamesApiReducer,
+		collectionsApi: collectionsApiReducer,
 		data: rootReducer
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(gamesApi.middleware)
+		getDefaultMiddleware().concat([
+			gamesApi.middleware,
+			collectionsApi.middleware
+		])
 })
 
 export type RootState = ReturnType<typeof store.getState>

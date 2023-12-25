@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetAllGenresQuery } from "@/redux/features/apiSlice"
+import { useGetAllGenresQuery } from "@/redux/features/gamesApiSlice"
 import LoadingItems from "@/components/loading/LoadingItems"
 import PageItemList from "@/components/PageItemList"
 

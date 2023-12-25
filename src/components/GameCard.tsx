@@ -2,6 +2,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useSelector } from "react-redux"
+import { currentUser } from "@/redux/features/authSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
@@ -10,10 +11,9 @@ import { FaFolderPlus } from "react-icons/fa"
 import { platformIcons } from "@/utils/platformIcons"
 //types
 import { GameT } from "@/types"
-import { RootState } from "@/redux/store"
 
 export default function GameCard({ game }: { game: GameT }) {
-	const user = useSelector((state: RootState) => state.data.user.user)
+	const user = useSelector(currentUser)
 	const [showCollections, setShowCollections] = useState(false)
 
 	return (

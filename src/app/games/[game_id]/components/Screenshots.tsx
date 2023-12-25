@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useGetGameScreenshotsQuery } from "@/redux/features/apiSlice"
+import { useGetGameScreenshotsQuery } from "@/redux/features/gamesApiSlice"
 import {
 	Carousel,
 	CarouselContent,

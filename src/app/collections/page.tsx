@@ -1,57 +1,26 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
-import { RootState } from "@/redux/store"
+import { currentUser, isLoading } from "@/redux/features/authSlice"
 import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import NewCollectionForm from "./components/NewCollectionForm"
 import CollectionCard from "./components/CollectionCard"
-import { getDocs, collection } from "firebase/firestore"
-import { db } from "@/config/firebase"
-
-type CollectionData = {
-	collectionId: string
-	collectionTitle: string
-	collectionDescription: string
-	collectionVisibility: boolean
-}
+import Spinner from "@/components/loading/Spinner"
+import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 
 export default function Collections() {
-	const user = useSelector((state: RootState) => state.data.user.user)
-	const [collections, setCollections] = useState<CollectionData[]>([])
+	const user = useSelector(currentUser)
+
+	const {
+		data: collectionsData,
+		isLoading,
+		isFetching,
+		isError
+	} = useFetchCollectionsQuery({ userId: user?.uid })
 	const { handleLogin } = useAuth()
 
-	const fetchCollectionsData = useCallback(async () => {
-		try {
-			if (user?.uid) {
-				const userCollectionsCollectionRef = collection(
-					db,
-					"users",
-					user?.uid,
-					"collections"
-				)
-				const querySnapshot = await getDocs(userCollectionsCollectionRef)
-
-				const collectionData = querySnapshot.docs.map((doc) => ({
-					collectionId: doc.id,
-					collectionTitle: doc.data().title as string,
-					collectionDescription: doc.data().description as string,
-					collectionVisibility: doc.data().visibility as boolean
-				}))
-				setCollections(collectionData)
-			} else {
-				console.log("User UID is not available.")
-			}
-		} catch (error) {
-			console.error("Error fetching collections:", error)
-			// Handle error
-		}
-	}, [user])
-
-	useEffect(() => {
-		fetchCollectionsData()
-	}, [fetchCollectionsData])
+	if (isLoading || isFetching) return <Spinner />
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 py-20">
@@ -63,7 +32,7 @@ export default function Collections() {
 				{user && (
 					<NewCollectionForm
 						user={user}
-						fetchCollectionsData={fetchCollectionsData}
+						// fetchCollectionsData={fetchCollectionsData}
 					/>
 				)}
 				{!user ? (
@@ -80,18 +49,16 @@ export default function Collections() {
 					</div>
 				) : (
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-						{collections.map(
-							({
-								collectionTitle,
-								collectionDescription,
-								collectionVisibility,
-								collectionId
-							}) => (
+						{collectionsData?.map(
+							({ id, title, description, isPublic, games }) => (
 								<CollectionCard
-									key={collectionId}
-									title={collectionTitle}
-									description={collectionDescription}
-									visibility={collectionVisibility}
+									key={id}
+									id={id}
+									title={title}
+									description={description}
+									isPublic={isPublic}
+									games={games}
+									// fetchCollectionsData={fetchCollectionsData}
 									user={user}
 								/>
 							)

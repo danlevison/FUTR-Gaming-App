@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetAllGamesQuery } from "@/redux/features/apiSlice"
+import { useGetAllGamesQuery } from "@/redux/features/gamesApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import GamesList from "@/components/GamesList"
 import GameCategoryMenu from "./components/GameCategoryMenu"

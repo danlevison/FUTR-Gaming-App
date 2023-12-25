@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { RootState } from "@/redux/store"
+import { currentUser } from "@/redux/features/authSlice"
 import { motion } from "framer-motion"
 import Logo from "../Logo"
 import UserLinks from "../UserLinks"
@@ -12,7 +12,7 @@ import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 
 export default function Sidebar() {
-	const user = useSelector((state: RootState) => state.data.user.user)
+	const user = useSelector(currentUser)
 	const [sidebar, setSidebar] = useState(false)
 	const sidebarAnimation = {
 		open: {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetAllTagsQuery } from "@/redux/features/apiSlice"
+import { useGetAllTagsQuery } from "@/redux/features/gamesApiSlice"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 

@@ -2,11 +2,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth, db } from "@/config/firebase"
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore"
 import { useDispatch } from "react-redux"
-import {
-	googleLogin,
-	googleLogout,
-	setLoading
-} from "@/redux/features/userSlice"
+import { googleLogin, googleLogout } from "@/redux/features/authSlice"
 import { AppDispatch } from "@/redux/store"
 
 export default function useAuth() {

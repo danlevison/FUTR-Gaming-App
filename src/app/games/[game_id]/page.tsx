@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetGameQuery } from "@/redux/features/apiSlice"
+import { useGetGameQuery } from "@/redux/features/gamesApiSlice"
 import { useParams } from "next/navigation"
 import GameBanner from "@/components/GameBanner"
 import Screenshots from "./components/Screenshots"
