@@ -58,8 +58,15 @@ export default function GameCard({ game }: { game: GameT }) {
 							<p className="details-item-value">{game?.released} </p>
 						</div>
 						<ul className="flex items-center gap-2">
-							{game.genres?.slice(0, 3).map((genre) => (
-								<li key={genre.name}>{genre.name}</li>
+							{game.genres?.slice(0, 3).map((genre, idx, array) => (
+								<li key={genre.name}>
+									<Link
+										href={`/genres/${genre.slug}`}
+										className="underline hover:text-primaryText duration-300"
+									>
+										{genre.name + (idx < array.length - 1 ? "," : "")}
+									</Link>
+								</li>
 							))}
 						</ul>
 					</div>
@@ -85,7 +92,7 @@ export default function GameCard({ game }: { game: GameT }) {
 					</div>
 				)}
 				{showCollections && (
-					<div className="p-2">
+					<div className="p-4">
 						<Link
 							href={"/collections"}
 							className="underline"
