@@ -4,7 +4,7 @@ import { currentUser, isLoading } from "@/redux/features/authSlice"
 import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
-import NewCollectionForm from "./components/NewCollectionForm"
+import AddNewCollection from "./components/AddNewCollection"
 import CollectionCard from "./components/CollectionCard"
 import Spinner from "@/components/loading/Spinner"
 import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
@@ -20,8 +20,6 @@ export default function Collections() {
 	} = useFetchCollectionsQuery({ userId: user?.uid })
 	const { handleLogin } = useAuth()
 
-	if (isLoading || isFetching) return <Spinner />
-
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 py-20">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
@@ -29,12 +27,7 @@ export default function Collections() {
 			</h1>
 			<div className="mt-20">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Collections</h2>
-				{user && (
-					<NewCollectionForm
-						user={user}
-						// fetchCollectionsData={fetchCollectionsData}
-					/>
-				)}
+				{user && <AddNewCollection user={user} />}
 				{!user ? (
 					<div className="flex flex-col justify-center items-center bg-foreground w-full h-32 rounded-md">
 						<p className="font-bold text-lg">Sign in to create collections</p>
@@ -48,20 +41,29 @@ export default function Collections() {
 						</div>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-						{collectionsData?.map(
-							({ id, title, description, isPublic, games }) => (
-								<CollectionCard
-									key={id}
-									id={id}
-									title={title}
-									description={description}
-									isPublic={isPublic}
-									games={games}
-									// fetchCollectionsData={fetchCollectionsData}
-									user={user}
-								/>
-							)
+					<div>
+						{isLoading || isFetching ? (
+							<div className="flex justify-center items-center">
+								<Spinner />
+							</div>
+						) : (
+							<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+								{collectionsData?.map(
+									({ id, title, description, isPublic, games }) => (
+										<CollectionCard
+											key={id}
+											id={id}
+											title={title}
+											description={description}
+											isPublic={isPublic}
+											games={games}
+											user={user}
+										/>
+									)
+								)}
+								{/* TODO: Check styling */}
+								{isError && <p>Unable to load collections.</p>}
+							</div>
 						)}
 					</div>
 				)}
