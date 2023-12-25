@@ -11,7 +11,7 @@ export default function UserLinks({
 	handleNav?: () => void
 }) {
 	return (
-		<ul className="flex flex-col gap-5 md:gap-7 md:mt-16 text-primaryText">
+		<ul className="flex flex-col gap-5 md:gap-7 mt-5 md:mt-8 text-primaryText">
 			{userRoutes.map(({ name, path, icon }) => (
 				<li
 					key={name}

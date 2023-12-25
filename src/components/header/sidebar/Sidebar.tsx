@@ -43,8 +43,8 @@ export default function Sidebar() {
 			}`}
 		>
 			<Logo sidebarStatus={sidebar} />
-			<NavLinks sidebarStatus={sidebar} />
 			<UserLinks sidebarStatus={sidebar} />
+			<NavLinks sidebarStatus={sidebar} />
 			<CollapseSidebarBtn
 				sidebarStatus={sidebar}
 				setSidebar={setSidebar}

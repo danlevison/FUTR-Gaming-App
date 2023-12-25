@@ -11,6 +11,7 @@ import {
 	CarouselPrevious
 } from "@/components/ui/carousel"
 import SkeletonGameScreenshots from "./skeletons/SkeletonGameScreenshots"
+import Heading from "./Heading"
 
 export default function GallerySlider() {
 	const {
@@ -25,12 +26,13 @@ export default function GallerySlider() {
 	})
 	return (
 		<section className="w-full px-5 pb-14">
+			<Heading heading={{ firstText: "New & Upcoming", secondText: "Games" }} />
 			<Carousel
 				opts={{
 					align: "start",
 					loop: true
 				}}
-				className="w-full"
+				className="w-full mt-5"
 			>
 				{(isLoading || isFetching) && <SkeletonGameScreenshots />}
 				{gamesData && gamesData.results.length > 0 && (

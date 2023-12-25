@@ -53,17 +53,14 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 				</div>
 
 				<div>
-					<h3 className="border-b border-gray-300 text-lg pb-2 whitespace-nowrap">
-						Main navigation
-					</h3>
-					<NavLinks
+					<UserLinks
 						nav={nav}
 						handleNav={handleNav}
 					/>
-					<h3 className="border-b border-gray-300 text-lg pb-2 whitespace-nowrap my-6">
-						Connect
+					<h3 className="border-b border-gray-300 text-lg pb-2 whitespace-nowrap mt-5">
+						Main navigation
 					</h3>
-					<UserLinks
+					<NavLinks
 						nav={nav}
 						handleNav={handleNav}
 					/>
