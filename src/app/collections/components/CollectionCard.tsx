@@ -65,7 +65,7 @@ export default function CollectionCard({
 					className="absolute opacity-[0.20] w-full h-full rounded-lg z-0"
 				/>
 			))}
-			<div className="relative z-50">
+			<div className="relative z-10">
 				<CardHeader>
 					<div className="flex justify-between items-center">
 						<CardTitle className="text-3xl">
