@@ -46,23 +46,24 @@ export default function Collections() {
 								<Spinner />
 							</div>
 						) : (
-							<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+							<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
 								{collectionsData?.map(
 									({ id, title, description, isPublic, games }) => (
-										<CollectionCard
-											key={id}
-											id={id}
-											title={title}
-											description={description}
-											isPublic={isPublic}
-											games={games}
-											user={user}
-										/>
+										<li key={id}>
+											<CollectionCard
+												id={id}
+												title={title}
+												description={description}
+												isPublic={isPublic}
+												games={games}
+												user={user}
+											/>
+										</li>
 									)
 								)}
 								{/* TODO: Check styling */}
 								{isError && <p>Unable to load collections.</p>}
-							</div>
+							</ul>
 						)}
 					</div>
 				)}

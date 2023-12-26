@@ -4,8 +4,8 @@ import placeholder from "@/../public/assets/placeholder.png"
 //types
 import { GameT } from "@/types"
 
-export default function Banner({ gameData }: { gameData: GameT }) {
-	const releaseDate = new Date(gameData.released).toDateString()
+export default function GameBanner({ gameData }: { gameData: GameT }) {
+	const releaseDate = new Date(gameData?.released as string).toDateString()
 	const platforms = gameData.parent_platforms?.map(({ platform }) => (
 		<span key={platform.id}>{platformIcons[platform.name]}</span>
 	))

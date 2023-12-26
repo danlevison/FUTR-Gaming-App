@@ -7,6 +7,8 @@ import {
 	collection,
 	serverTimestamp,
 	deleteDoc,
+	updateDoc,
+	arrayUnion,
 	getDocs
 } from "firebase/firestore"
 //types
@@ -101,6 +103,26 @@ export const collectionsApi = createApi({
 				}
 			},
 			invalidatesTags: ["Collection"]
+		}),
+		addGamesToCollection: builder.mutation({
+			async queryFn({ data, userId, collectionId }) {
+				try {
+					const collectionDocRef = doc(
+						db,
+						"users",
+						userId,
+						"collections",
+						collectionId
+					)
+					await updateDoc(collectionDocRef, {
+						games: arrayUnion(data)
+					})
+					return { data: "ok" }
+				} catch (error) {
+					return { error: "Failed to add game to collection" }
+				}
+			},
+			invalidatesTags: ["Collection"]
 		})
 	})
 })
@@ -108,7 +130,8 @@ export const collectionsApi = createApi({
 export const {
 	useFetchCollectionsQuery,
 	useAddCollectionMutation,
-	useDeleteCollectionMutation
+	useDeleteCollectionMutation,
+	useAddGamesToCollectionMutation
 } = collectionsApi
 
 export default collectionsApi.reducer

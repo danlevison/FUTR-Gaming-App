@@ -20,7 +20,7 @@ export type GameT = {
 	id?: string
 	slug: string
 	name: string
-	released: string
+	released?: string
 	background_image: string
 	description?: string
 	developers?: DeveloperT[]
@@ -98,3 +98,9 @@ export type ScreenshotT = {
 	is_deleted: boolean
 	width: number
 }
+
+export type UserT = {
+	uid: string
+	displayName: string
+	email: string
+} | null

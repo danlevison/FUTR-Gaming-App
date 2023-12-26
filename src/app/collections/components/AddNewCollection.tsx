@@ -46,10 +46,10 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 		description: "",
 		isPublic: false
 	})
+	const [addCollection] = useAddCollectionMutation()
 	const [message, setMessage] = useState("")
 	const collectionId = crypto.randomUUID()
 	const { toast } = useToast()
-	const [addCollection] = useAddCollectionMutation()
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -112,7 +112,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 					htmlFor="title"
 					className="text-xl"
 				>
-					Title*
+					Title
 				</Label>
 				<Input
 					onChange={handleChange}
@@ -121,7 +121,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 					name="title"
 					id="title"
 					placeholder="Write a collection title e.g. Horror Games"
-					className="h-16 text-lg mt-1"
+					className="text-base md:text-lg h-16 mt-1"
 				/>
 				{message && <span className="text-red-500">{message}</span>}
 			</div>
@@ -140,7 +140,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 					id="description"
 					placeholder="Write a description"
 					maxLength={500}
-					className="text-lg mt-1 resize-none h-32"
+					className="text-base md:text-lg mt-1 resize-none h-32"
 				/>
 			</div>
 			<div className="flex items-center gap-2">
@@ -191,7 +191,7 @@ export default function AddNewCollection({ user }: NewCollectionFormProps) {
 				onOpenChange={setOpen}
 			>
 				<DialogTrigger className="underline mb-2">
-					Start a new collection
+					Start a new collection +
 				</DialogTrigger>
 				<DialogContent className="flex flex-col justify-center items-center w-full max-w-[1000px]">
 					<DialogHeader>
@@ -217,7 +217,7 @@ export default function AddNewCollection({ user }: NewCollectionFormProps) {
 				onClick={() => setOpen(true)}
 				className="underline mb-2"
 			>
-				Start a new collection
+				Start a new collection +
 			</DrawerTrigger>
 			<DrawerContent className="flex flex-col justify-center items-center">
 				<DrawerHeader>

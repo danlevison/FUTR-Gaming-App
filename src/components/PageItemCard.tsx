@@ -18,8 +18,7 @@ export default function PageItemCard<T extends PageItemT>({
 			<Image
 				src={item.image_background || placeholder}
 				alt={item.name}
-				width={100}
-				height={100}
+				fill
 				style={{ objectFit: "cover" }}
 				className="absolute w-full h-full rounded-lg"
 			/>
