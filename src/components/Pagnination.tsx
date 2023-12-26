@@ -1,4 +1,3 @@
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"
 import {
 	MdOutlineKeyboardArrowRight,
 	MdOutlineKeyboardArrowLeft
@@ -38,7 +37,7 @@ export default function PaginationComponent({
 
 	return (
 		<Pagination className="mt-10">
-			<PaginationContent className="flex gap-2">
+			<PaginationContent className="flex sm:gap-2">
 				<PaginationItem>
 					<Button
 						onClick={pagePrevHandler}
@@ -52,6 +51,7 @@ export default function PaginationComponent({
 					<Button
 						onClick={() => pageNumberHandler(1)}
 						variant={"outline"}
+						className="hidden sm:block"
 					>
 						1
 					</Button>
@@ -60,6 +60,7 @@ export default function PaginationComponent({
 					<Button
 						onClick={() => pageNumberHandler(2)}
 						variant={"outline"}
+						className="hidden sm:block"
 					>
 						2
 					</Button>
@@ -68,12 +69,13 @@ export default function PaginationComponent({
 					<Button
 						onClick={() => pageNumberHandler(3)}
 						variant={"outline"}
+						className="hidden sm:block"
 					>
 						3
 					</Button>
 				</PaginationItem>
 				<PaginationItem>
-					<PaginationEllipsis />
+					<PaginationEllipsis className="hidden sm:flex" />
 				</PaginationItem>
 				<PaginationItem>
 					<Button
