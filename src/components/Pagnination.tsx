@@ -1,4 +1,15 @@
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"
+import {
+	MdOutlineKeyboardArrowRight,
+	MdOutlineKeyboardArrowLeft
+} from "react-icons/md"
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem
+} from "@/components/ui/pagination"
+import { Button } from "./ui/button"
 
 type PaginationT = {
 	pageHandler: (pageValue: number) => void
@@ -7,7 +18,7 @@ type PaginationT = {
 	currentPage: number
 }
 
-export default function Pagination({
+export default function PaginationComponent({
 	pageHandler,
 	nextPage,
 	prevPage,
@@ -20,24 +31,60 @@ export default function Pagination({
 	const pagePrevHandler = () => {
 		if (prevPage !== null) pageHandler(--currentPage)
 	}
+
+	const pageNumberHandler = (pageNumber: number) => {
+		pageHandler(pageNumber)
+	}
+
 	return (
-		<div className="flex items-center gap-4 mt-10">
-			<button
-				type="button"
-				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-accentSecondary duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
-				disabled={prevPage === null ? true : false}
-				onClick={pagePrevHandler}
-			>
-				<AiOutlineArrowLeft /> Prev
-			</button>
-			<button
-				type="button"
-				className="flex items-center gap-2 text-lg sm:text-xl uppercase font-bold hover:text-accentSecondary duration-300 disabled:text-gray-400 disabled:hover:scale-100 disabled:duration-0"
-				disabled={nextPage === null ? true : false}
-				onClick={pageNextHandler}
-			>
-				Next <AiOutlineArrowRight />
-			</button>
-		</div>
+		<Pagination className="mt-10">
+			<PaginationContent className="flex gap-2">
+				<PaginationItem>
+					<Button
+						onClick={pagePrevHandler}
+						variant={"outline"}
+						disabled={prevPage === null ? true : false}
+					>
+						<MdOutlineKeyboardArrowLeft size={25} /> Previous
+					</Button>
+				</PaginationItem>
+				<PaginationItem>
+					<Button
+						onClick={() => pageNumberHandler(1)}
+						variant={"outline"}
+					>
+						1
+					</Button>
+				</PaginationItem>
+				<PaginationItem>
+					<Button
+						onClick={() => pageNumberHandler(2)}
+						variant={"outline"}
+					>
+						2
+					</Button>
+				</PaginationItem>
+				<PaginationItem>
+					<Button
+						onClick={() => pageNumberHandler(3)}
+						variant={"outline"}
+					>
+						3
+					</Button>
+				</PaginationItem>
+				<PaginationItem>
+					<PaginationEllipsis />
+				</PaginationItem>
+				<PaginationItem>
+					<Button
+						onClick={pageNextHandler}
+						variant={"outline"}
+						disabled={nextPage === null ? true : false}
+					>
+						Next <MdOutlineKeyboardArrowRight size={25} />
+					</Button>
+				</PaginationItem>
+			</PaginationContent>
+		</Pagination>
 	)
 }

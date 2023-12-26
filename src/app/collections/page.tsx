@@ -11,7 +11,6 @@ import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 
 export default function Collections() {
 	const user = useSelector(currentUser)
-
 	const {
 		data: collectionsData,
 		isLoading,

@@ -1,4 +1,0 @@
-.swiper-button-prev,
-.swiper-button-next {
-	@apply hidden md:block !important;
-}
