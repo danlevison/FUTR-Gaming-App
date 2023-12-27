@@ -6,8 +6,9 @@ import { useFetchCollectionQuery } from "@/redux/features/collectionsApiSlice"
 import { useSelector } from "react-redux"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
+import PrivateRoute from "@/components/PrivateRoute"
 
-export default function Collection() {
+function Collection() {
 	const { collection_id } = useParams()
 	const user = useSelector(currentUser)
 	const {
@@ -49,3 +50,5 @@ export default function Collection() {
 		</main>
 	)
 }
+
+export default PrivateRoute(Collection)
