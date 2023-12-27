@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[FUTR Gaming](https://futr-gaming-app.vercel.app/) is a web application that uses the RAWG API to allow you to explore an extensive library of games, stay informed about upcoming releases, and effortlessly curate personalised collections.
 
-## Getting Started
+## Features
 
-First, run the development server:
+- User Authentication: Users can login effortlessly through their Gmail account.
+- Comprehensive Game Exploration: Explore games via titles, genres, tags, stores, and publishers.
+- Intuitive Game Filters: Effortlessly navigate the extensive game library using the user-friendly sort-by filters.
+- Streamlined Pagination: Access all games through a simple and effective pagination system.
+- Personalised Collections: Craft and curate your own unique collections of games.
+- Futuristic User Interface: FUTR Gaming provides a sleek interface, designed for seamless navigation across both desktop and mobile screens.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+As a web-based application, there is no installation required to use FUTR Gaming. Simply visit the website [here](https://futr-gaming-app.vercel.app/) using a web browser to access the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The following technologies were used to build Student Space:
 
-## Learn More
+- React
+- Next.js
+- RTK
+- RTK Query
+- Tailwind CSS
+- Shadcn
+- Firebase
 
-To learn more about Next.js, take a look at the following resources:
+## What I learned from this project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+TBC...
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Useful Resources
 
-## Deploy on Vercel
+- rawg.io - RAWG API is a powerful tool for working with video games data which was used in this project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT License
+
+## Contact
+
+- Author: Daniel Levison
+- Email: dan.ejlevison@gmail.com
+- GitHub: https://github.com/danlevison
