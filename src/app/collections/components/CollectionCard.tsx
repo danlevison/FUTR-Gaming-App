@@ -9,10 +9,8 @@ import {
 	CardTitle
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FaRegTrashAlt } from "react-icons/fa"
 import { MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md"
-import { useToast } from "@/components/ui/use-toast"
-import { useDeleteCollectionMutation } from "@/redux/features/collectionsApiSlice"
+import DeleteCollectionModal from "./DeleteCollectionModal"
 //types
 import { GameT } from "@/types"
 
@@ -37,21 +35,6 @@ export default function CollectionCard({
 	games,
 	user
 }: CollectionCardProps) {
-	const [deleteCollection] = useDeleteCollectionMutation()
-	const { toast } = useToast()
-
-	const handleDeleteCollection = async (collectionId: string) => {
-		try {
-			await deleteCollection({ userId: user.uid, collectionId: collectionId })
-			toast({
-				variant: "default",
-				description: "Your collection has been successfully deleted."
-			})
-		} catch (error) {
-			console.error(error)
-		}
-	}
-
 	return (
 		<Card className="relative bg-zinc-900/50 text-primaryText h-[420px]">
 			{games.slice(0, 1).map((game) => (
@@ -82,13 +65,10 @@ export default function CollectionCard({
 							>
 								<MdEdit size={20} />
 							</Button>
-							<Button
-								onClick={() => handleDeleteCollection(id)}
-								variant={"ghost"}
-								aria-label="Delete collection"
-							>
-								<FaRegTrashAlt size={20} />
-							</Button>
+							<DeleteCollectionModal
+								id={id}
+								user={user}
+							/>
 						</div>
 					</div>
 
