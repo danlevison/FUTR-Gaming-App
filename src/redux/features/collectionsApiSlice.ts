@@ -9,7 +9,8 @@ import {
 	deleteDoc,
 	updateDoc,
 	arrayUnion,
-	getDocs
+	getDocs,
+	arrayRemove
 } from "firebase/firestore"
 //types
 import { GameT } from "@/types"
@@ -51,6 +52,24 @@ export const collectionsApi = createApi({
 					return { data: collections }
 				} catch (error) {
 					return { error: "Failed to fetch collections" }
+				}
+			},
+			providesTags: ["Collection"]
+		}),
+		fetchCollection: builder.query({
+			async queryFn({ userId, collectionId }) {
+				try {
+					const userCollectionRef = doc(
+						db,
+						"users",
+						userId,
+						"collections",
+						collectionId
+					)
+					const collectionDocSnapshot = await getDoc(userCollectionRef)
+					return { data: collectionDocSnapshot.data() }
+				} catch (error) {
+					return { error: "Failed to fetch collection" }
 				}
 			},
 			providesTags: ["Collection"]
@@ -104,7 +123,7 @@ export const collectionsApi = createApi({
 			},
 			invalidatesTags: ["Collection"]
 		}),
-		addGamesToCollection: builder.mutation({
+		addGameToCollection: builder.mutation({
 			async queryFn({ data, userId, collectionId }) {
 				try {
 					const collectionDocRef = doc(
@@ -123,15 +142,37 @@ export const collectionsApi = createApi({
 				}
 			},
 			invalidatesTags: ["Collection"]
+		}),
+		removeGameFromCollection: builder.mutation({
+			async queryFn({ data, userId, collectionId }) {
+				try {
+					const collectionDocRef = doc(
+						db,
+						"users",
+						userId,
+						"collections",
+						collectionId
+					)
+					await updateDoc(collectionDocRef, {
+						games: arrayRemove(data)
+					})
+					return { data: "ok" }
+				} catch (error) {
+					return { error: "Failed to remove game from collection" }
+				}
+			},
+			invalidatesTags: ["Collection"]
 		})
 	})
 })
 
 export const {
 	useFetchCollectionsQuery,
+	useFetchCollectionQuery,
 	useAddCollectionMutation,
 	useDeleteCollectionMutation,
-	useAddGamesToCollectionMutation
+	useAddGameToCollectionMutation,
+	useRemoveGameFromCollectionMutation
 } = collectionsApi
 
 export default collectionsApi.reducer

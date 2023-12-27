@@ -1,25 +1,56 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useParams, usePathname } from "next/navigation"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
 import { BiChevronDown } from "react-icons/bi"
-import { FaFolderPlus } from "react-icons/fa"
+import { FaFolderPlus, FaRegTrashAlt } from "react-icons/fa"
 import { platformIcons } from "@/utils/platformIcons"
 import {
-	useAddGamesToCollectionMutation,
-	useFetchCollectionsQuery
+	useAddGameToCollectionMutation,
+	useFetchCollectionsQuery,
+	useRemoveGameFromCollectionMutation
 } from "@/redux/features/collectionsApiSlice"
 import { useToast } from "./ui/use-toast"
+import { Button } from "./ui/button"
 //types
 import { GameT, UserT } from "@/types"
 
 export default function GameCard({ game }: { game: GameT }) {
 	const user = useSelector(currentUser)
 	const [showCollections, setShowCollections] = useState(false)
+	const pathname = usePathname()
+	const { collection_id } = useParams()
+	const { toast } = useToast()
+	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
+
+	const handleRemoveGameFromCollection = async (
+		gameData: GameT,
+		userId: string,
+		collectionId: string
+	) => {
+		try {
+			await removeGameFromCollection({
+				data: gameData,
+				userId: userId,
+				collectionId: collectionId
+			})
+			toast({
+				variant: "default",
+				description: "Game successfully removed from your collection."
+			})
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description: "Error: unable to remove game from your collection."
+			})
+		}
+	}
 
 	return (
 		<Card className="flex flex-col justify-between bg-[#15142e] text-primaryText">
@@ -41,14 +72,30 @@ export default function GameCard({ game }: { game: GameT }) {
 				</div>
 			</div>
 
-			<CardContent className="flex flex-col p-4">
+			<CardContent className="relative flex flex-col p-4">
 				<div className="flex items-center gap-1">
 					{game.parent_platforms?.map(({ platform }) => (
 						<span key={platform.id}>{platformIcons[platform.name]}</span>
 					))}
 				</div>
+				{pathname.includes("collections") && (
+					<Button
+						onClick={() =>
+							handleRemoveGameFromCollection(
+								{ ...game },
+								user?.uid!,
+								collection_id as string
+							)
+						}
+						variant={"ghost"}
+						className="absolute top-1 right-1"
+						aria-label="Delete collection"
+					>
+						<FaRegTrashAlt size={17} />
+					</Button>
+				)}
 
-				<h4 className="uppercase text-lg font-bold tracking-wide hover:underline mt-2">
+				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-2">
 					<Link
 						href={`/games/${game?.id}`}
 						className=""
@@ -77,21 +124,23 @@ export default function GameCard({ game }: { game: GameT }) {
 					</div>
 				</div>
 			</CardContent>
-			<CardFooter className="flex flex-col p-0 m-0">
-				<button
-					onClick={() => setShowCollections(!showCollections)}
-					className={`flex justify-center items-center w-full bg-accentPrimary rounded-b-lg ${
-						showCollections && "rounded-b-none"
-					} p-2 font-bold`}
-				>
-					Collections <BiChevronDown size={25} />
-				</button>
-				<CollectionDropdown
-					showCollections={showCollections}
-					user={user}
-					game={game}
-				/>
-			</CardFooter>
+			{pathname.includes("collections") ? null : (
+				<CardFooter className="flex flex-col p-0 m-0">
+					<button
+						onClick={() => setShowCollections(!showCollections)}
+						className={`flex justify-center items-center w-full bg-accentPrimary rounded-b-lg ${
+							showCollections && "rounded-b-none"
+						} p-2 font-bold`}
+					>
+						Collections <BiChevronDown size={25} />
+					</button>
+					<CollectionDropdown
+						showCollections={showCollections}
+						user={user}
+						game={game}
+					/>
+				</CardFooter>
+			)}
 		</Card>
 	)
 }
@@ -111,7 +160,7 @@ function CollectionDropdown({
 		isFetching,
 		isError
 	} = useFetchCollectionsQuery({ userId: user?.uid })
-	const [addGamesToCollection] = useAddGamesToCollectionMutation()
+	const [addGameToCollection] = useAddGameToCollectionMutation()
 	const { toast } = useToast()
 
 	const handleAddGameToCollection = async (
@@ -120,12 +169,8 @@ function CollectionDropdown({
 		collectionId: string
 	) => {
 		try {
-			await addGamesToCollection({
-				data: {
-					id: gameData.id,
-					name: gameData.name,
-					background_image: gameData.background_image
-				},
+			await addGameToCollection({
+				data: gameData,
 				userId: userId,
 				collectionId: collectionId
 			})
@@ -150,16 +195,7 @@ function CollectionDropdown({
 						<button
 							key={collection.id}
 							onClick={() =>
-								handleAddGameToCollection(
-									{
-										id: game.id as string,
-										name: game.name,
-										background_image: game.background_image,
-										slug: game.slug
-									},
-									user.uid,
-									collection.id
-								)
+								handleAddGameToCollection({ ...game }, user.uid, collection.id)
 							}
 							className="flex items-center gap-2 bg-gray-500 text-start text-lg font-bold w-full p-3 mt-4 rounded-md hover:opacity-70 duration-300"
 						>

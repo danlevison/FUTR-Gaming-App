@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FaRegTrashAlt } from "react-icons/fa"
-import { MdVisibility } from "react-icons/md"
-import { MdVisibilityOff } from "react-icons/md"
+import { MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md"
 import { useToast } from "@/components/ui/use-toast"
 import { useDeleteCollectionMutation } from "@/redux/features/collectionsApiSlice"
 //types
@@ -76,13 +75,21 @@ export default function CollectionCard({
 								{title}
 							</Link>
 						</CardTitle>
-						<Button
-							onClick={() => handleDeleteCollection(id)}
-							variant={"ghost"}
-							aria-label="Delete collection"
-						>
-							<FaRegTrashAlt size={20} />
-						</Button>
+						<div>
+							<Button
+								variant={"ghost"}
+								aria-label="Edit collection"
+							>
+								<MdEdit size={20} />
+							</Button>
+							<Button
+								onClick={() => handleDeleteCollection(id)}
+								variant={"ghost"}
+								aria-label="Delete collection"
+							>
+								<FaRegTrashAlt size={20} />
+							</Button>
+						</div>
 					</div>
 
 					<CardDescription className="text-primaryText">
@@ -92,11 +99,11 @@ export default function CollectionCard({
 						{description}
 					</CardDescription>
 					{isPublic ? (
-						<p className="flex items-center gap-2 font-bold ">
+						<p className="flex items-center gap-2 font-bold">
 							Private Collection <MdVisibilityOff />
 						</p>
 					) : (
-						<p className="flex items-center gap-2 font-bold ">
+						<p className="flex items-center gap-2 font-bold">
 							Public Collection <MdVisibility />
 						</p>
 					)}

@@ -104,3 +104,11 @@ export type UserT = {
 	displayName: string
 	email: string
 } | null
+
+export type UserCollectionT = {
+	id: string
+	title: string
+	description: string
+	isPublic: boolean
+	games: GameT[] | null
+}
