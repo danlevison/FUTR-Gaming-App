@@ -13,6 +13,7 @@ import { MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md"
 import DeleteCollectionModal from "./DeleteCollectionModal"
 //types
 import { GameT } from "@/types"
+import EditCollection from "./EditCollection"
 
 type CollectionCardProps = {
 	id: string
@@ -49,7 +50,7 @@ export default function CollectionCard({
 			))}
 			<div className="relative z-10">
 				<CardHeader>
-					<div className="flex justify-between items-center">
+					<div className="flex justify-between items-center gap-4">
 						<CardTitle className="text-3xl">
 							<Link
 								href={`/collections/${id}`}
@@ -58,13 +59,14 @@ export default function CollectionCard({
 								{title}
 							</Link>
 						</CardTitle>
-						<div>
-							<Button
-								variant={"ghost"}
-								aria-label="Edit collection"
-							>
-								<MdEdit size={20} />
-							</Button>
+						<div className="flex items-center gap-4">
+							<EditCollection
+								user={user}
+								id={id}
+								title={title}
+								description={description}
+								isPublic={isPublic}
+							/>
 							<DeleteCollectionModal
 								id={id}
 								user={user}

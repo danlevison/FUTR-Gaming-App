@@ -1,12 +1,4 @@
 import { useState } from "react"
-import { MdClose } from "react-icons/md"
-import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger
-} from "@/components/ui/drawer"
 import {
 	Dialog,
 	DialogContent,
@@ -14,40 +6,45 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "@/components/ui/dialog"
-import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { useAddCollectionMutation } from "@/redux/features/collectionsApiSlice"
-
-type NewCollectionFormProps = {
-	user: {
-		uid: string
-		displayName: string
-		email: string
-	}
-}
+import { MdEdit } from "react-icons/md"
+//types
+import { UserT } from "@/types"
+import { useEditCollectionMutation } from "@/redux/features/collectionsApiSlice"
 
 type FormProps = {
-	user: {
-		uid: string
-		displayName: string
-		email: string
-	}
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function AddNewCollectionForm({ user, setOpen }: FormProps) {
+type EditCollectionProps = {
+	user: UserT
+	id: string
+	title: string
+	description: string
+	isPublic: boolean
+}
+
+type CombinedProps = FormProps & EditCollectionProps
+
+function EditCollectionForm({
+	user,
+	setOpen,
+	id: collectionId,
+	title: collectionTitle,
+	description: collectionDescription,
+	isPublic: collectionIsPublic
+}: CombinedProps) {
 	const [formData, setFormData] = useState({
-		title: "",
-		description: "",
-		isPublic: false
+		title: collectionTitle,
+		description: collectionDescription,
+		isPublic: collectionIsPublic
 	})
-	const [addCollection] = useAddCollectionMutation()
 	const [message, setMessage] = useState("")
-	const collectionId = crypto.randomUUID()
+	const [editCollection] = useEditCollectionMutation()
 	const { toast } = useToast()
 
 	const handleChange = (
@@ -60,18 +57,12 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 					[e.target.name]: (e.target as HTMLInputElement).checked
 				}
 			}
-
 			return { ...prevFormData, [e.target.name]: e.target.value }
 		})
 	}
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-
-		if (!user) {
-			console.error("User not authenticated.")
-			return
-		}
 
 		if (formData.title.trim() === "") {
 			setMessage("You must enter a title")
@@ -80,23 +71,21 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 
 		try {
 			setMessage("")
-			await addCollection({
+			await editCollection({
 				data: formData,
-				userId: user.uid,
+				userId: user?.uid,
 				collectionId: collectionId
 			})
-
-			setFormData({ title: "", description: "", isPublic: false })
 			setOpen(false)
 			toast({
 				variant: "default",
-				description: "Your collection has been successfully created."
+				description: "Your collection has been successfully edited."
 			})
 		} catch (error) {
-			console.error("Error creating collection", error)
+			console.error("Error editing collection", error)
 			toast({
 				variant: "destructive",
-				description: "Unable to create your collection, please try again."
+				description: "Unable to edit your collection, please try again."
 			})
 		}
 	}
@@ -115,7 +104,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 				</Label>
 				<Input
 					onChange={handleChange}
-					value={formData.title}
+					defaultValue={formData.title}
 					type="text"
 					name="title"
 					id="title"
@@ -134,7 +123,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 				</Label>
 				<Textarea
 					onChange={handleChange}
-					value={formData.description}
+					defaultValue={formData.description}
 					name="description"
 					id="description"
 					placeholder="Write a description"
@@ -145,7 +134,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 			<div className="flex items-center gap-2">
 				<input
 					onChange={handleChange}
-					checked={formData.isPublic}
+					defaultChecked={formData.isPublic}
 					type="checkbox"
 					name="isPublic"
 					id="isPublic"
@@ -179,64 +168,40 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 	)
 }
 
-export default function AddNewCollection({ user }: NewCollectionFormProps) {
+export default function EditCollection({
+	user,
+	id,
+	title,
+	description,
+	isPublic
+}: EditCollectionProps) {
 	const [open, setOpen] = useState(false)
-	const isDesktop = useMediaQuery("(min-width: 768px)")
-
-	if (isDesktop) {
-		return (
-			<Dialog
-				open={open}
-				onOpenChange={setOpen}
-			>
-				<DialogTrigger className="underline mb-2">
-					Start a new collection +
-				</DialogTrigger>
-				<DialogContent className="flex flex-col justify-center items-center w-full max-w-[1000px]">
-					<DialogHeader>
-						<DialogTitle className="text-3xl sm:text-4xl md:text-5xl">
-							Start a new collection
-						</DialogTitle>
-					</DialogHeader>
-					<AddNewCollectionForm
-						user={user}
-						setOpen={setOpen}
-					/>
-				</DialogContent>
-			</Dialog>
-		)
-	}
-
 	return (
-		<Drawer
+		<Dialog
 			open={open}
 			onOpenChange={setOpen}
 		>
-			<DrawerTrigger
-				onClick={() => setOpen(true)}
-				className="underline mb-2"
+			<DialogTrigger
+				aria-label="Edit collection"
+				className="underline"
 			>
-				Start a new collection +
-			</DrawerTrigger>
-			<DrawerContent className="flex flex-col justify-center items-center">
-				<DrawerHeader>
-					<DrawerTitle className="text-3xl sm:text-4xl md:text-5xl">
-						Start a new collection
-					</DrawerTitle>
-					<Button
-						onClick={() => setOpen(false)}
-						variant={"ghost"}
-						aria-label="Close drawer"
-						className="absolute top-0 right-0"
-					>
-						<MdClose size={25} />
-					</Button>
-				</DrawerHeader>
-				<AddNewCollectionForm
+				<MdEdit size={20} />
+			</DialogTrigger>
+			<DialogContent className="flex flex-col justify-center items-center w-full max-w-[1000px]">
+				<DialogHeader>
+					<DialogTitle className="text-3xl sm:text-4xl md:text-5xl">
+						Edit {title} collection
+					</DialogTitle>
+				</DialogHeader>
+				<EditCollectionForm
 					user={user}
 					setOpen={setOpen}
+					id={id}
+					title={title}
+					description={description}
+					isPublic={isPublic}
 				/>
-			</DrawerContent>
-		</Drawer>
+			</DialogContent>
+		</Dialog>
 	)
 }

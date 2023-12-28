@@ -5,18 +5,10 @@ import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import AddNewCollection from "./components/AddNewCollection"
-import CollectionCard from "./components/CollectionCard"
-import Spinner from "@/components/loading/Spinner"
-import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
+import CollectionGrid from "./components/CollectionGrid"
 
 export default function Collections() {
 	const user = useSelector(currentUser)
-	const {
-		data: collectionsData,
-		isLoading,
-		isFetching,
-		isError
-	} = useFetchCollectionsQuery({ userId: user?.uid })
 	const { handleLogin } = useAuth()
 
 	return (
@@ -40,32 +32,7 @@ export default function Collections() {
 						</div>
 					</div>
 				) : (
-					<div>
-						{isLoading || isFetching ? (
-							<div className="flex justify-center items-center">
-								<Spinner />
-							</div>
-						) : (
-							<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-								{collectionsData?.map(
-									({ id, title, description, isPublic, games }) => (
-										<li key={id}>
-											<CollectionCard
-												id={id}
-												title={title}
-												description={description}
-												isPublic={isPublic}
-												games={games}
-												user={user}
-											/>
-										</li>
-									)
-								)}
-								{/* TODO: Check styling */}
-								{isError && <p>Unable to load collections.</p>}
-							</ul>
-						)}
-					</div>
+					<CollectionGrid user={user} />
 				)}
 			</div>
 		</main>

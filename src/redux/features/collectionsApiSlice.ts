@@ -30,7 +30,7 @@ export const collectionsApi = createApi({
 	tagTypes: ["Collection"],
 	endpoints: (builder) => ({
 		fetchCollections: builder.query({
-			async queryFn({ userId }) {
+			async queryFn({ userId }: { userId: string }) {
 				try {
 					const userCollectionsRef = collection(
 						db,
@@ -57,7 +57,13 @@ export const collectionsApi = createApi({
 			providesTags: ["Collection"]
 		}),
 		fetchCollection: builder.query({
-			async queryFn({ userId, collectionId }) {
+			async queryFn({
+				userId,
+				collectionId
+			}: {
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const userCollectionRef = doc(
 						db,
@@ -96,7 +102,7 @@ export const collectionsApi = createApi({
 							})
 						}
 					} else {
-						console.error("Collection already exists.")
+						console.error("Collection already exists")
 					}
 					return { data: "ok" }
 				} catch (error) {
@@ -162,6 +168,28 @@ export const collectionsApi = createApi({
 				}
 			},
 			invalidatesTags: ["Collection"]
+		}),
+		editCollection: builder.mutation({
+			async queryFn({ data, userId, collectionId }) {
+				try {
+					const collectionDocRef = doc(
+						db,
+						"users",
+						userId,
+						"collections",
+						collectionId
+					)
+					await updateDoc(collectionDocRef, {
+						title: data.title,
+						description: data.description,
+						isPublic: data.isPublic
+					})
+					return { data: "ok" }
+				} catch (error) {
+					return { error: "Failed to edit collection" }
+				}
+			},
+			invalidatesTags: ["Collection"]
 		})
 	})
 })
@@ -172,7 +200,8 @@ export const {
 	useAddCollectionMutation,
 	useDeleteCollectionMutation,
 	useAddGameToCollectionMutation,
-	useRemoveGameFromCollectionMutation
+	useRemoveGameFromCollectionMutation,
+	useEditCollectionMutation
 } = collectionsApi
 
 export default collectionsApi.reducer

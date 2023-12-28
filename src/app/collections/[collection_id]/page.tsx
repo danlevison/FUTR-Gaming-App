@@ -17,8 +17,8 @@ function Collection() {
 		isFetching,
 		isError
 	} = useFetchCollectionQuery({
-		userId: user?.uid,
-		collectionId: collection_id
+		userId: user?.uid as string,
+		collectionId: collection_id as string
 	})
 
 	return (

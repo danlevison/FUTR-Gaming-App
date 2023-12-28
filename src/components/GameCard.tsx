@@ -159,7 +159,7 @@ function CollectionDropdown({
 		isLoading,
 		isFetching,
 		isError
-	} = useFetchCollectionsQuery({ userId: user?.uid })
+	} = useFetchCollectionsQuery({ userId: user?.uid as string })
 	const [addGameToCollection] = useAddGameToCollectionMutation()
 	const { toast } = useToast()
 
