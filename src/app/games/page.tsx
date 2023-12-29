@@ -80,7 +80,7 @@ export default function Games() {
 	}
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-5 py-20">
+		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Games
 			</h1>

@@ -16,7 +16,7 @@ export default function Logo({ sidebarStatus, setNav }: LogoProps) {
 		<Link
 			href={"/"}
 			onClick={handleLogoClick}
-			className={`uppercase text-center text-sm font-bold text-primaryText border-y border-accentSecondary py-2 ${
+			className={`uppercase text-center text-sm font-bold text-primaryText border-y border-accentSecondary py-1 md:py-2 ${
 				sidebarStatus && "text-xl w-full"
 			}`}
 		>

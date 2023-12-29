@@ -30,6 +30,10 @@ export const gamesApi = createApi({
 		getGame: builder.query<GameT, { id: string }>({
 			query: ({ id }: { id: string }) => `games/${id}?key=${rawgApiKey}`
 		}),
+		getSearchedGame: builder.query<GamesApiResponse, string>({
+			query: (searchInput: string) =>
+				`games?key=${rawgApiKey}&search=${searchInput}&ordering=-added`
+		}),
 		getGameScreenshots: builder.query<ScreenshotsT, { id: string }>({
 			query: ({ id }) => `games/${id}/screenshots?key=${rawgApiKey}`
 		}),
@@ -104,6 +108,7 @@ export const {
 	useGetAllPublishersQuery,
 
 	useGetGameQuery,
+	useGetSearchedGameQuery,
 	useGetGameScreenshotsQuery,
 	useGetGameSeriesQuery,
 

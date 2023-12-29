@@ -10,6 +10,7 @@ import NavLinks from "../NavLinks"
 import CollapseSidebarBtn from "./CollapseSidebarBtn"
 import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
+import Searchbar from "@/components/searchbar/Searchbar"
 
 export default function Sidebar() {
 	const user = useSelector(currentUser)

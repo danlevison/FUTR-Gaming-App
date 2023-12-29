@@ -109,6 +109,7 @@ function EditCollectionForm({
 					name="title"
 					id="title"
 					placeholder="Write a collection title e.g. Horror Games"
+					autoFocus
 					className="text-base md:text-lg h-16 mt-1"
 				/>
 				{message && <span className="text-red-500">{message}</span>}

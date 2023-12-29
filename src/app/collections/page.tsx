@@ -12,11 +12,11 @@ export default function Collections() {
 	const { handleLogin } = useAuth()
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-5 py-20">
+		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Collections
 			</h1>
-			<div className="mt-20">
+			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Collections</h2>
 				{user && <AddNewCollection user={user} />}
 				{!user ? (

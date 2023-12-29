@@ -45,7 +45,7 @@ export default function Publisher() {
 	}
 
 	return (
-		<main className="flex flex-col min-h-screen w-full px-5 py-20">
+		<main className="flex flex-col min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
 			{(isPublisherDataLoading || isPublisherDataFetching) && (
 				<SkeletonBanner />
 			)}
