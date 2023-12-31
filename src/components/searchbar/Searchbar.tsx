@@ -42,12 +42,13 @@ export default function Searchbar() {
 					open={showResults}
 					onOpenChange={setShowResults}
 				>
-					<DialogContent className="block max-w-full h-full border-none">
+					<DialogContent className="block max-w-full h-full border-none overflow-auto">
 						<DialogHeader className="mt-2">
 							<SearchForm
 								searchInput={searchInput}
 								setSearchInput={setSearchInput}
 								handleSearch={handleSearch}
+								showResults={showResults}
 							/>
 						</DialogHeader>
 						<div className="flex justify-center items-center">

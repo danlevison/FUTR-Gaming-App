@@ -6,42 +6,42 @@ type SearchFormProps = {
 	searchInput: string
 	setSearchInput: React.Dispatch<React.SetStateAction<string>>
 	handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+	showResults?: boolean
 }
 
 export default function SearchForm({
 	searchInput,
 	setSearchInput,
-	handleSearch
+	handleSearch,
+	showResults
 }: SearchFormProps) {
 	return (
-		<form className="w-full p-2">
-			<div className="flex items-center gap-2">
-				<div className="w-full flex items-center gap-2">
-					<Label htmlFor="search">
-						<AiOutlineSearch size={30} />
-						<span className="sr-only">Search games</span>
-					</Label>
-					<div className="flex items-center w-full border-input border-2 rounded-md p-2">
-						<input
-							type="text"
-							id="search"
-							name="search"
-							value={searchInput}
-							onChange={handleSearch}
-							placeholder="Search games"
-							autoComplete="off"
-							className="text-base w-full bg-transparent outline-none"
-							autoFocus
-						/>
-						{searchInput && (
-							<button
-								onClick={() => setSearchInput("")}
-								type="button"
-							>
-								<MdClose />
-							</button>
-						)}
-					</div>
+		<form className="w-full md:pt-2 px-2 bg-transparent">
+			<div className="w-full flex items-center gap-2">
+				<Label htmlFor="search">
+					<AiOutlineSearch size={30} />
+					<span className="sr-only">Search games</span>
+				</Label>
+				<div className="bg-transparent flex items-center w-full border-input md:border-gray-600 border-2 rounded-md p-2">
+					<input
+						value={searchInput}
+						onChange={handleSearch}
+						type="text"
+						id="search"
+						name="search"
+						placeholder="Search games"
+						autoComplete="off"
+						className="text-base w-full bg-transparent outline-none"
+						autoFocus={showResults}
+					/>
+					{searchInput && (
+						<button
+							onClick={() => setSearchInput("")}
+							type="button"
+						>
+							<MdClose />
+						</button>
+					)}
 				</div>
 			</div>
 		</form>
