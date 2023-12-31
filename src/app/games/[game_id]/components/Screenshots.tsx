@@ -24,7 +24,7 @@ export default function Screenshots({ gameData }: { gameData: GameT }) {
 	})
 
 	return (
-		<section className="w-full mt-10">
+		<section className="w-full mt-5">
 			<Carousel
 				opts={{
 					align: "start",

@@ -8,6 +8,7 @@ import Details from "./components/Details"
 import Series from "./components/Series"
 import RatingBar from "./components/RatingBar"
 import SkeletonGameDetailsPage from "@/components/skeletons/SkeletonGameDetailsPage"
+import Collections from "./components/Collections"
 
 export default function GameDetails() {
 	const { game_id } = useParams()
@@ -29,6 +30,7 @@ export default function GameDetails() {
 				isSuccess && (
 					<>
 						<GameBanner gameData={gameData} />
+						<Collections gameData={gameData} />
 						<Screenshots gameData={gameData} />
 						<RatingBar gameData={gameData} />
 						<Details gameData={gameData} />
