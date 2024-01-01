@@ -18,7 +18,10 @@ export default function SearchForm({
 	return (
 		<form className="w-full md:pt-2 px-2 bg-transparent">
 			<div className="w-full flex items-center gap-2">
-				<Label htmlFor="search">
+				<Label
+					htmlFor="search"
+					className="bg-transparent"
+				>
 					<AiOutlineSearch size={30} />
 					<span className="sr-only">Search games</span>
 				</Label>

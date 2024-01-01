@@ -6,13 +6,21 @@ import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
-import { BsStar } from "react-icons/bs"
+import { BsStar, BsThreeDots } from "react-icons/bs"
 import { BiChevronDown } from "react-icons/bi"
 import { FaRegTrashAlt } from "react-icons/fa"
 import { platformIcons } from "@/utils/platformIcons"
-import { useRemoveGameFromCollectionMutation } from "@/redux/features/collectionsApiSlice"
+import {
+	useRemoveGameFromCollectionMutation,
+	useUpdateCollectionBgMutation
+} from "@/redux/features/collectionsApiSlice"
 import { useToast } from "./ui/use-toast"
 import { Button } from "./ui/button"
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger
+} from "@/components/ui/popover"
 import CollectionsDropdown from "./CollectionsDropdown"
 //types
 import { GameT } from "@/types"
@@ -20,10 +28,12 @@ import { GameT } from "@/types"
 export default function GameCard({ game }: { game: GameT }) {
 	const user = useSelector(currentUser)
 	const [showCollections, setShowCollections] = useState(false)
+	const [open, setOpen] = useState(false)
 	const pathname = usePathname()
 	const { collection_id } = useParams()
 	const { toast } = useToast()
 	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
+	const [updateCollectionBg] = useUpdateCollectionBgMutation()
 
 	const handleRemoveGameFromCollection = async (
 		gameData: GameT,
@@ -46,6 +56,24 @@ export default function GameCard({ game }: { game: GameT }) {
 				variant: "destructive",
 				description: "Error: unable to remove game from your collection."
 			})
+		}
+	}
+
+	const changeCollectionBg = async (gameBgImage: string) => {
+		try {
+			await updateCollectionBg({
+				data: gameBgImage,
+				userId: user?.uid,
+				collectionId: collection_id
+			})
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description: "Error: Unable to set collection background"
+			})
+		} finally {
+			setOpen(false)
 		}
 	}
 
@@ -76,20 +104,38 @@ export default function GameCard({ game }: { game: GameT }) {
 					))}
 				</div>
 				{pathname.includes("collections") && (
-					<Button
-						onClick={() =>
-							handleRemoveGameFromCollection(
-								{ ...game },
-								user?.uid!,
-								collection_id as string
-							)
-						}
-						variant={"ghost"}
-						className="absolute top-1 right-1"
-						aria-label="Delete collection"
-					>
-						<FaRegTrashAlt size={17} />
-					</Button>
+					<div className="absolute top-1 right-1 flex items-center">
+						<Popover
+							open={open}
+							onOpenChange={setOpen}
+						>
+							<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
+								<BsThreeDots />
+							</PopoverTrigger>
+							<PopoverContent align="end">
+								<Button
+									onClick={() => changeCollectionBg(game.background_image)}
+									className="w-full"
+								>
+									Set as collection background
+								</Button>
+							</PopoverContent>
+						</Popover>
+
+						<Button
+							onClick={() =>
+								handleRemoveGameFromCollection(
+									{ ...game },
+									user?.uid!,
+									collection_id as string
+								)
+							}
+							variant={"ghost"}
+							aria-label="Delete collection"
+						>
+							<FaRegTrashAlt size={17} />
+						</Button>
+					</div>
 				)}
 
 				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-2">

@@ -15,7 +15,7 @@ export default function Collections({ gameData }: { gameData: GameT }) {
 			<Button
 				onClick={() => setShowCollections(!showCollections)}
 				variant={"outline"}
-				className={`w-full text-base font-bold h-12 ${
+				className={`w-full text-base font-bold h-12 duration-300 ${
 					showCollections && "rounded-b-none"
 				}`}
 			>

@@ -98,7 +98,8 @@ export const collectionsApi = createApi({
 							await setDoc(collectionDocRef, {
 								id: collectionId,
 								...data,
-								games: []
+								games: [],
+								collectionBg: ""
 							})
 						}
 					} else {
@@ -190,6 +191,26 @@ export const collectionsApi = createApi({
 				}
 			},
 			invalidatesTags: ["Collection"]
+		}),
+		updateCollectionBg: builder.mutation({
+			async queryFn({ data, userId, collectionId }) {
+				try {
+					const collectionDocRef = doc(
+						db,
+						"users",
+						userId,
+						"collections",
+						collectionId
+					)
+					await updateDoc(collectionDocRef, {
+						collectionBg: data
+					})
+					return { data: "ok" }
+				} catch (error) {
+					return { error: "Failed to set collection background" }
+				}
+			},
+			invalidatesTags: ["Collection"]
 		})
 	})
 })
@@ -201,7 +222,8 @@ export const {
 	useDeleteCollectionMutation,
 	useAddGameToCollectionMutation,
 	useRemoveGameFromCollectionMutation,
-	useEditCollectionMutation
+	useEditCollectionMutation,
+	useUpdateCollectionBgMutation
 } = collectionsApi
 
 export default collectionsApi.reducer
