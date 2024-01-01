@@ -1,4 +1,4 @@
-[FUTR Gaming](https://futr-gaming-app.vercel.app/) is a web application that uses the RAWG API to allow you to explore an extensive library of games, stay informed about upcoming releases, and effortlessly curate personalised collections.
+[FUTR Gaming](https://futr-gaming.netlify.app/) is a web application that uses the RAWG API to allow you to explore an extensive library of games, stay informed about upcoming releases, and effortlessly curate personalised collections.
 
 ## Features
 
@@ -11,7 +11,7 @@
 
 ## Installation
 
-As a web-based application, there is no installation required to use FUTR Gaming. Simply visit the website [here](https://futr-gaming-app.vercel.app/) using a web browser to access the application.
+As a web-based application, there is no installation required to use FUTR Gaming. Simply visit the website [here](https://futr-gaming.netlify.app/) using a web browser to access the application.
 
 ## Technologies Used
 
