@@ -22,10 +22,9 @@ export default function Hero() {
 						Find your game.
 					</h1>
 					<p className="my-7 leading-relaxed text-base md:text-lg">
-						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed
-						similique animi eum voluptas ad ipsam ab voluptates doloribus
-						officiis eveniet quos cum maiores assumenda, deleniti alias. Eveniet
-						reiciendis optio hic!
+						Jump-start your gaming collection with titles from Steam,
+						PlayStation, Xbox, GOG and more. Enhance your profile and show off
+						your gaming interests!
 					</p>
 					<Link
 						href="games"

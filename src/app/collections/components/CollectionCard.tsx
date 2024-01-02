@@ -13,7 +13,7 @@ import DeleteCollectionModal from "./DeleteCollectionModal"
 //types
 import { GameT, UserT } from "@/types"
 import EditCollection from "./EditCollection"
-import { useParams, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 type CollectionCardProps = {
 	id: string
@@ -33,8 +33,6 @@ export default function CollectionCard({
 	user
 }: CollectionCardProps) {
 	const pathname = usePathname()
-	const params = useParams()
-	console.log(params)
 
 	return (
 		<Card className="relative bg-zinc-900/50 text-primaryText h-[420px]">

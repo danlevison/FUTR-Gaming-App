@@ -13,7 +13,6 @@ import { userProfileId } from "@/redux/features/userProfileIdSlice"
 function Collection() {
 	const { collection_id } = useParams()
 	const viewedUserProfileId = useSelector(userProfileId)
-	console.log(viewedUserProfileId)
 	const user = useSelector(currentUser)
 	const {
 		data: collectionData,
