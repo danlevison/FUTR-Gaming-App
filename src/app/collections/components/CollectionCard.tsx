@@ -8,12 +8,12 @@ import {
 	CardHeader,
 	CardTitle
 } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md"
+import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import DeleteCollectionModal from "./DeleteCollectionModal"
 //types
-import { GameT } from "@/types"
+import { GameT, UserT } from "@/types"
 import EditCollection from "./EditCollection"
+import { useParams, usePathname } from "next/navigation"
 
 type CollectionCardProps = {
 	id: string
@@ -21,11 +21,7 @@ type CollectionCardProps = {
 	description: string
 	isPublic: boolean
 	games: GameT[]
-	user: {
-		uid: string
-		displayName: string
-		email: string
-	}
+	user: UserT
 }
 
 export default function CollectionCard({
@@ -36,6 +32,10 @@ export default function CollectionCard({
 	games,
 	user
 }: CollectionCardProps) {
+	const pathname = usePathname()
+	const params = useParams()
+	console.log(params)
+
 	return (
 		<Card className="relative bg-zinc-900/50 text-primaryText h-[420px]">
 			{games.slice(0, 1).map((game) => (
@@ -59,34 +59,36 @@ export default function CollectionCard({
 								{title}
 							</Link>
 						</CardTitle>
-						<div className="flex items-center gap-4">
-							<EditCollection
-								user={user}
-								id={id}
-								title={title}
-								description={description}
-								isPublic={isPublic}
-							/>
-							<DeleteCollectionModal
-								id={id}
-								user={user}
-							/>
-						</div>
+						{!pathname.includes("user") && (
+							<div className="flex items-center gap-4">
+								<EditCollection
+									user={user}
+									id={id}
+									title={title}
+									description={description}
+									isPublic={isPublic}
+								/>
+								<DeleteCollectionModal
+									id={id}
+									user={user}
+								/>
+							</div>
+						)}
 					</div>
 
 					<CardDescription className="text-primaryText">
-						Collection by: {user.displayName}
+						Collection by: {user?.displayName}
 					</CardDescription>
 					<CardDescription className="text-primaryText">
 						{description}
 					</CardDescription>
 					{isPublic ? (
 						<p className="flex items-center gap-2 font-bold">
-							Private Collection <MdVisibilityOff />
+							Public Collection <MdVisibility />
 						</p>
 					) : (
 						<p className="flex items-center gap-2 font-bold">
-							Public Collection <MdVisibility />
+							Private Collection <MdVisibilityOff />
 						</p>
 					)}
 				</CardHeader>

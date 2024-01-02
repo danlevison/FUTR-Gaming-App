@@ -145,7 +145,7 @@ function EditCollectionForm({
 					htmlFor="title"
 					className="text-xl"
 				>
-					Collection is only visible to me
+					Collection is visible to everyone
 				</Label>
 			</div>
 			<div className="flex flex-col gap-4 justify-center items-center w-full mt-5">

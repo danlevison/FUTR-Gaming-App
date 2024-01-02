@@ -12,11 +12,13 @@ export default function useAuth() {
 		try {
 			const googleProvider = new GoogleAuthProvider()
 			const result = await signInWithPopup(auth, googleProvider)
+
 			dispatch(
 				googleLogin({
 					uid: result.user.uid,
 					displayName: result.user.displayName,
-					email: result.user.email
+					email: result.user.email,
+					avatar: result.user.photoURL
 				})
 			)
 			const userDocRef = doc(db, "users", result.user.uid)
@@ -26,6 +28,8 @@ export default function useAuth() {
 			}
 			await setDoc(userDocRef, {
 				email: result.user.email,
+				displayName: result.user.displayName,
+				avatar: result.user.photoURL,
 				createdAt: serverTimestamp()
 			})
 		} catch (error) {

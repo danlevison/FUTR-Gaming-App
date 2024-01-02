@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../store"
 
 type AuthState = {
-	user: { uid: string; displayName: string; email: string } | null
+	user: {
+		uid: string
+		displayName: string
+		email: string
+		avatar: string
+	} | null
 	isLoading: boolean
 }
 

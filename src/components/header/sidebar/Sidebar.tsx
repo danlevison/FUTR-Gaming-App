@@ -11,6 +11,7 @@ import CollapseSidebarBtn from "./CollapseSidebarBtn"
 import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 import Searchbar from "@/components/searchbar/Searchbar"
+import UserInfo from "../UserInfo"
 
 export default function Sidebar() {
 	const user = useSelector(currentUser)
@@ -44,6 +45,7 @@ export default function Sidebar() {
 			}`}
 		>
 			<Logo sidebarStatus={sidebar} />
+			{user && <UserInfo sidebarStatus={sidebar} />}
 			<UserLinks sidebarStatus={sidebar} />
 			<NavLinks sidebarStatus={sidebar} />
 			<CollapseSidebarBtn

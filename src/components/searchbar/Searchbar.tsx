@@ -5,11 +5,15 @@ import { useDebounce } from "use-debounce"
 import Image from "next/image"
 import Link from "next/link"
 import { useGetSearchedGameQuery } from "@/redux/features/gamesApiSlice"
+import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import Spinner from "../loading/Spinner"
 import SearchForm from "./SearchForm"
+import { useSelector } from "react-redux"
+import { currentUser } from "@/redux/features/authSlice"
 
 export default function Searchbar() {
+	const user = useSelector(currentUser)
 	const [searchInput, setSearchInput] = useState("")
 	const [value] = useDebounce(searchInput, 700)
 	const [showResults, setShowResults] = useState(false)
@@ -19,6 +23,7 @@ export default function Searchbar() {
 		isFetching,
 		isError
 	} = useGetSearchedGameQuery(searchInput)
+	const { data: userData } = useFetchUsersQuery({})
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchInput(e.target.value)
@@ -29,6 +34,10 @@ export default function Searchbar() {
 		setShowResults(false)
 		setSearchInput("")
 	}
+
+	const filteredUsers = userData?.filter((user) =>
+		user?.displayName.toLowerCase().includes(searchInput)
+	)
 
 	return (
 		<>
@@ -54,11 +63,12 @@ export default function Searchbar() {
 						<div className="flex justify-center items-center">
 							{(isLoading || isFetching) && <Spinner />}
 						</div>
-						<div className="mt-5">
+						<div className="mt-5 border-b-2 pb-5">
+							<h3 className="font-bold text-2xl">Games</h3>
 							{searchedGameData && searchedGameData.count === 0 ? (
 								<p>No games found!</p>
 							) : (
-								<ul className="flex flex-col gap-3">
+								<ul className="flex flex-col gap-3 mt-4">
 									{searchedGameData &&
 										searchedGameData.results.slice(0, 7).map((game) => (
 											<li
@@ -87,6 +97,42 @@ export default function Searchbar() {
 								</ul>
 							)}
 						</div>
+						{user && (
+							<div className="mt-5 border-b-[0.5px] pb-5">
+								<h3 className="font-bold text-2xl">Users</h3>
+								{userData && filteredUsers?.length === 0 ? (
+									<p>No users found!</p>
+								) : (
+									<ul className="flex flex-col gap-3 mt-4">
+										{userData &&
+											filteredUsers?.map((user) => (
+												<li
+													key={user?.uid}
+													className="flex items-center gap-2"
+												>
+													{user?.avatar && (
+														<Image
+															src={user?.avatar}
+															alt={user?.displayName}
+															width={50}
+															height={50}
+															style={{ objectFit: "cover" }}
+															className="rounded-md"
+														/>
+													)}
+													<Link
+														href={`/user/${user?.uid}`}
+														onClick={handleLinkClick}
+														className="font-bold md:text-lg hover:underline"
+													>
+														{user?.displayName}
+													</Link>
+												</li>
+											))}
+									</ul>
+								)}
+							</div>
+						)}
 						{isError && (
 							<p className="text-3xl font-bold text-center">
 								Unable to load games.

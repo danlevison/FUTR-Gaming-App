@@ -1,6 +1,6 @@
 "use client"
 
-import { currentUser, isLoading } from "@/redux/features/authSlice"
+import { currentUser } from "@/redux/features/authSlice"
 import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
@@ -16,6 +16,7 @@ export default function Collections() {
 			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 				Collections
 			</h1>
+
 			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Collections</h2>
 				{user && <AddNewCollection user={user} />}

@@ -21,7 +21,8 @@ export default function AuthWrapper({
 					googleLogin({
 						uid: user.uid,
 						displayName: user.displayName,
-						email: user.email
+						email: user.email,
+						avatar: user.photoURL
 					})
 				)
 				dispatch(setLoading(false))

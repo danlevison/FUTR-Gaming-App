@@ -8,9 +8,12 @@ import { useSelector } from "react-redux"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
 import PrivateRoute from "@/components/PrivateRoute"
+import { userProfileId } from "@/redux/features/userProfileIdSlice"
 
 function Collection() {
 	const { collection_id } = useParams()
+	const viewedUserProfileId = useSelector(userProfileId)
+	console.log(viewedUserProfileId)
 	const user = useSelector(currentUser)
 	const {
 		data: collectionData,
@@ -18,11 +21,9 @@ function Collection() {
 		isFetching,
 		isError
 	} = useFetchCollectionQuery({
-		userId: user?.uid as string,
+		userId: viewedUserProfileId?.userId ?? "",
 		collectionId: collection_id as string
 	})
-
-	console.log(collectionData)
 
 	return (
 		<main className="relative min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
@@ -51,11 +52,11 @@ function Collection() {
 					<p>Collection by: {user?.displayName}</p>
 					{collectionData?.isPublic ? (
 						<p className="flex items-center gap-2">
-							Private Collection <MdVisibilityOff />
+							Public Collection <MdVisibility />
 						</p>
 					) : (
 						<p className="flex items-center gap-2">
-							Public Collection <MdVisibility />
+							Private Collection <MdVisibilityOff />
 						</p>
 					)}
 				</div>
@@ -73,4 +74,4 @@ function Collection() {
 	)
 }
 
-export default PrivateRoute(Collection)
+export default Collection

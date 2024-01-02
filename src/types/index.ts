@@ -103,6 +103,7 @@ export type UserT = {
 	uid: string
 	displayName: string
 	email: string
+	avatar: string
 } | null
 
 export type UserCollectionT = {
