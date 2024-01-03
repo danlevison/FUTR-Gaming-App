@@ -83,6 +83,8 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 			await addCollection({
 				data: formData,
 				userId: user.uid,
+				owner: user.displayName,
+				ownerId: user.uid,
 				collectionId: collectionId
 			})
 

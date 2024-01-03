@@ -11,6 +11,7 @@ import Spinner from "../loading/Spinner"
 import SearchForm from "./SearchForm"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
+import { useFetchPublicCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 
 export default function Searchbar() {
 	const user = useSelector(currentUser)
@@ -23,6 +24,7 @@ export default function Searchbar() {
 		isFetching,
 		isError
 	} = useGetSearchedGameQuery(searchInput)
+	const { data: publicCollectionsData } = useFetchPublicCollectionsQuery({})
 	const { data: userData } = useFetchUsersQuery({})
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +39,10 @@ export default function Searchbar() {
 
 	const filteredUsers = userData?.filter((user) =>
 		user?.displayName.toLowerCase().includes(searchInput)
+	)
+
+	const filteredCollections = publicCollectionsData?.filter((collection) =>
+		collection.title.toLowerCase().includes(searchInput)
 	)
 
 	return (
@@ -97,42 +103,76 @@ export default function Searchbar() {
 								</ul>
 							)}
 						</div>
-						{user && (
-							<div className="mt-5 border-b-[0.5px] pb-5">
-								<h3 className="font-bold text-2xl">Users</h3>
-								{userData && filteredUsers?.length === 0 ? (
-									<p>No users found!</p>
-								) : (
-									<ul className="flex flex-col gap-3 mt-4">
-										{userData &&
-											filteredUsers?.map((user) => (
-												<li
-													key={user?.uid}
-													className="flex items-center gap-2"
+
+						<div className="mt-5 border-b-[0.5px] pb-5">
+							<h3 className="font-bold text-2xl">Users</h3>
+							{userData && filteredUsers?.length === 0 ? (
+								<p>No users found!</p>
+							) : (
+								<ul className="flex flex-col gap-3 mt-4">
+									{userData &&
+										filteredUsers?.map((user) => (
+											<li
+												key={user?.uid}
+												className="flex items-center gap-2"
+											>
+												{user?.avatar && (
+													<Image
+														src={user?.avatar}
+														alt={user?.displayName}
+														width={50}
+														height={50}
+														style={{ objectFit: "cover" }}
+														className="rounded-md"
+													/>
+												)}
+												<Link
+													href={`/user/${user?.uid}`}
+													onClick={handleLinkClick}
+													className="font-bold md:text-lg hover:underline"
 												>
-													{user?.avatar && (
-														<Image
-															src={user?.avatar}
-															alt={user?.displayName}
-															width={50}
-															height={50}
-															style={{ objectFit: "cover" }}
-															className="rounded-md"
-														/>
-													)}
-													<Link
-														href={`/user/${user?.uid}`}
-														onClick={handleLinkClick}
-														className="font-bold md:text-lg hover:underline"
-													>
-														{user?.displayName}
-													</Link>
-												</li>
-											))}
-									</ul>
-								)}
-							</div>
-						)}
+													{user?.displayName}
+												</Link>
+											</li>
+										))}
+								</ul>
+							)}
+						</div>
+
+						<div className="mt-5 border-b-[0.5px] pb-5">
+							<h3 className="font-bold text-2xl">Collections</h3>
+							{filteredCollections && filteredCollections.length === 0 ? (
+								<p>No collections found!</p>
+							) : (
+								<ul className="flex flex-col gap-3 mt-4">
+									{filteredCollections?.map((collection) => (
+										<li
+											key={collection.id}
+											className="flex items-center gap-2"
+										>
+											{/* {user?.avatar && (
+													<Image
+														src={user?.avatar}
+														alt={user?.displayName}
+														width={50}
+														height={50}
+														style={{ objectFit: "cover" }}
+														className="rounded-md"
+													/>
+												)} */}
+											<Link
+												href={`/collections/${collection.id}`}
+												onClick={handleLinkClick}
+												className="font-bold md:text-lg hover:underline"
+											>
+												{collection.title}
+											</Link>
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
+
 						{isError && (
 							<p className="text-3xl font-bold text-center">
 								Unable to load games.

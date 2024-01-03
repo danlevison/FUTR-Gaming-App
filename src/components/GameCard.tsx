@@ -4,7 +4,6 @@ import Image from "next/image"
 import { useParams, usePathname } from "next/navigation"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
-import { userProfileId } from "@/redux/features/userProfileIdSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar, BsThreeDots } from "react-icons/bs"
@@ -26,9 +25,13 @@ import CollectionsDropdown from "./CollectionsDropdown"
 //types
 import { GameT } from "@/types"
 
-export default function GameCard({ game }: { game: GameT }) {
+type GameCardProps = {
+	game: GameT
+	ownerId?: string
+}
+
+export default function GameCard({ game, ownerId }: GameCardProps) {
 	const user = useSelector(currentUser)
-	const viewedUserProfileId = useSelector(userProfileId)
 	const [showCollections, setShowCollections] = useState(false)
 	const [open, setOpen] = useState(false)
 	const pathname = usePathname()
@@ -105,41 +108,40 @@ export default function GameCard({ game }: { game: GameT }) {
 						<span key={platform.id}>{platformIcons[platform.name]}</span>
 					))}
 				</div>
-				{pathname.includes("collections") &&
-					user?.uid === viewedUserProfileId && (
-						<div className="absolute top-1 right-1 flex items-center">
-							<Popover
-								open={open}
-								onOpenChange={setOpen}
-							>
-								<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
-									<BsThreeDots />
-								</PopoverTrigger>
-								<PopoverContent align="end">
-									<Button
-										onClick={() => changeCollectionBg(game.background_image)}
-										className="w-full"
-									>
-										Set as collection background
-									</Button>
-								</PopoverContent>
-							</Popover>
+				{pathname.includes("collections") && user?.uid === ownerId && (
+					<div className="absolute top-1 right-1 flex items-center">
+						<Popover
+							open={open}
+							onOpenChange={setOpen}
+						>
+							<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
+								<BsThreeDots />
+							</PopoverTrigger>
+							<PopoverContent align="end">
+								<Button
+									onClick={() => changeCollectionBg(game.background_image)}
+									className="w-full"
+								>
+									Set as collection background
+								</Button>
+							</PopoverContent>
+						</Popover>
 
-							<Button
-								onClick={() =>
-									handleRemoveGameFromCollection(
-										{ ...game },
-										user?.uid!,
-										collection_id as string
-									)
-								}
-								variant={"ghost"}
-								aria-label="Delete collection"
-							>
-								<FaRegTrashAlt size={17} />
-							</Button>
-						</div>
-					)}
+						<Button
+							onClick={() =>
+								handleRemoveGameFromCollection(
+									{ ...game },
+									user?.uid!,
+									collection_id as string
+								)
+							}
+							variant={"ghost"}
+							aria-label="Delete collection"
+						>
+							<FaRegTrashAlt size={17} />
+						</Button>
+					</div>
+				)}
 
 				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-2">
 					<Link

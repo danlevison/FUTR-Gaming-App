@@ -1,73 +1,102 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useParams } from "next/navigation"
-import { currentUser } from "@/redux/features/authSlice"
 import { useFetchCollectionQuery } from "@/redux/features/collectionsApiSlice"
-import { useSelector } from "react-redux"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
-import { userProfileId } from "@/redux/features/userProfileIdSlice"
+import { useSelector } from "react-redux"
+import {
+	currentUser,
+	isLoading as isUserLoading
+} from "@/redux/features/authSlice"
+import Spinner from "@/components/loading/Spinner"
 
 function Collection() {
 	const { collection_id } = useParams()
-	const viewedUserProfileId = useSelector(userProfileId)
 	const user = useSelector(currentUser)
 	const {
 		data: collectionData,
 		isLoading,
 		isFetching,
 		isError
-	} = useFetchCollectionQuery({
-		userId: viewedUserProfileId as string,
-		collectionId: collection_id as string
-	})
+	} = useFetchCollectionQuery(collection_id as string)
+
+	// prevent private collections be shown to users that are not the collection owner
+	if (!collectionData?.isPublic && collectionData?.ownerId !== user?.uid) {
+		return (
+			<main className="flex flex-col justify-center items-center min-h-screen w-full text-center px-5">
+				<h1 className="text-5xl sm:text-7xl md:text-9xl font-bold">404</h1>
+				<p className="text-2xl sm:text:3xl md:text-4xl">
+					We couldn&apos;t find that page.
+				</p>
+				<Link
+					href={"/"}
+					className="bg-white text-foreground p-4 rounded-md mt-5 text-lg hover:opacity-70 duration-300"
+				>
+					Return to Home
+				</Link>
+			</main>
+		)
+	}
 
 	return (
 		<main className="relative min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
-			{collectionData?.collectionBg && (
+			{isLoading || isFetching ? (
+				<div className="flex justify-center items-center py-20">
+					<Spinner />
+				</div>
+			) : (
 				<>
-					<Image
-						alt=""
-						src={collectionData?.collectionBg}
-						quality={100}
-						fill
-						sizes="100vw"
-						priority
-						style={{
-							objectFit: "cover"
-						}}
-						className="z-0"
-					/>
-					<div className="absolute inset-0 bg-black/80" />
+					{collectionData?.collectionBg && (
+						<>
+							<Image
+								alt=""
+								src={collectionData?.collectionBg}
+								quality={100}
+								fill
+								sizes="100vw"
+								priority
+								style={{
+									objectFit: "cover"
+								}}
+								className="z-0"
+							/>
+							<div className="absolute inset-0 bg-black/80" />
+						</>
+					)}
+					<div className="relative z-10">
+						<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
+							{collectionData?.title}
+						</h1>
+						<div className="mt-2">
+							<p>Collection by: {collectionData?.owner}</p>
+							{collectionData?.isPublic ? (
+								<p className="flex items-center gap-2">
+									Public Collection <MdVisibility />
+								</p>
+							) : (
+								<p className="flex items-center gap-2">
+									Private Collection <MdVisibilityOff />
+								</p>
+							)}
+						</div>
+						<div className="flex flex-col items-center mt-5">
+							{collectionData && collectionData.games?.length > 0 && (
+								<GamesList
+									games={collectionData.games}
+									ownerId={collectionData.ownerId}
+								/>
+							)}
+
+							{isError && (
+								<p className="text-3xl font-bold">Unable to load collection.</p>
+							)}
+						</div>
+					</div>
 				</>
 			)}
-			<div className="relative z-10">
-				<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-					{collectionData?.title}
-				</h1>
-				<div className="mt-2">
-					<p>Collection by: {user?.displayName}</p>
-					{collectionData?.isPublic ? (
-						<p className="flex items-center gap-2">
-							Public Collection <MdVisibility />
-						</p>
-					) : (
-						<p className="flex items-center gap-2">
-							Private Collection <MdVisibilityOff />
-						</p>
-					)}
-				</div>
-				<div className="flex flex-col items-center mt-5">
-					{collectionData && collectionData.games?.length > 0 && (
-						<GamesList games={collectionData.games} />
-					)}
-
-					{isError && (
-						<p className="text-3xl font-bold">Unable to load collection.</p>
-					)}
-				</div>
-			</div>
 		</main>
 	)
 }

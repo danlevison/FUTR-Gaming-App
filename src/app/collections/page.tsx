@@ -1,9 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
 import { currentUser } from "@/redux/features/authSlice"
-import { useSelector, useDispatch } from "react-redux"
-import { setUserId } from "@/redux/features/userProfileIdSlice"
+import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import AddNewCollection from "./components/AddNewCollection"
@@ -11,12 +9,7 @@ import CollectionGrid from "./components/CollectionGrid"
 
 export default function Collections() {
 	const user = useSelector(currentUser)
-	const dispatch = useDispatch()
 	const { handleLogin } = useAuth()
-
-	useEffect(() => {
-		dispatch(setUserId(user?.uid))
-	}, [dispatch, user?.uid])
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">

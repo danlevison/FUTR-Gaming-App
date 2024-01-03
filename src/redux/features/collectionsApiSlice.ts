@@ -10,7 +10,10 @@ import {
 	updateDoc,
 	arrayUnion,
 	getDocs,
-	arrayRemove
+	arrayRemove,
+	collectionGroup,
+	query,
+	where
 } from "firebase/firestore"
 //types
 import { GameT } from "@/types"
@@ -19,8 +22,11 @@ type CollectionsData = {
 	id: string
 	title: string
 	description: string
+	owner: string
+	ownerId: string
 	isPublic: boolean
 	games: GameT[]
+	collectionBg: string
 }
 
 export const collectionsApi = createApi({
@@ -45,8 +51,11 @@ export const collectionsApi = createApi({
 							id: doc.id,
 							title: doc.data().title,
 							description: doc.data().description,
+							owner: doc.data().owner,
+							ownerId: doc.data().ownerId,
 							isPublic: doc.data().isPublic,
-							games: doc.data().games
+							games: doc.data().games,
+							collectionBg: doc.data().collectionBg
 						})
 					})
 					return { data: collections }
@@ -56,32 +65,61 @@ export const collectionsApi = createApi({
 			},
 			providesTags: ["Collection"]
 		}),
-		fetchCollection: builder.query({
-			async queryFn({
-				userId,
-				collectionId
-			}: {
-				userId: string
-				collectionId: string
-			}) {
+		fetchPublicCollections: builder.query({
+			async queryFn() {
 				try {
-					const userCollectionRef = doc(
-						db,
-						"users",
-						userId,
-						"collections",
-						collectionId
+					const publicCollectionsQuery = query(
+						collectionGroup(db, "collections"),
+						where("isPublic", "==", true)
 					)
-					const collectionDocSnapshot = await getDoc(userCollectionRef)
-					return { data: collectionDocSnapshot.data() }
+					const querySnapshot = await getDocs(publicCollectionsQuery)
+					let publicCollections: CollectionsData[] = []
+					querySnapshot?.forEach((doc) => {
+						publicCollections.push({
+							id: doc.id,
+							title: doc.data().title,
+							description: doc.data().description,
+							owner: doc.data().owner,
+							ownerId: doc.data().ownerId,
+							isPublic: doc.data().isPublic,
+							games: doc.data().games,
+							collectionBg: doc.data().collectionBg
+						})
+					})
+					return { data: publicCollections }
 				} catch (error) {
-					return { error: "Failed to fetch collection" }
+					return { error: error }
+				}
+			},
+			providesTags: ["Collection"]
+		}),
+		fetchCollection: builder.query({
+			async queryFn(collectionId: string) {
+				try {
+					const collectionsQuery = query(
+						collectionGroup(db, "collections"),
+						where("id", "==", collectionId)
+					)
+					const querySnapshot = await getDocs(collectionsQuery)
+					const collection: CollectionsData = {
+						id: querySnapshot.docs[0].id,
+						title: querySnapshot.docs[0].data().title,
+						description: querySnapshot.docs[0].data().description,
+						owner: querySnapshot.docs[0].data().owner,
+						ownerId: querySnapshot.docs[0].data().ownerId,
+						isPublic: querySnapshot.docs[0].data().isPublic,
+						games: querySnapshot.docs[0].data().games,
+						collectionBg: querySnapshot.docs[0].data().collectionBg
+					}
+					return { data: collection }
+				} catch (error) {
+					return { error: error }
 				}
 			},
 			providesTags: ["Collection"]
 		}),
 		addCollection: builder.mutation({
-			async queryFn({ data, userId, collectionId }) {
+			async queryFn({ data, userId, owner, ownerId, collectionId }) {
 				try {
 					const docRef = doc(db, "users", userId as string)
 					const docSnap = await getDoc(docRef)
@@ -97,6 +135,8 @@ export const collectionsApi = createApi({
 							// If the document doesn't exist, create it with following properties.
 							await setDoc(collectionDocRef, {
 								id: collectionId,
+								owner: owner,
+								ownerId: ownerId,
 								...data,
 								games: [],
 								collectionBg: ""
@@ -217,6 +257,7 @@ export const collectionsApi = createApi({
 
 export const {
 	useFetchCollectionsQuery,
+	useFetchPublicCollectionsQuery,
 	useFetchCollectionQuery,
 	useAddCollectionMutation,
 	useDeleteCollectionMutation,
