@@ -106,7 +106,7 @@ export default function GameCard({ game }: { game: GameT }) {
 					))}
 				</div>
 				{pathname.includes("collections") &&
-					user?.uid === viewedUserProfileId.userId && (
+					user?.uid === viewedUserProfileId && (
 						<div className="absolute top-1 right-1 flex items-center">
 							<Popover
 								open={open}

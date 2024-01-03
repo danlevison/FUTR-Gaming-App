@@ -7,7 +7,6 @@ import { useFetchCollectionQuery } from "@/redux/features/collectionsApiSlice"
 import { useSelector } from "react-redux"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
-import PrivateRoute from "@/components/PrivateRoute"
 import { userProfileId } from "@/redux/features/userProfileIdSlice"
 
 function Collection() {
@@ -20,7 +19,7 @@ function Collection() {
 		isFetching,
 		isError
 	} = useFetchCollectionQuery({
-		userId: viewedUserProfileId?.userId ?? "",
+		userId: viewedUserProfileId as string,
 		collectionId: collection_id as string
 	})
 
