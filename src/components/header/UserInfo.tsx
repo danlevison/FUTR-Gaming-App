@@ -4,9 +4,11 @@ import { currentUser } from "@/redux/features/authSlice"
 import { useSelector } from "react-redux"
 
 export default function UserInfo({
-	sidebarStatus
+	sidebarStatus,
+	nav
 }: {
-	sidebarStatus: boolean
+	sidebarStatus?: boolean
+	nav?: boolean
 }) {
 	const user = useSelector(currentUser)
 
@@ -26,7 +28,7 @@ export default function UserInfo({
 					/>
 				</Link>
 			</div>
-			{sidebarStatus && (
+			{(sidebarStatus || nav) && (
 				<div className="flex flex-col justify-center items-center mt-2 whitespace-nowrap">
 					<p className="text-sm">{user?.email}</p>
 					<div className="flex items-center gap-4 text-sm">

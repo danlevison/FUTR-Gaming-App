@@ -6,6 +6,7 @@ import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
+import UserInfo from "../UserInfo"
 
 type MobileNavMenuProps = {
 	nav: boolean
@@ -51,6 +52,12 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 						<MdClose size={30} />
 					</button>
 				</div>
+
+				{user && (
+					<div>
+						<UserInfo nav={nav} />
+					</div>
+				)}
 
 				<div>
 					<UserLinks
