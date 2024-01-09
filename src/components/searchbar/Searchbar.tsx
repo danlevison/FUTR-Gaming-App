@@ -9,12 +9,9 @@ import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import Spinner from "../loading/Spinner"
 import SearchForm from "./SearchForm"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { useFetchPublicCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 
 export default function Searchbar() {
-	const user = useSelector(currentUser)
 	const [searchInput, setSearchInput] = useState("")
 	const [value] = useDebounce(searchInput, 700)
 	const [showResults, setShowResults] = useState(false)
@@ -38,11 +35,11 @@ export default function Searchbar() {
 	}
 
 	const filteredUsers = userData?.filter((user) =>
-		user?.displayName.toLowerCase().includes(searchInput)
+		user?.displayName.toLowerCase().includes(searchInput.toLowerCase())
 	)
 
 	const filteredCollections = publicCollectionsData?.filter((collection) =>
-		collection.title.toLowerCase().includes(searchInput)
+		collection.title.toLowerCase().includes(searchInput.toLowerCase())
 	)
 
 	return (
@@ -150,16 +147,17 @@ export default function Searchbar() {
 											key={collection.id}
 											className="flex items-center gap-2"
 										>
-											{/* {user?.avatar && (
-													<Image
-														src={user?.avatar}
-														alt={user?.displayName}
-														width={50}
-														height={50}
-														style={{ objectFit: "cover" }}
-														className="rounded-md"
-													/>
-												)} */}
+											{collection.collectionBg && (
+												<Image
+													src={collection.collectionBg}
+													alt={""}
+													width={50}
+													height={50}
+													style={{ objectFit: "cover" }}
+													className="rounded-md"
+												/>
+											)}
+
 											<Link
 												href={`/collections/${collection.id}`}
 												onClick={handleLinkClick}
