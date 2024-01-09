@@ -27,7 +27,7 @@ The following technologies were used to build Student Space:
 
 ## What I learned from this project
 
-TBC...
+With this app I have learnt and implemented Redux Toolkit for global state management and Redux Toolkit Query for advanced data fetching and caching. Learning these two new tools has been game changing by allowing me to transition away from traditional methods like useEffect and fetch for data retrieval. Redux Toolkit Query handles the majority of the work by providing built-in features such as loading, fetching, and error states, thereby simplifying the entire data-fetching process.
 
 ## Useful Resources
 
