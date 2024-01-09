@@ -39,7 +39,7 @@ export default function NavLinks({
 
 						{(sidebarStatus || nav) && (
 							<span
-								className={`font-bold text-gray-400 text-lg transition-all group-hover:text-primaryText duration-300 ${
+								className={`font-bold text-gray-400 md:text-lg transition-all group-hover:text-primaryText duration-300 ${
 									pathname === path && "text-white"
 								} ${sidebarStatus || nav ? "block" : "hidden"} `}
 							>

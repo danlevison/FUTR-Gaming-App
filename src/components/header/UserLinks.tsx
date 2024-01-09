@@ -28,7 +28,7 @@ export default function UserLinks({
 
 						{(sidebarStatus || nav) && (
 							<span
-								className={`font-bold text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
+								className={`font-bold md:text-lg text-gray-400 transition-all group-hover:text-primaryText duration-300 ${
 									sidebarStatus || nav ? "block" : "hidden"
 								}`}
 							>
