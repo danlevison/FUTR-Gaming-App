@@ -60,6 +60,7 @@ export default function Genre() {
 							nextPage={genreGamesData.next}
 							prevPage={genreGamesData.previous}
 							currentPage={pageQuery}
+							count={genreGamesData.count}
 						/>
 					</div>
 				)}

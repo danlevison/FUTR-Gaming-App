@@ -61,6 +61,7 @@ export default function Tag() {
 							nextPage={tagGamesData.next}
 							prevPage={tagGamesData.previous}
 							currentPage={pageQuery}
+							count={tagGamesData.count}
 						/>
 					</div>
 				)}

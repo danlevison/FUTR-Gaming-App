@@ -63,6 +63,7 @@ export default function Publisher() {
 							nextPage={publisherGamesData.next}
 							prevPage={publisherGamesData.previous}
 							currentPage={pageQuery}
+							count={publisherGamesData.count}
 						/>
 					</div>
 				)}

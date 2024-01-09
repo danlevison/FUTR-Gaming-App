@@ -45,6 +45,7 @@ export default function Publishers() {
 							nextPage={allPublishersData.next}
 							prevPage={allPublishersData.previous}
 							currentPage={pageQuery}
+							count={allPublishersData.count}
 						/>
 					</div>
 				</>

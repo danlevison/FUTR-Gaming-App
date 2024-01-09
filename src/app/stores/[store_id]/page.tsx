@@ -61,6 +61,7 @@ export default function Store() {
 							nextPage={storeGamesData.next}
 							prevPage={storeGamesData.previous}
 							currentPage={pageQuery}
+							count={storeGamesData.count}
 						/>
 					</div>
 				)}
