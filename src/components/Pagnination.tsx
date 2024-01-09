@@ -15,13 +15,15 @@ type PaginationT = {
 	nextPage: string | null
 	prevPage: string | null
 	currentPage: number
+	count: number
 }
 
 export default function PaginationComponent({
 	pageHandler,
 	nextPage,
 	prevPage,
-	currentPage
+	currentPage,
+	count
 }: PaginationT) {
 	const pageNextHandler = () => {
 		if (nextPage !== null) pageHandler(++currentPage)
@@ -61,6 +63,7 @@ export default function PaginationComponent({
 						onClick={() => pageNumberHandler(2)}
 						variant={"outline"}
 						className="hidden sm:block"
+						disabled={count < 40}
 					>
 						2
 					</Button>
@@ -70,6 +73,7 @@ export default function PaginationComponent({
 						onClick={() => pageNumberHandler(3)}
 						variant={"outline"}
 						className="hidden sm:block"
+						disabled={count < 80}
 					>
 						3
 					</Button>

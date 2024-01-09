@@ -9,10 +9,10 @@ import {
 	CardTitle
 } from "@/components/ui/card"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
-import DeleteCollectionModal from "./DeleteCollectionModal"
+import DeleteCollectionModal from "../app/collections/components/DeleteCollectionModal"
 //types
 import { GameT, UserT } from "@/types"
-import EditCollection from "./EditCollection"
+import EditCollection from "../app/collections/components/EditCollection"
 import { usePathname } from "next/navigation"
 
 type CollectionCardProps = {

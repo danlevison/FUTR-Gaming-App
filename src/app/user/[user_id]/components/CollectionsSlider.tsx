@@ -1,6 +1,6 @@
 "use client"
 
-import CollectionCard from "@/app/collections/components/CollectionCard"
+import CollectionCard from "@/components/CollectionCard"
 import Spinner from "@/components/loading/Spinner"
 import {
 	Carousel,
