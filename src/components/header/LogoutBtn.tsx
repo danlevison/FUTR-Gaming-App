@@ -12,11 +12,11 @@ export default function LogoutBtn({
 	return (
 		<button
 			onClick={handleLogout}
-			className="flex justify-center items-center gap-2"
+			className="flex justify-center items-center gap-2 w-full bg-gray-500 p-2 rounded-md hover:opacity-80"
 		>
 			<CiLogout size={25} />
 			{(sidebarStatus || nav) && (
-				<span className="whitespace-nowrap">Sign out</span>
+				<span className="text-sm whitespace-nowrap">Sign out</span>
 			)}
 		</button>
 	)
