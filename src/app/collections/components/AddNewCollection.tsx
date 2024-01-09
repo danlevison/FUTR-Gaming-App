@@ -220,7 +220,7 @@ export default function AddNewCollection({ user }: NewCollectionFormProps) {
 			>
 				Start a new collection +
 			</DrawerTrigger>
-			<DrawerContent className="flex flex-col justify-center items-center">
+			<DrawerContent>
 				<DrawerHeader>
 					<DrawerTitle className="text-3xl sm:text-4xl md:text-5xl">
 						Start a new collection
