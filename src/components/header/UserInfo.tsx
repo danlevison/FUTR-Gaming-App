@@ -5,18 +5,21 @@ import { useSelector } from "react-redux"
 
 export default function UserInfo({
 	sidebarStatus,
-	nav
+	nav,
+	handleNav
 }: {
 	sidebarStatus?: boolean
 	nav?: boolean
+	handleNav?: () => void
 }) {
 	const user = useSelector(currentUser)
 
 	return (
-		<div className="mt-5 md:mt-8">
+		<div className="flex items-center gap-4 md:flex-col md:gap-0 mt-5 md:mt-8">
 			<div className="flex justify-center items-center">
 				<Link
 					href={`/user/${user?.uid}`}
+					onClick={handleNav}
 					className="rounded-full p-[0.15rem] hover:bg-white duration-300"
 				>
 					<Image
@@ -41,7 +44,8 @@ export default function UserInfo({
 					</div>
 					<Link
 						href={`/user/${user?.uid}`}
-						className="border border-accentSecondary w-full text-center rounded-md mt-2 p-1 hover:border-white duration-300"
+						onClick={handleNav}
+						className="border border-accentSecondary w-full text-sm md:text-base text-center rounded-md mt-2 p-1 hover:border-white duration-300"
 					>
 						{user?.displayName}
 					</Link>

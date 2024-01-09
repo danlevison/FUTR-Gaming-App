@@ -55,7 +55,10 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 
 				{user && (
 					<div>
-						<UserInfo nav={nav} />
+						<UserInfo
+							nav={nav}
+							handleNav={handleNav}
+						/>
 					</div>
 				)}
 
