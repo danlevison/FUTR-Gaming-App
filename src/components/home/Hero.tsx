@@ -9,6 +9,7 @@ export default function Hero() {
 			<Image
 				src={heroImg}
 				alt="Space"
+				priority
 				placeholder="blur"
 				quality={100}
 				fill
