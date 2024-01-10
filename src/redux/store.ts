@@ -5,19 +5,22 @@ import usersApiReducer, { usersApi } from "./features/usersApiSlice"
 import collectionsApiReducer, {
 	collectionsApi
 } from "./features/collectionsApiSlice"
+import friendsApiReducer, { friendsApi } from "./features/friendsApiSlice"
 
 export const store = configureStore({
 	reducer: {
 		gamesApi: gamesApiReducer,
 		usersApi: usersApiReducer,
 		collectionsApi: collectionsApiReducer,
+		friendsApi: friendsApiReducer,
 		data: rootReducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
 			gamesApi.middleware,
 			usersApi.middleware,
-			collectionsApi.middleware
+			collectionsApi.middleware,
+			friendsApi.middleware
 		])
 })
 
