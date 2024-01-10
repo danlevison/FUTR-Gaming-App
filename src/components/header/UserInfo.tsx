@@ -2,6 +2,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { currentUser } from "@/redux/features/authSlice"
 import { useSelector } from "react-redux"
+import {
+	useFetchFollowersQuery,
+	useFetchFollowingQuery
+} from "@/redux/features/friendsApiSlice"
 
 export default function UserInfo({
 	sidebarStatus,
@@ -13,6 +17,8 @@ export default function UserInfo({
 	handleNav?: () => void
 }) {
 	const user = useSelector(currentUser)
+	const { data: followersData } = useFetchFollowersQuery(user?.uid as string)
+	const { data: followingData } = useFetchFollowingQuery(user?.uid as string)
 
 	return (
 		<div className="flex items-center gap-4 md:flex-col md:gap-0 mt-5 md:mt-8">
@@ -36,10 +42,14 @@ export default function UserInfo({
 					<p className="text-sm">{user?.email}</p>
 					<div className="flex items-center gap-4 text-sm">
 						<p>
-							0 <span className="text-gray-400">Followers</span>
+							{followersData?.length}
+							<span className="ml-1 text-gray-400">
+								{followersData?.length === 1 ? "Follower" : "Followers"}
+							</span>
 						</p>
 						<p>
-							0 <span className="text-gray-400">Following</span>
+							{followingData?.length}
+							<span className="ml-1 text-gray-400">Following</span>
 						</p>
 					</div>
 					<Link
