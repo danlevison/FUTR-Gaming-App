@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button"
 import {
 	useFollowUserMutation,
 	useFetchFollowingQuery,
 	useUnfollowUserMutation
 } from "@/redux/features/friendsApiSlice"
 import { FcCheckmark } from "react-icons/fc"
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { Loader2 } from "lucide-react"
 import type { UserT } from "@/types"
 
 type FollowBtnProps = {
@@ -15,20 +17,42 @@ type FollowBtnProps = {
 export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 	const [followUser] = useFollowUserMutation()
 	const [unfollowUser] = useUnfollowUserMutation()
-	const { data: followingData } = useFetchFollowingQuery(user?.uid as string)
-
-	const handleFollowUser = () => {
-		followUser({
-			userId: user?.uid as string,
-			followedUserId: userParamId as string
-		})
+	const { data: followingData, isFetching } = useFetchFollowingQuery(
+		user?.uid as string
+	)
+	const { toast } = useToast()
+	const Icons = {
+		spinner: Loader2
 	}
 
-	const handleUnfollowUser = () => {
-		unfollowUser({
-			userId: user?.uid as string,
-			followedUserId: userParamId as string
-		})
+	const handleFollowUser = async () => {
+		try {
+			await followUser({
+				userId: user?.uid as string,
+				followedUserId: userParamId as string
+			})
+		} catch (error) {
+			console.error("Error following user", error)
+			toast({
+				variant: "destructive",
+				description: "Failed to follow user, please try again."
+			})
+		}
+	}
+
+	const handleUnfollowUser = async () => {
+		try {
+			await unfollowUser({
+				userId: user?.uid as string,
+				followedUserId: userParamId as string
+			})
+		} catch (error) {
+			console.error("Error unfollowing user", error)
+			toast({
+				variant: "destructive",
+				description: "Failed to unfollow user, please try again."
+			})
+		}
 	}
 
 	const isFollowing = followingData?.find((user) => user.userId === userParamId)
@@ -39,9 +63,15 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleFollowUser}
 					variant={"secondary"}
-					className="w-full max-w-[130px] mx-auto xs:mx-0"
+					className={`w-full max-w-[130px] mx-auto xs:mx-0 ${
+						isFetching ? "bg-gray-700 animate-pulse" : ""
+					}`}
 				>
-					Follow
+					{isFetching ? (
+						<Icons.spinner className="ml-2 w-4 h-4 animate-spin text-gray-400" />
+					) : (
+						<p>Follow</p>
+					)}
 				</Button>
 			)
 		} else if (user?.uid !== userParamId && isFollowing) {
@@ -49,13 +79,21 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleUnfollowUser}
 					variant={"outline"}
-					className="w-full max-w-[130px] mx-auto xs:mx-0"
+					className={`w-full max-w-[130px] mx-auto xs:mx-0 ${
+						isFetching ? "bg-gray-700 animate-pulse border-none" : ""
+					}`}
 				>
-					Following
-					<FcCheckmark
-						size={18}
-						className="ml-1"
-					/>
+					{isFetching ? (
+						<Icons.spinner className="ml-2 w-4 h-4 animate-spin text-gray-400" />
+					) : (
+						<>
+							<p>Following</p>
+							<FcCheckmark
+								size={18}
+								className="ml-1"
+							/>
+						</>
+					)}
 				</Button>
 			)
 		} else {
