@@ -23,10 +23,10 @@ export default function User() {
 	const { displayName, avatar } = userDetails() || {}
 
 	return (
-		<main className="flex flex-col min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
-			<div className="flex justify-between items-center">
-				<div className="flex items-center gap-2">
-					<h1 className="order-1 font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
+		<main className="min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
+			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+				<div className="flex flex-col items-center xs:flex-row gap-2">
+					<h1 className="order-1 font-bold uppercase text-center text-3xl sm:text-4xl md:text-5xl tracking-wider">
 						{displayName}
 					</h1>
 					{avatar && (

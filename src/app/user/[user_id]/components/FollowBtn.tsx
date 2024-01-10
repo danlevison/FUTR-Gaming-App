@@ -39,6 +39,7 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleFollowUser}
 					variant={"secondary"}
+					className="w-full max-w-[130px] mx-auto xs:mx-0"
 				>
 					Follow
 				</Button>
@@ -48,6 +49,7 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleUnfollowUser}
 					variant={"outline"}
+					className="w-full max-w-[130px] mx-auto xs:mx-0"
 				>
 					Following
 					<FcCheckmark
