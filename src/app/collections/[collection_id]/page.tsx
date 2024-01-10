@@ -71,7 +71,15 @@ function Collection() {
 							{collectionData?.title}
 						</h1>
 						<div className="mt-2">
-							<p>Collection by: {collectionData?.owner}</p>
+							<p>
+								Collection by:{" "}
+								<Link
+									href={`/user/${collectionData?.ownerId}`}
+									className="hover:underline"
+								>
+									{collectionData?.owner}
+								</Link>
+							</p>
 							{collectionData?.isPublic ? (
 								<p className="flex items-center gap-2">
 									Public Collection <MdVisibility />

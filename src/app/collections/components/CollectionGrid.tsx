@@ -23,7 +23,7 @@ export default function CollectionGrid({ user }: { user: UserT }) {
 			) : (
 				<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
 					{collectionsData?.map(
-						({ id, title, description, isPublic, games }) => (
+						({ id, title, description, isPublic, games, owner, ownerId }) => (
 							<li key={id}>
 								<CollectionCard
 									id={id}
@@ -31,6 +31,8 @@ export default function CollectionGrid({ user }: { user: UserT }) {
 									description={description}
 									isPublic={isPublic}
 									games={games}
+									owner={owner}
+									ownerId={ownerId}
 									user={user!}
 								/>
 							</li>

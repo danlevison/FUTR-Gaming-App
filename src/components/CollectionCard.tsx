@@ -21,6 +21,8 @@ type CollectionCardProps = {
 	description: string
 	isPublic: boolean
 	games: GameT[]
+	owner: string
+	ownerId: string
 	user: UserT
 }
 
@@ -30,6 +32,8 @@ export default function CollectionCard({
 	description,
 	isPublic,
 	games,
+	owner,
+	ownerId,
 	user
 }: CollectionCardProps) {
 	const pathname = usePathname()
@@ -75,7 +79,13 @@ export default function CollectionCard({
 					</div>
 
 					<CardDescription className="text-primaryText">
-						Collection by: {user?.displayName}
+						Collection by:{" "}
+						<Link
+							href={`/user/${ownerId}`}
+							className="hover:underline"
+						>
+							{owner}
+						</Link>
 					</CardDescription>
 					<CardDescription className="text-primaryText">
 						{description}

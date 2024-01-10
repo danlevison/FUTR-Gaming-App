@@ -16,7 +16,7 @@ export default function SearchForm({
 	showResults
 }: SearchFormProps) {
 	return (
-		<form className="w-full md:pt-2 px-2 bg-transparent">
+		<form className="w-full py-1 px-2">
 			<div className="w-full flex items-center gap-2">
 				<Label
 					htmlFor="search"
@@ -25,7 +25,7 @@ export default function SearchForm({
 					<AiOutlineSearch size={30} />
 					<span className="sr-only">Search games</span>
 				</Label>
-				<div className="bg-transparent flex items-center w-full border-input md:border-gray-600 border-2 rounded-md p-2">
+				<div className="flex items-center w-full border-input md:border-gray-600 border-2 rounded-md p-2">
 					<input
 						value={searchInput}
 						onChange={handleSearch}
@@ -34,7 +34,7 @@ export default function SearchForm({
 						name="search"
 						placeholder="Search games"
 						autoComplete="off"
-						className="text-base w-full bg-transparent outline-none"
+						className="text-base w-full outline-none bg-transparent"
 						autoFocus={showResults}
 					/>
 					{searchInput && (

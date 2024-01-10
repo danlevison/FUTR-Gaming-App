@@ -53,7 +53,15 @@ export default function CollectionsSlider() {
 						<div>
 							<CarouselContent>
 								{publicCollections()?.map(
-									({ id, title, description, isPublic, games }) => (
+									({
+										id,
+										title,
+										description,
+										isPublic,
+										games,
+										owner,
+										ownerId
+									}) => (
 										<CarouselItem
 											key={id}
 											className="sm:basis-1/2 md:basis-1/2 xl:basis-1/3"
@@ -64,6 +72,8 @@ export default function CollectionsSlider() {
 												description={description}
 												isPublic={isPublic}
 												games={games}
+												owner={owner}
+												ownerId={ownerId}
 												user={user!}
 											/>
 										</CarouselItem>
