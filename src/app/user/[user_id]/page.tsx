@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import FollowBtn from "./components/FollowBtn"
 import Following from "./components/Following"
+import Followers from "./components/Followers"
 
 export default function User() {
 	const user = useSelector(currentUser)
@@ -28,7 +29,7 @@ export default function User() {
 					<h1 className="order-1 font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
 						{displayName}
 					</h1>
-					{user && avatar && (
+					{avatar && (
 						<Image
 							src={avatar}
 							alt={displayName || "User avatar"}
@@ -45,6 +46,10 @@ export default function User() {
 			</div>
 			<CollectionsSlider />
 			<Following
+				userParamId={user_id}
+				userData={userData}
+			/>
+			<Followers
 				userParamId={user_id}
 				userData={userData}
 			/>

@@ -34,7 +34,7 @@ export default function CollectionsSlider() {
 		}
 	}
 	return (
-		<section className="w-full py-10">
+		<section className="w-full pt-10">
 			<h2 className="text-xl font-bold uppercase pb-2">Collections</h2>
 			{publicCollections()?.length === 0 ? (
 				<p className="mt-20 text-xl text-center">No collections yet.</p>

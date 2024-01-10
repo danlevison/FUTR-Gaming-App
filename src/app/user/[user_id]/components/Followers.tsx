@@ -1,34 +1,34 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useFetchFollowingQuery } from "@/redux/features/friendsApiSlice"
+import { useFetchFollowersQuery } from "@/redux/features/friendsApiSlice"
 import type { UserT } from "@/types"
 
-type FollowingProps = {
+type FollowersProps = {
 	userParamId: string | string[]
 	userData: UserT[] | undefined
 }
 
-export default function Following({ userParamId, userData }: FollowingProps) {
-	const { data: followingData } = useFetchFollowingQuery(userParamId as string)
+export default function Followers({ userParamId, userData }: FollowersProps) {
+	const { data: followersData } = useFetchFollowersQuery(userParamId as string)
 
-	const followedUsers = () => {
-		const users = followingData?.map((followedUser) => {
-			return userData?.find((user) => user?.uid === followedUser.userId)
+	const followers = () => {
+		const users = followersData?.map((follower) => {
+			return userData?.find((user) => user?.uid === follower.userId)
 		})
 
 		return users?.filter((user) => user !== undefined)
 	}
 
 	return (
-		<section className="w-full py-10">
+		<section>
 			<h2 className="text-xl font-bold uppercase pb-2">
-				Following <span>({followedUsers()?.length})</span>
+				Followers <span>({followers()?.length})</span>
 			</h2>
-			{followedUsers() && followedUsers()?.length === 0 ? (
+			{followers() && followers()?.length === 0 ? (
 				<p className="text-2xl">😴</p>
 			) : (
 				<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] items-center gap-6">
-					{followedUsers()?.map((user) => (
+					{followers()?.map((user) => (
 						<Link
 							key={user?.uid}
 							href={`/user/${user?.uid}`}

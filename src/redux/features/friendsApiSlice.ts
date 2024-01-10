@@ -16,13 +16,22 @@ export const friendsApi = createApi({
 	tagTypes: ["FriendsList"],
 	endpoints: (builder) => ({
 		fetchFollowers: builder.query({
-			async queryFn() {
+			async queryFn(userId: string) {
 				try {
-					return { data: "ok" }
+					const userFollowersCollectionRef = collection(
+						db,
+						"users",
+						userId,
+						"followers"
+					)
+					const querySnapshot = await getDocs(userFollowersCollectionRef)
+					const data = querySnapshot?.docs.map((doc) => doc.data())
+					return { data }
 				} catch (error) {
-					return { error: "Error" }
+					return { error: "Failed to fetch followers" }
 				}
-			}
+			},
+			providesTags: ["FriendsList"]
 		}),
 		fetchFollowing: builder.query({
 			async queryFn(userId: string) {
@@ -51,24 +60,42 @@ export const friendsApi = createApi({
 				followedUserId: string
 			}) {
 				try {
-					const docRef = doc(db, "users", userId)
-					const docSnap = await getDoc(docRef)
+					const currentUserDocRef = doc(db, "users", userId)
+					const currentUserDocSnap = await getDoc(currentUserDocRef)
 
-					if (docSnap.exists()) {
-						const collectionDocRef = doc(
-							collection(docRef, "following"),
+					const followedUserDocRef = doc(db, "users", followedUserId)
+					const followedUserDocSnap = await getDoc(followedUserDocRef)
+
+					// following collection
+					if (currentUserDocSnap.exists()) {
+						const followingDocRef = doc(
+							collection(currentUserDocRef, "following"),
 							followedUserId
 						)
-						const collectionDocSnap = await getDoc(collectionDocRef)
+						const followingDocSnap = await getDoc(followingDocRef)
 
-						if (!collectionDocSnap.exists()) {
+						if (!followingDocSnap.exists()) {
 							// If the document doesn't exist, create it with following properties.
-							await setDoc(collectionDocRef, {
+							await setDoc(followingDocRef, {
 								userId: followedUserId
 							})
 						}
-					} else {
-						console.error("Collection already exists")
+					}
+
+					// followers collection
+					if (followedUserDocSnap.exists()) {
+						const followersDocRef = doc(
+							collection(followedUserDocRef, "followers"),
+							userId
+						)
+						const followersDocSnap = await getDoc(followersDocRef)
+
+						if (!followersDocSnap.exists()) {
+							// If the document doesn't exist, create it with following properties.
+							await setDoc(followersDocRef, {
+								userId: userId
+							})
+						}
 					}
 					return { data: "ok" }
 				} catch (error) {
@@ -93,7 +120,16 @@ export const friendsApi = createApi({
 						"following",
 						followedUserId
 					)
-					await deleteDoc(followingDocRef)
+					const followersDocRef = doc(
+						db,
+						"users",
+						followedUserId,
+						"followers",
+						userId
+					)
+
+					await deleteDoc(followingDocRef) // remove user from current users following list
+					await deleteDoc(followersDocRef) // removes current user from the followed users followers list
 					return { data: "ok" }
 				} catch (error) {
 					return { error: "Failed to unfollow user" }
@@ -106,6 +142,7 @@ export const friendsApi = createApi({
 
 export const {
 	useFetchFollowingQuery,
+	useFetchFollowersQuery,
 	useFollowUserMutation,
 	useUnfollowUserMutation
 } = friendsApi

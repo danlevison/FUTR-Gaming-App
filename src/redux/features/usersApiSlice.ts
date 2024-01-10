@@ -2,12 +2,10 @@ import { db } from "@/config/firebase"
 import { UserT } from "@/types"
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react"
 import { collection, getDocs } from "firebase/firestore"
-//types
 
 export const usersApi = createApi({
 	reducerPath: "usersApi",
 	baseQuery: fakeBaseQuery(),
-	// to allow automatic re-fetching when there is a mutation e.g. add/delete collection
 	tagTypes: ["User"],
 	endpoints: (builder) => ({
 		fetchUsers: builder.query({

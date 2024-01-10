@@ -61,5 +61,5 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 		}
 	}
 
-	return <>{determineFollowButton()}</>
+	return <>{user && determineFollowButton()}</>
 }
