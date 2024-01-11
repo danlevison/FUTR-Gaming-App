@@ -24,6 +24,7 @@ import {
 import CollectionsDropdown from "./CollectionsDropdown"
 //types
 import { GameT } from "@/types"
+import { useAddGameToWishlistMutation } from "@/redux/features/wishlistApiSlice"
 
 type GameCardProps = {
 	game: GameT
@@ -37,8 +38,34 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 	const pathname = usePathname()
 	const { collection_id } = useParams()
 	const { toast } = useToast()
+	const [addGameToWishlist] = useAddGameToWishlistMutation()
 	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
 	const [updateCollectionBg] = useUpdateCollectionBgMutation()
+
+	const handleAddGameToWishlist = async (gameData: GameT) => {
+		try {
+			await addGameToWishlist({
+				data: gameData,
+				userId: user?.uid,
+				owner: user?.displayName,
+				ownerId: user?.uid,
+				wishlistId: user?.uid
+			})
+			toast({
+				variant: "default",
+				description: "Game successfully added to your wishlist."
+			})
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description:
+					"Error: Unable to add game to your wishlist, please try again."
+			})
+		} finally {
+			setOpen(false)
+		}
+	}
 
 	const handleRemoveGameFromCollection = async (
 		gameData: GameT,
@@ -108,25 +135,36 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 						<span key={platform.id}>{platformIcons[platform.name]}</span>
 					))}
 				</div>
-				{pathname.includes("collections") && user?.uid === ownerId && (
-					<div className="absolute top-1 right-1 flex items-center">
-						<Popover
-							open={open}
-							onOpenChange={setOpen}
+
+				<div className="absolute top-1 right-1 flex items-center">
+					<Popover
+						open={open}
+						onOpenChange={setOpen}
+					>
+						<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
+							<BsThreeDots />
+						</PopoverTrigger>
+						<PopoverContent
+							align="end"
+							className="p-0 rounded-none"
 						>
-							<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
-								<BsThreeDots />
-							</PopoverTrigger>
-							<PopoverContent align="end">
+							<Button
+								onClick={() => handleAddGameToWishlist({ ...game })}
+								className="w-full rounded-none"
+							>
+								Add to your wishlist ❤️
+							</Button>
+							{pathname.includes("collections") && user?.uid === ownerId && (
 								<Button
 									onClick={() => changeCollectionBg(game.background_image)}
-									className="w-full"
+									className="w-full rounded-none"
 								>
 									Set as collection background
 								</Button>
-							</PopoverContent>
-						</Popover>
-
+							)}
+						</PopoverContent>
+					</Popover>
+					{pathname.includes("collections") && user?.uid === ownerId && (
 						<Button
 							onClick={() =>
 								handleRemoveGameFromCollection(
@@ -140,10 +178,10 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 						>
 							<FaRegTrashAlt size={17} />
 						</Button>
-					</div>
-				)}
+					)}
+				</div>
 
-				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-2">
+				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-3">
 					<Link
 						href={`/games/${game?.id}`}
 						className=""

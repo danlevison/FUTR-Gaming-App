@@ -46,7 +46,10 @@ export default function Sidebar() {
 		>
 			<Logo sidebarStatus={sidebar} />
 			{user && <UserInfo sidebarStatus={sidebar} />}
-			<UserLinks sidebarStatus={sidebar} />
+			<UserLinks
+				sidebarStatus={sidebar}
+				user={user}
+			/>
 			<NavLinks sidebarStatus={sidebar} />
 			<CollapseSidebarBtn
 				sidebarStatus={sidebar}

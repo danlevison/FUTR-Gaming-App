@@ -5,6 +5,7 @@ import usersApiReducer, { usersApi } from "./features/usersApiSlice"
 import collectionsApiReducer, {
 	collectionsApi
 } from "./features/collectionsApiSlice"
+import wishlistApiReducer, { wishlistApi } from "./features/wishlistApiSlice"
 import friendsApiReducer, { friendsApi } from "./features/friendsApiSlice"
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
 		gamesApi: gamesApiReducer,
 		usersApi: usersApiReducer,
 		collectionsApi: collectionsApiReducer,
+		wishlistApi: wishlistApiReducer,
 		friendsApi: friendsApiReducer,
 		data: rootReducer
 	},
@@ -20,6 +22,7 @@ export const store = configureStore({
 			gamesApi.middleware,
 			usersApi.middleware,
 			collectionsApi.middleware,
+			wishlistApi.middleware,
 			friendsApi.middleware
 		])
 })

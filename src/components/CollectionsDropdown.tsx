@@ -45,7 +45,8 @@ export default function CollectionsDropdown({
 			console.error(error)
 			toast({
 				variant: "destructive",
-				description: "Error: unable to add game to your collection."
+				description:
+					"Error: Unable to add game to your collection, please try again."
 			})
 		}
 	}
@@ -73,7 +74,7 @@ export default function CollectionsDropdown({
 						href={"/collections"}
 						className="underline"
 					>
-						Start New Collection
+						Start a new collection +
 					</Link>
 				</div>
 			)}

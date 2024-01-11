@@ -20,7 +20,7 @@ export default function Followers({ userParamId, userData }: FollowersProps) {
 	}
 
 	return (
-		<section>
+		<section className="w-full py-10">
 			<h2 className="text-xl font-bold uppercase pb-2">
 				Followers <span>({followers()?.length})</span>
 			</h2>

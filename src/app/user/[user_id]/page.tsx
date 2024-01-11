@@ -45,11 +45,11 @@ export default function User() {
 				/>
 			</div>
 			<CollectionsSlider />
-			<Following
+			<Followers
 				userParamId={user_id}
 				userData={userData}
 			/>
-			<Followers
+			<Following
 				userParamId={user_id}
 				userData={userData}
 			/>

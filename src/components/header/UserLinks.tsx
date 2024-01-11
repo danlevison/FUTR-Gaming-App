@@ -1,11 +1,14 @@
 import Link from "next/link"
 import { userRoutes } from "@/routes/routes"
+import type { UserT } from "@/types"
 
 export default function UserLinks({
+	user,
 	sidebarStatus,
 	nav,
 	handleNav
 }: {
+	user: UserT
 	sidebarStatus?: boolean
 	nav?: boolean
 	handleNav?: () => void
@@ -18,7 +21,7 @@ export default function UserLinks({
 					className="group w-fit"
 				>
 					<Link
-						href={path}
+						href={path === "/wishlist" ? `/wishlist/${user?.uid}` : path}
 						className="flex items-center gap-2"
 						onClick={handleNav}
 					>

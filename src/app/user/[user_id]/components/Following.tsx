@@ -20,7 +20,7 @@ export default function Following({ userParamId, userData }: FollowingProps) {
 	}
 
 	return (
-		<section className="w-full py-10">
+		<section className="w-full">
 			<h2 className="text-xl font-bold uppercase pb-2">
 				Following <span>({followedUsers()?.length})</span>
 			</h2>
