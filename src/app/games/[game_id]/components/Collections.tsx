@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Link from "next/link"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import { useAddGameToWishlistMutation } from "@/redux/features/wishlistApiSlice"
@@ -44,15 +45,24 @@ export default function Collections({ gameData }: { gameData: GameT }) {
 			className={`${showCollections ? "bg-foreground" : ""} mt-5 rounded-b-md`}
 		>
 			<div className="flex items-center gap-5">
-				<Button
-					onClick={() => handleAddGameToWishlist({ ...gameData })}
-					variant={"outline"}
-					className={`w-full text-base font-bold h-12 duration-300 ${
-						showCollections && "rounded-b-none"
-					}`}
-				>
-					Add to wishlist ❤️
-				</Button>
+				{user ? (
+					<Button
+						onClick={() => handleAddGameToWishlist({ ...gameData })}
+						variant={"outline"}
+						className={`w-full text-base font-bold h-12 duration-300 ${
+							showCollections && "rounded-b-none"
+						}`}
+					>
+						Add to wishlist ❤️
+					</Button>
+				) : (
+					<Link
+						href={"/wishlist"}
+						className="w-full text-center font-bold border-input border h-12 px-4 py-3 rounded-md bg-background hover:bg-accent hover:text-accent-foreground duration-300"
+					>
+						Add to wishlist ❤️
+					</Link>
+				)}
 				<Button
 					onClick={() => setShowCollections(!showCollections)}
 					variant={"outline"}
