@@ -6,10 +6,24 @@ import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import AddNewCollection from "./components/AddNewCollection"
 import CollectionGrid from "./components/CollectionGrid"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Collections() {
 	const user = useSelector(currentUser)
 	const { handleLogin } = useAuth()
+	const { toast } = useToast()
+
+	const handleSignIn = async () => {
+		try {
+			await handleLogin()
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description: "Error: Failed to sign you in, please try again."
+			})
+		}
+	}
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
@@ -25,7 +39,7 @@ export default function Collections() {
 						<p className="font-bold text-lg">Sign in to create collections</p>
 						<div className="flex justify-center w-full max-w-[200px] mt-2">
 							<button
-								onClick={handleLogin}
+								onClick={handleSignIn}
 								className="flex justify-center items-center gap-2 w-full bg-gray-500 p-2 rounded-md hover:opacity-80"
 							>
 								Sign in with Google <FcGoogle size={30} />

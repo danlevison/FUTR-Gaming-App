@@ -10,6 +10,8 @@ import { currentUser } from "@/redux/features/authSlice"
 import FollowBtn from "./components/FollowBtn"
 import Following from "./components/Following"
 import Followers from "./components/Followers"
+import WishlistSlider from "./components/WishlistSlider"
+import Link from "next/link"
 
 export default function User() {
 	const user = useSelector(currentUser)
@@ -26,9 +28,17 @@ export default function User() {
 		<main className="min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col items-center xs:flex-row gap-2">
-					<h1 className="order-1 font-bold uppercase text-center text-3xl sm:text-4xl md:text-5xl tracking-wider">
-						{displayName}
-					</h1>
+					<div className="order-1">
+						<h1 className="font-bold uppercase text-center text-3xl sm:text-4xl md:text-5xl tracking-wider">
+							{displayName}
+						</h1>
+						<Link
+							href={`/wishlist/${user_id}`}
+							className="text-lg underline"
+						>
+							View wishlist
+						</Link>
+					</div>
 					{avatar && (
 						<Image
 							src={avatar}
@@ -53,6 +63,7 @@ export default function User() {
 				userParamId={user_id}
 				userData={userData}
 			/>
+			{/* <WishlistSlider /> */}
 		</main>
 	)
 }

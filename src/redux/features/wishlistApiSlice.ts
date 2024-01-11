@@ -2,19 +2,27 @@ import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react"
 import { db } from "@/config/firebase"
 import {
 	doc,
-	getDoc,
-	setDoc,
-	collection,
-	serverTimestamp,
-	deleteDoc,
 	updateDoc,
 	arrayUnion,
 	getDocs,
+	getDoc,
+	collection,
+	setDoc,
 	arrayRemove,
 	collectionGroup,
 	query,
-	where
+	where,
+	runTransaction,
+	writeBatch
 } from "firebase/firestore"
+import type { GameT } from "@/types"
+
+type WishlistData = {
+	id: string
+	owner: string
+	ownerId: string
+	games: GameT[]
+}
 
 export const wishlistApi = createApi({
 	reducerPath: "wishlistApi",
@@ -23,12 +31,21 @@ export const wishlistApi = createApi({
 	tagTypes: ["Wishlist"],
 	endpoints: (builder) => ({
 		fetchWishlist: builder.query({
-			async queryFn({ userId }: { userId: string }) {
+			async queryFn(wishlistId: string) {
 				try {
-					const userWishlistRef = collection(db, "users", userId, "wishlist")
-					const querySnapshot = await getDocs(userWishlistRef)
+					const wishlistQuery = query(
+						collectionGroup(db, "wishlist"),
+						where("id", "==", wishlistId)
+					)
+					const querySnapshot = await getDocs(wishlistQuery)
 
-					return { data: "ok" }
+					const wishlist: WishlistData = {
+						id: querySnapshot.docs[0].id,
+						owner: querySnapshot.docs[0].data().owner,
+						ownerId: querySnapshot.docs[0].data().ownerId,
+						games: querySnapshot.docs[0].data().games
+					}
+					return { data: wishlist }
 				} catch (error) {
 					return { error: "Failed to fetch wishlist" }
 				}
@@ -46,13 +63,9 @@ export const wishlistApi = createApi({
 							collection(docRef, "wishlist"),
 							wishlistId
 						)
-						const wishlistDocSnap = await getDoc(wishlistDocRef)
+						const collectionDocSnap = await getDoc(wishlistDocRef)
 
-						await updateDoc(wishlistDocRef, {
-							games: arrayUnion(data)
-						})
-
-						if (!wishlistDocSnap.exists()) {
+						if (!collectionDocSnap.exists()) {
 							// If the document doesn't exist, create it with following properties.
 							await setDoc(wishlistDocRef, {
 								id: wishlistId,
@@ -61,12 +74,36 @@ export const wishlistApi = createApi({
 								games: []
 							})
 						}
+						await updateDoc(wishlistDocRef, {
+							games: arrayUnion(data)
+						})
 					} else {
-						console.error("Wishlist already exists")
+						console.error("Collection already exists")
 					}
+
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to add game to wishlist" }
+					return { error: error }
+				}
+			},
+			invalidatesTags: ["Wishlist"]
+		}),
+		removeGameFromWishlist: builder.mutation({
+			async queryFn({ data, userId, wishlistId }) {
+				try {
+					const wishlistDocRef = doc(
+						db,
+						"users",
+						userId,
+						"wishlist",
+						wishlistId
+					)
+					await updateDoc(wishlistDocRef, {
+						games: arrayRemove(data)
+					})
+					return { data: "ok" }
+				} catch (error) {
+					return { error: "Failed to remove game from wishlist" }
 				}
 			},
 			invalidatesTags: ["Wishlist"]
@@ -74,7 +111,10 @@ export const wishlistApi = createApi({
 	})
 })
 
-export const { useFetchWishlistQuery, useAddGameToWishlistMutation } =
-	wishlistApi
+export const {
+	useFetchWishlistQuery,
+	useAddGameToWishlistMutation,
+	useRemoveGameFromWishlistMutation
+} = wishlistApi
 
 export default wishlistApi.reducer

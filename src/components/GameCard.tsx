@@ -24,7 +24,10 @@ import {
 import CollectionsDropdown from "./CollectionsDropdown"
 //types
 import { GameT } from "@/types"
-import { useAddGameToWishlistMutation } from "@/redux/features/wishlistApiSlice"
+import {
+	useAddGameToWishlistMutation,
+	useRemoveGameFromWishlistMutation
+} from "@/redux/features/wishlistApiSlice"
 
 type GameCardProps = {
 	game: GameT
@@ -37,8 +40,10 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 	const [open, setOpen] = useState(false)
 	const pathname = usePathname()
 	const { collection_id } = useParams()
+	const { wishlist_id } = useParams()
 	const { toast } = useToast()
 	const [addGameToWishlist] = useAddGameToWishlistMutation()
+	const [removeGameFromWishlist] = useRemoveGameFromWishlistMutation()
 	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
 	const [updateCollectionBg] = useUpdateCollectionBgMutation()
 
@@ -67,6 +72,27 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 		}
 	}
 
+	const handleRemoveGameFromWishlist = async (gameData: GameT) => {
+		try {
+			await removeGameFromWishlist({
+				data: gameData,
+				userId: user?.uid,
+				wishlistId: wishlist_id
+			})
+			toast({
+				variant: "default",
+				description: "Game successfully removed from your wishlist."
+			})
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description:
+					"Error: Unable to remove game from your wishlist, please try again."
+			})
+		}
+	}
+
 	const handleRemoveGameFromCollection = async (
 		gameData: GameT,
 		userId: string,
@@ -86,7 +112,8 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 			console.error(error)
 			toast({
 				variant: "destructive",
-				description: "Error: unable to remove game from your collection."
+				description:
+					"Error: Unable to remove game from your collection, please try again."
 			})
 		}
 	}
@@ -135,51 +162,61 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 						<span key={platform.id}>{platformIcons[platform.name]}</span>
 					))}
 				</div>
-
-				<div className="absolute top-1 right-1 flex items-center">
-					<Popover
-						open={open}
-						onOpenChange={setOpen}
-					>
-						<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
-							<BsThreeDots />
-						</PopoverTrigger>
-						<PopoverContent
-							align="end"
-							className="p-0 rounded-none"
+				{user && (
+					<div className="absolute top-1 right-1 flex items-center">
+						<Popover
+							open={open}
+							onOpenChange={setOpen}
 						>
-							<Button
-								onClick={() => handleAddGameToWishlist({ ...game })}
-								className="w-full rounded-none"
+							<PopoverTrigger className="hover:bg-accent hover:text-accent-foreground duration-150 h-10 px-4 py-2 rounded-md">
+								<BsThreeDots />
+							</PopoverTrigger>
+							<PopoverContent
+								align="end"
+								className="p-0 rounded-none w-full max-w-[240px]"
 							>
-								Add to your wishlist ❤️
+								{pathname.includes("wishlist") && user.uid === ownerId ? (
+									<Button
+										onClick={() => handleRemoveGameFromWishlist({ ...game })}
+										className="w-full rounded-none"
+									>
+										Remove from wishlist
+									</Button>
+								) : (
+									<Button
+										onClick={() => handleAddGameToWishlist({ ...game })}
+										className="w-full rounded-none"
+									>
+										Add to your wishlist ❤️
+									</Button>
+								)}
+								{pathname.includes("collections") && user?.uid === ownerId && (
+									<Button
+										onClick={() => changeCollectionBg(game.background_image)}
+										className="w-full rounded-none"
+									>
+										Set as collection background
+									</Button>
+								)}
+							</PopoverContent>
+						</Popover>
+						{pathname.includes("collections") && user?.uid === ownerId && (
+							<Button
+								onClick={() =>
+									handleRemoveGameFromCollection(
+										{ ...game },
+										user?.uid!,
+										collection_id as string
+									)
+								}
+								variant={"ghost"}
+								aria-label="Delete collection"
+							>
+								<FaRegTrashAlt size={17} />
 							</Button>
-							{pathname.includes("collections") && user?.uid === ownerId && (
-								<Button
-									onClick={() => changeCollectionBg(game.background_image)}
-									className="w-full rounded-none"
-								>
-									Set as collection background
-								</Button>
-							)}
-						</PopoverContent>
-					</Popover>
-					{pathname.includes("collections") && user?.uid === ownerId && (
-						<Button
-							onClick={() =>
-								handleRemoveGameFromCollection(
-									{ ...game },
-									user?.uid!,
-									collection_id as string
-								)
-							}
-							variant={"ghost"}
-							aria-label="Delete collection"
-						>
-							<FaRegTrashAlt size={17} />
-						</Button>
-					)}
-				</div>
+						)}
+					</div>
+				)}
 
 				<h4 className="w-fit uppercase text-lg font-bold tracking-wide hover:underline mt-3">
 					<Link

@@ -96,11 +96,11 @@ export const collectionsApi = createApi({
 		fetchCollection: builder.query({
 			async queryFn(collectionId: string) {
 				try {
-					const collectionsQuery = query(
+					const collectionQuery = query(
 						collectionGroup(db, "collections"),
 						where("id", "==", collectionId)
 					)
-					const querySnapshot = await getDocs(collectionsQuery)
+					const querySnapshot = await getDocs(collectionQuery)
 					const collection: CollectionsData = {
 						id: querySnapshot.docs[0].id,
 						title: querySnapshot.docs[0].data().title,
@@ -113,7 +113,7 @@ export const collectionsApi = createApi({
 					}
 					return { data: collection }
 				} catch (error) {
-					return { error: error }
+					return { error: "Failed to fetch collection data" }
 				}
 			},
 			providesTags: ["Collection"]
