@@ -63,7 +63,7 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleFollowUser}
 					variant={"secondary"}
-					className={`w-full max-w-[130px] mx-auto xs:mx-0 ${
+					className={`w-full xs:max-w-[140px] mx-auto xs:mx-0 ${
 						isFetching ? "bg-gray-700 animate-pulse" : ""
 					}`}
 				>
@@ -79,7 +79,7 @@ export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
 				<Button
 					onClick={handleUnfollowUser}
 					variant={"outline"}
-					className={`w-full max-w-[130px] mx-auto xs:mx-0 ${
+					className={`w-full xs:max-w-[140px] mx-auto xs:mx-0 ${
 						isFetching ? "bg-gray-700 animate-pulse border-none" : ""
 					}`}
 				>
