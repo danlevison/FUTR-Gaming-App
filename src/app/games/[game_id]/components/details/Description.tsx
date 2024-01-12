@@ -1,6 +1,4 @@
 import { useState } from "react"
-//types
-import { GameT } from "@/types"
 
 export default function Description({ description }: { description: string }) {
 	const [showMore, setShowMore] = useState(false)

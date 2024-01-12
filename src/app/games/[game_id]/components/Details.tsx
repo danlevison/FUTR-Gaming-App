@@ -1,8 +1,7 @@
 import Link from "next/link"
 import Description from "./details/Description"
 import Tags from "./details/Tags"
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 export default function Details({ gameData }: { gameData: GameT }) {
 	return (

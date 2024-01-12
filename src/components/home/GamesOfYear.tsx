@@ -2,11 +2,11 @@
 
 import Link from "next/link"
 import { useGetAllGamesQuery } from "@/redux/features/gamesApiSlice"
-import Heading from "@/components/Heading"
+import Heading from "@/components/home/Heading"
 import GamesList from "../GamesList"
 import LoadingGames from "../loading/LoadingGames"
 
-export default function PopularGames() {
+export default function GamesOfYear() {
 	const {
 		data: gamesData,
 		isLoading,

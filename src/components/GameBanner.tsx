@@ -1,8 +1,7 @@
 import Image from "next/image"
 import { platformIcons } from "@/utils/platformIcons"
 import placeholder from "@/../public/assets/placeholder.png"
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 export default function GameBanner({ gameData }: { gameData: GameT }) {
 	const releaseDate = new Date(gameData?.released as string).toDateString()

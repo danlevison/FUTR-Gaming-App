@@ -1,5 +1,4 @@
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 export default function RatingBar({ gameData }: { gameData: GameT }) {
 	return (

@@ -5,8 +5,7 @@ import {
 } from "@/redux/features/collectionsApiSlice"
 import { useToast } from "./ui/use-toast"
 import { FaFolderPlus } from "react-icons/fa"
-//types
-import { UserT, GameT } from "@/types"
+import type { UserT, GameT } from "@/types"
 
 export default function CollectionsDropdown({
 	showCollections,

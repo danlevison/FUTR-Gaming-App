@@ -1,6 +1,5 @@
 import Link from "next/link"
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 export default function Tags({ gameData }: { gameData: GameT }) {
 	return (

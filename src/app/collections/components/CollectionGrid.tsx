@@ -3,8 +3,7 @@
 import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 import Spinner from "@/components/loading/Spinner"
 import CollectionCard from "@/components/CollectionCard"
-//types
-import { UserT } from "@/types"
+import type { UserT } from "@/types"
 
 export default function CollectionGrid({ user }: { user: UserT }) {
 	const {

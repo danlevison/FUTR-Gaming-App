@@ -5,7 +5,6 @@ import {
 	getDoc,
 	setDoc,
 	collection,
-	serverTimestamp,
 	deleteDoc,
 	updateDoc,
 	arrayUnion,
@@ -15,8 +14,7 @@ import {
 	query,
 	where
 } from "firebase/firestore"
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 type CollectionsData = {
 	id: string

@@ -12,8 +12,7 @@ import {
 import { useToast } from "@/components/ui/use-toast"
 import { useDeleteCollectionMutation } from "@/redux/features/collectionsApiSlice"
 import { FaRegTrashAlt } from "react-icons/fa"
-//types
-import { UserT } from "@/types"
+import type { UserT } from "@/types"
 
 export default function DeleteCollectionModal({
 	id: collectionId,

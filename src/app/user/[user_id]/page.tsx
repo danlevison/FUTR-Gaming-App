@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-
 import CollectionsSlider from "./components/CollectionsSlider"
 import { useParams } from "next/navigation"
 import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"

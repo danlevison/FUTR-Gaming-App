@@ -1,8 +1,7 @@
 import Image from "next/image"
 import placeholder from "@/../public/assets/placeholder.png"
 import Description from "@/app/games/[game_id]/components/details/Description"
-//types
-import { PageItemT } from "@/types"
+import type { PageItemT } from "@/types"
 
 export default function Banner({ data }: { data: PageItemT }) {
 	return (

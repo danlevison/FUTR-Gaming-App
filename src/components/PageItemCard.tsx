@@ -3,8 +3,7 @@ import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { usePathname } from "next/navigation"
-//types
-import { PageItemT } from "@/types"
+import type { PageItemT } from "@/types"
 
 export default function PageItemCard<T extends PageItemT>({
 	item

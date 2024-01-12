@@ -11,9 +11,7 @@ import {
 	arrayRemove,
 	collectionGroup,
 	query,
-	where,
-	runTransaction,
-	writeBatch
+	where
 } from "firebase/firestore"
 import type { GameT } from "@/types"
 

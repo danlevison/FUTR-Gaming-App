@@ -7,9 +7,7 @@ import { Button } from "@/components/ui/button"
 import { BiChevronDown } from "react-icons/bi"
 import CollectionsDropdown from "@/components/CollectionsDropdown"
 import { useToast } from "@/components/ui/use-toast"
-
-//types
-import { GameT } from "@/types"
+import type { GameT } from "@/types"
 
 export default function Collections({ gameData }: { gameData: GameT }) {
 	const user = useSelector(currentUser)

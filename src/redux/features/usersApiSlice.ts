@@ -1,7 +1,7 @@
 import { db } from "@/config/firebase"
-import { UserT } from "@/types"
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react"
 import { collection, getDocs } from "firebase/firestore"
+import type { UserT } from "@/types"
 
 export const usersApi = createApi({
 	reducerPath: "usersApi",

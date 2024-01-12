@@ -12,9 +12,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { MdEdit } from "react-icons/md"
-//types
-import { UserT } from "@/types"
 import { useEditCollectionMutation } from "@/redux/features/collectionsApiSlice"
+import type { UserT } from "@/types"
 
 type FormProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>

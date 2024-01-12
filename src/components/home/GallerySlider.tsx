@@ -10,7 +10,7 @@ import {
 	CarouselNext,
 	CarouselPrevious
 } from "@/components/ui/carousel"
-import SkeletonGameScreenshots from "./skeletons/SkeletonGameScreenshots"
+import SkeletonGameScreenshots from "../skeletons/SkeletonGameScreenshots"
 import Heading from "./Heading"
 
 export default function GallerySlider() {

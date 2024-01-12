@@ -5,6 +5,13 @@ import { useParams, usePathname } from "next/navigation"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger
+} from "@/components/ui/popover"
+import { useToast } from "./ui/use-toast"
+import { Button } from "./ui/button"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar, BsThreeDots } from "react-icons/bs"
 import { BiChevronDown } from "react-icons/bi"
@@ -14,20 +21,12 @@ import {
 	useRemoveGameFromCollectionMutation,
 	useUpdateCollectionBgMutation
 } from "@/redux/features/collectionsApiSlice"
-import { useToast } from "./ui/use-toast"
-import { Button } from "./ui/button"
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger
-} from "@/components/ui/popover"
 import CollectionsDropdown from "./CollectionsDropdown"
-//types
-import { GameT } from "@/types"
 import {
 	useAddGameToWishlistMutation,
 	useRemoveGameFromWishlistMutation
 } from "@/redux/features/wishlistApiSlice"
+import type { GameT } from "@/types"
 
 type GameCardProps = {
 	game: GameT
