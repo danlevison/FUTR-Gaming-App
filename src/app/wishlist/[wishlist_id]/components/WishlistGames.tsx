@@ -1,11 +1,16 @@
+"use client"
+
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useSelector } from "react-redux"
+import { currentUser } from "@/redux/features/authSlice"
 import { useFetchWishlistQuery } from "@/redux/features/wishlistApiSlice"
+import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import GamesList from "@/components/GamesList"
-import type { UserT } from "@/types"
 
-export default function WishListGames({ user }: { user: UserT }) {
+export default function WishListGames() {
+	const user = useSelector(currentUser)
 	const { wishlist_id } = useParams()
 	const {
 		data: wishlistData,
@@ -13,22 +18,31 @@ export default function WishListGames({ user }: { user: UserT }) {
 		isFetching,
 		isError
 	} = useFetchWishlistQuery(wishlist_id as string)
+	const { data: userData } = useFetchUsersQuery({})
 
-	return wishlistData ? (
-		<div>
-			<h2 className="text-2xl sm:text-3xl mb-2">
-				{user?.uid === wishlist_id ? (
-					"Your"
-				) : (
-					<Link
-						href={`/user/${wishlist_id}`}
-						className="underline"
-					>
-						{wishlistData?.owner}&apos;s
-					</Link>
-				)}{" "}
-				Wishlist
-			</h2>
+	const userDetails = () => {
+		return userData?.find((user) => user?.uid === wishlist_id)
+	}
+
+	const { displayName } = userDetails() || {}
+
+	return (
+		<>
+			{displayName && (
+				<h2 className="text-2xl sm:text-3xl mb-2">
+					{user?.uid === wishlist_id ? (
+						"Your"
+					) : (
+						<Link
+							href={`/user/${wishlist_id}`}
+							className="underline"
+						>
+							{displayName}&apos;s
+						</Link>
+					)}{" "}
+					Wishlist
+				</h2>
+			)}
 			<div className="flex flex-col items-center mt-5">
 				{(isLoading || isFetching) && <LoadingGames />}
 
@@ -41,12 +55,8 @@ export default function WishListGames({ user }: { user: UserT }) {
 					</>
 				)}
 
-				{isError && (
-					<p className="text-3xl font-bold">Unable to load wishlist.</p>
-				)}
+				{isError && <p className="text-3xl font-bold">Wishlist is empty.</p>}
 			</div>
-		</div>
-	) : (
-		<p className="text-2xl text-center">Wishlist is empty.</p>
+		</>
 	)
 }

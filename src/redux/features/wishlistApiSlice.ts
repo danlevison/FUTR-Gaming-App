@@ -47,7 +47,7 @@ export const wishlistApi = createApi({
 					}
 					return { data: wishlist }
 				} catch (error) {
-					return { error: "Failed to fetch wishlist" }
+					return { error: "Failed to fetch wishlist." }
 				}
 			},
 			providesTags: ["Wishlist"]
