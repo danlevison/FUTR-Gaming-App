@@ -11,6 +11,7 @@ import FollowBtn from "./components/FollowBtn"
 import Following from "./components/Following"
 import Followers from "./components/Followers"
 import WishlistLink from "./components/WishlistLink"
+import PageHeading from "@/components/PageHeading"
 
 export default function User() {
 	const user = useSelector(currentUser)
@@ -27,9 +28,7 @@ export default function User() {
 		<main className="min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col items-center xs:flex-row gap-2 mb-3">
-					<h1 className="order-1 font-bold uppercase text-center text-3xl sm:text-4xl md:text-5xl tracking-wider">
-						{displayName}
-					</h1>
+					<PageHeading headingText={displayName} />
 
 					{avatar && (
 						<Image

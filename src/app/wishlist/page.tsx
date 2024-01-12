@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import { useEffect } from "react"
+import PageHeading from "@/components/PageHeading"
 
 export default function WishListPage() {
 	const { handleLogin } = useAuth()
@@ -34,9 +35,7 @@ export default function WishListPage() {
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
-			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-				Wishlist
-			</h1>
+			<PageHeading headingText="Wishlist" />
 			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Wishlist</h2>
 				<div className="flex flex-col justify-center items-center bg-foreground w-full h-32 rounded-md">

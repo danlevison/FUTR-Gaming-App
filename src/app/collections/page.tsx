@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc"
 import AddNewCollection from "./components/AddNewCollection"
 import CollectionGrid from "./components/CollectionGrid"
 import { useToast } from "@/components/ui/use-toast"
+import PageHeading from "@/components/PageHeading"
 
 export default function Collections() {
 	const user = useSelector(currentUser)
@@ -27,9 +28,7 @@ export default function Collections() {
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
-			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-				Collections
-			</h1>
+			<PageHeading headingText="Collections" />
 
 			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Collections</h2>

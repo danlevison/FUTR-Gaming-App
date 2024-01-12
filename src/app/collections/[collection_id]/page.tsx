@@ -6,6 +6,7 @@ import { useParams } from "next/navigation"
 import { useFetchCollectionQuery } from "@/redux/features/collectionsApiSlice"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
+import PageHeading from "@/components/PageHeading"
 import { useSelector } from "react-redux"
 import {
 	currentUser,
@@ -67,15 +68,13 @@ function Collection() {
 						</>
 					)}
 					<div className="relative z-10">
-						<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-							{collectionData?.title}
-						</h1>
+						<PageHeading headingText={collectionData?.title} />
 						<div className="mt-2">
 							<p>
 								Collection by:{" "}
 								<Link
 									href={`/user/${collectionData?.ownerId}`}
-									className="hover:underline"
+									className="underline"
 								>
 									{collectionData?.owner}
 								</Link>

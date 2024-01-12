@@ -5,6 +5,7 @@ import { useQueryState, parseAsInteger } from "next-usequerystate"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 import Pagination from "@/components/Pagnination"
+import PageHeading from "@/components/PageHeading"
 
 export default function Publishers() {
 	const [pageQuery, setPageQuery] = useQueryState(
@@ -29,9 +30,7 @@ export default function Publishers() {
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
-			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-				Publishers
-			</h1>
+			<PageHeading headingText="Publishers" />
 			<div className="flex justify-center">
 				{(isLoading || isFetching) && <LoadingItems />}
 			</div>

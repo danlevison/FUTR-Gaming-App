@@ -3,6 +3,7 @@
 import { useGetAllStoresQuery } from "@/redux/features/gamesApiSlice"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
+import PageHeading from "@/components/PageHeading"
 
 export default function Stores() {
 	const {
@@ -14,9 +15,7 @@ export default function Stores() {
 
 	return (
 		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
-			<h1 className="font-bold uppercase text-3xl sm:text-4xl md:text-5xl tracking-wider">
-				Stores
-			</h1>
+			<PageHeading headingText="Stores" />
 			<div className="flex justify-center">
 				{(isLoading || isFetching) && <LoadingItems />}
 			</div>
