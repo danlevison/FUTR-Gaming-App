@@ -12,6 +12,7 @@ import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 import Searchbar from "@/components/searchbar/Searchbar"
 import UserInfo from "../UserInfo"
+import PortfolioLink from "../PortfolioLink"
 
 export default function Sidebar() {
 	const user = useSelector(currentUser)
@@ -60,6 +61,7 @@ export default function Sidebar() {
 			) : (
 				<LoginBtn sidebarStatus={sidebar} />
 			)}
+			<PortfolioLink sidebarStatus={sidebar} />
 		</motion.aside>
 	)
 }

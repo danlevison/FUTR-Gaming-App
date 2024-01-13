@@ -7,6 +7,7 @@ import LogoutBtn from "../LogoutBtn"
 import { useSelector } from "react-redux"
 import { currentUser } from "@/redux/features/authSlice"
 import UserInfo from "../UserInfo"
+import PortfolioLink from "../PortfolioLink"
 
 type MobileNavMenuProps = {
 	nav: boolean
@@ -76,9 +77,10 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 						handleNav={handleNav}
 					/>
 				</div>
-				<div className="mt-10">
+				<div className="mt-5 mb-2">
 					{user ? <LogoutBtn nav={nav} /> : <LoginBtn nav={nav} />}
 				</div>
+				<PortfolioLink nav={nav} />
 			</motion.div>
 		</div>
 	)
