@@ -5,7 +5,6 @@ import { ReduxProvider } from "@/redux/Provider"
 import MobileNav from "@/components/header/mobileNav/MobileNav"
 import Sidebar from "@/components/header/sidebar/Sidebar"
 import Searchbar from "@/components/searchbar/Searchbar"
-import PageTransitionEffect from "@/components/PageTransitionEffect"
 import AuthWrapper from "@/utils/AuthWrapper"
 import { Toaster } from "@/components/ui/toaster"
 
@@ -31,7 +30,6 @@ export default function RootLayout({
 								<Sidebar />
 								<MobileNav />
 							</header>
-							{/* <PageTransitionEffect>{children}</PageTransitionEffect> */}
 							<div className="w-full">
 								<div className="hidden md:block">
 									<Searchbar />
