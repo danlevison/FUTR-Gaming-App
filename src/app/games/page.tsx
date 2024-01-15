@@ -81,7 +81,7 @@ export default function Games() {
 	}
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
+		<main className="w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
 			<PageHeading headingText="Games" />
 			<GameCategoryMenu
 				endPoints={endPoints}
@@ -109,7 +109,11 @@ export default function Games() {
 					</>
 				)}
 
-				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+				{isError && (
+					<p className="text-3xl font-bold text-center">
+						Unable to load games.
+					</p>
+				)}
 			</div>
 		</main>
 	)

@@ -13,11 +13,14 @@ export default function CollapseSidebarBtn({
 			className={`hidden transition-all duration-300 md:mt-auto md:gap-2 ${
 				sidebarStatus ? "md:flex md:items-center" : "md:inline-block"
 			} `}
+			aria-label="Toggle sidebar"
+			aria-expanded={sidebarStatus ? "true" : "false"}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 				fill="none"
+				aria-hidden={true}
 				className={`h-6 w-6 fill-secondary transition-all duration-300 ${
 					sidebarStatus && "rotate-180"
 				}`}

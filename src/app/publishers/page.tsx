@@ -29,7 +29,7 @@ export default function Publishers() {
 	}
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
+		<main className="w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
 			<PageHeading headingText="Publishers" />
 			<div className="flex justify-center">
 				{(isLoading || isFetching) && <LoadingItems />}

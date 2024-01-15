@@ -24,7 +24,7 @@ export default function User() {
 	const { displayName, avatar } = userDetails() || {}
 
 	return (
-		<main className="min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
+		<main className="w-full px-5 pt-20 pb-10 md:pt-2">
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col items-center xs:flex-row gap-2 mb-3">
 					<PageHeading headingText={displayName} />

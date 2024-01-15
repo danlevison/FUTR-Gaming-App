@@ -44,7 +44,7 @@ export default function Genre() {
 	}
 
 	return (
-		<main className="flex flex-col min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
+		<main className="flex flex-col w-full px-5 pt-20 pb-10 md:pt-2">
 			{(isGenreDataLoading || isGenreDataFetching) && <SkeletonBanner />}
 			{genreData && <Banner data={genreData} />}
 			{isGenreDataError && (
@@ -64,7 +64,11 @@ export default function Genre() {
 						/>
 					</div>
 				)}
-				{isError && <p className="text-3xl font-bold">Unable to load genre</p>}
+				{isError && (
+					<p className="text-3xl font-bold text-center">
+						Unable to load games.
+					</p>
+				)}
 			</div>
 		</main>
 	)

@@ -34,7 +34,7 @@ export default function WishListPage() {
 	}, [user, push])
 
 	return (
-		<main className="min-h-screen w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
+		<main className="w-full mx-auto px-5 pt-20 pb-10 md:pt-2">
 			<PageHeading headingText="Wishlist" />
 			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Wishlist</h2>

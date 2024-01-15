@@ -16,7 +16,7 @@ export default function NavLinks({
 }) {
 	const pathname = usePathname()
 	return (
-		<ul className="flex flex-col justify-between gap-5 md:gap-7 mt-5 md:mt-16">
+		<ul className="flex flex-col justify-between gap-5 md:gap-7 mt-5 md:mt-8">
 			{pageRoutes.map(({ name, path, icon }) => (
 				<li
 					key={path}

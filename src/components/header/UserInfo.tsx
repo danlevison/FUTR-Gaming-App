@@ -21,7 +21,7 @@ export default function UserInfo({
 	const { data: followingData } = useFetchFollowingQuery(user?.uid as string)
 
 	return (
-		<div className="flex items-center gap-4 md:flex-col md:gap-0 mt-5 md:mt-8">
+		<div className="flex items-center gap-4 md:flex-col md:gap-0 mt-5">
 			<div className="flex justify-center items-center">
 				<Link
 					href={`/user/${user?.uid}`}

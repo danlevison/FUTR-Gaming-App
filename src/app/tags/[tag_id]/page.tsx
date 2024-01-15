@@ -45,7 +45,7 @@ export default function Tag() {
 	}
 
 	return (
-		<main className="flex flex-col min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">
+		<main className="flex flex-col w-full px-5 pt-20 pb-10 md:pt-2">
 			{(istagDataLoading || istagDataFetching) && <SkeletonBanner />}
 			{tagData && <Banner data={tagData} />}
 			{istagDataError && (
@@ -66,7 +66,9 @@ export default function Tag() {
 					</div>
 				)}
 				{isError && (
-					<p className="text-3xl font-bold">Unable to load tag data</p>
+					<p className="text-3xl font-bold text-center">
+						Unable to load games.
+					</p>
 				)}
 			</div>
 		</main>

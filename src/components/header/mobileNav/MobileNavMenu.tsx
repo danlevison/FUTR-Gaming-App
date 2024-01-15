@@ -50,7 +50,10 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 						onClick={handleNav}
 						aria-label="Close menu"
 					>
-						<MdClose size={30} />
+						<MdClose
+							size={30}
+							aria-hidden={true}
+						/>
 					</button>
 				</div>
 

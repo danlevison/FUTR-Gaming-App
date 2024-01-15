@@ -27,7 +27,10 @@ export default function Nav() {
 					onClick={handleNav}
 					aria-label="Open menu"
 				>
-					<HiOutlineMenuAlt3 size={30} />
+					<HiOutlineMenuAlt3
+						size={30}
+						aria-hidden={true}
+					/>
 				</button>
 			</div>
 		</nav>
