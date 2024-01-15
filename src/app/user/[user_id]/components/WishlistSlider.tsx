@@ -1,7 +1,7 @@
 "use client"
 
 import CollectionCard from "@/components/CollectionCard"
-import GameCard from "@/components/GameCard"
+import GameCard from "@/components/gameCard/GameCard"
 import Spinner from "@/components/loading/Spinner"
 import {
 	Carousel,

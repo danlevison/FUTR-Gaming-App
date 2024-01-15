@@ -18,9 +18,8 @@ export default function CollectionsDropdown({
 }) {
 	const {
 		data: collectionsData,
-		isLoading,
-		isFetching,
-		isError
+		isError,
+		error
 	} = useFetchCollectionsQuery({ userId: user?.uid as string })
 	const [addGameToCollection] = useAddGameToCollectionMutation()
 	const { toast } = useToast()
@@ -65,6 +64,9 @@ export default function CollectionsDropdown({
 							<FaFolderPlus /> {collection.title}
 						</button>
 					))}
+					{isError && (
+						<p className="text-center mt-1 text-red-500">{error as string}</p>
+					)}
 				</div>
 			)}
 			{showCollections && (

@@ -1,5 +1,5 @@
 import { GameT } from "@/types"
-import GameCard from "./GameCard"
+import GameCard from "./gameCard/GameCard"
 
 type GamesListProps = {
 	games: GameT[]

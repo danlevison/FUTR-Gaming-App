@@ -1,0 +1,60 @@
+import { Button } from "../ui/button"
+import { useToast } from "../ui/use-toast"
+import { useRemoveGameFromCollectionMutation } from "@/redux/features/collectionsApiSlice"
+import { FaRegTrashAlt } from "react-icons/fa"
+import type { GameT, UserT } from "@/types"
+
+type RemoveGameCardBtnProps = {
+	game: GameT
+	user: UserT
+	collectionId: string | string[]
+}
+
+export default function RemoveGameCardBtn({
+	game,
+	user,
+	collectionId
+}: RemoveGameCardBtnProps) {
+	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
+	const { toast } = useToast()
+
+	const handleRemoveGameFromCollection = async (
+		gameData: GameT,
+		userId: string,
+		collectionId: string
+	) => {
+		try {
+			await removeGameFromCollection({
+				data: gameData,
+				userId: userId,
+				collectionId: collectionId
+			})
+			toast({
+				variant: "default",
+				description: "Game successfully removed from your collection."
+			})
+		} catch (error) {
+			console.error(error)
+			toast({
+				variant: "destructive",
+				description:
+					"Error: Unable to remove game from your collection, please try again."
+			})
+		}
+	}
+	return (
+		<Button
+			onClick={() =>
+				handleRemoveGameFromCollection(
+					{ ...game },
+					user?.uid!,
+					collectionId as string
+				)
+			}
+			variant={"ghost"}
+			aria-label="Delete collection"
+		>
+			<FaRegTrashAlt size={17} />
+		</Button>
+	)
+}

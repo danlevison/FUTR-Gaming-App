@@ -58,7 +58,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: collections }
 				} catch (error) {
-					return { error: "Failed to fetch collections" }
+					return { error: "Failed to fetch collections." }
 				}
 			},
 			providesTags: ["Collection"]
@@ -111,7 +111,7 @@ export const collectionsApi = createApi({
 					}
 					return { data: collection }
 				} catch (error) {
-					return { error: "Failed to fetch collection data" }
+					return { error: "Failed to fetch collection data." }
 				}
 			},
 			providesTags: ["Collection"]
@@ -141,11 +141,11 @@ export const collectionsApi = createApi({
 							})
 						}
 					} else {
-						console.error("Collection already exists")
+						console.error("Collection already exists.")
 					}
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to add new collection" }
+					return { error: "Failed to add new collection." }
 				}
 			},
 			invalidatesTags: ["Collection"]
@@ -163,7 +163,7 @@ export const collectionsApi = createApi({
 					await deleteDoc(collectionDocRef)
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to delete collection" }
+					return { error: "Failed to delete collection." }
 				}
 			},
 			invalidatesTags: ["Collection"]
@@ -183,7 +183,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to add game to collection" }
+					return { error: "Failed to add game to collection." }
 				}
 			},
 			invalidatesTags: ["Collection"]
@@ -203,7 +203,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to remove game from collection" }
+					return { error: "Failed to remove game from collection." }
 				}
 			},
 			invalidatesTags: ["Collection"]
@@ -225,7 +225,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to edit collection" }
+					return { error: "Failed to edit collection." }
 				}
 			},
 			invalidatesTags: ["Collection"]
@@ -245,7 +245,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: "ok" }
 				} catch (error) {
-					return { error: "Failed to set collection background" }
+					return { error: "Failed to set collection background." }
 				}
 			},
 			invalidatesTags: ["Collection"]
