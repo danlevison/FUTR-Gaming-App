@@ -20,7 +20,7 @@ export default function CollectionsDropdown({
 		data: collectionsData,
 		isError,
 		error
-	} = useFetchCollectionsQuery({ userId: user?.uid as string })
+	} = useFetchCollectionsQuery(user?.uid as string)
 	const [addGameToCollection] = useAddGameToCollectionMutation()
 	const { toast } = useToast()
 

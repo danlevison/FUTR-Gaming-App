@@ -17,7 +17,7 @@ export default function Publishers() {
 		isLoading,
 		isFetching,
 		isError
-	} = useGetAllPublishersQuery({ page: pageQuery })
+	} = useGetAllPublishersQuery(pageQuery)
 
 	const pageHandler = (pageValue: number) => {
 		setPageQuery(pageValue)

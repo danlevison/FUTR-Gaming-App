@@ -27,14 +27,28 @@ type CollectionsData = {
 	collectionBg: string
 }
 
+type AddCollectionData = {
+	title: string
+	description: string
+	isPublic: boolean
+}
+
+type AddCollection = {
+	data: AddCollectionData
+	userId: string
+	owner: string
+	ownerId: string
+	collectionId: string
+}
+
 export const collectionsApi = createApi({
 	reducerPath: "collectionsApi",
 	baseQuery: fakeBaseQuery(),
 	// to allow automatic re-fetching when there is a mutation e.g. add/delete collection
 	tagTypes: ["Collection"],
 	endpoints: (builder) => ({
-		fetchCollections: builder.query({
-			async queryFn({ userId }: { userId: string }) {
+		fetchCollections: builder.query<CollectionsData[], string>({
+			async queryFn(userId) {
 				try {
 					const userCollectionsRef = collection(
 						db,
@@ -63,7 +77,7 @@ export const collectionsApi = createApi({
 			},
 			providesTags: ["Collection"]
 		}),
-		fetchPublicCollections: builder.query({
+		fetchPublicCollections: builder.query<CollectionsData[], {}>({
 			async queryFn() {
 				try {
 					const publicCollectionsQuery = query(
@@ -91,8 +105,8 @@ export const collectionsApi = createApi({
 			},
 			providesTags: ["Collection"]
 		}),
-		fetchCollection: builder.query({
-			async queryFn(collectionId: string) {
+		fetchCollection: builder.query<CollectionsData, string>({
+			async queryFn(collectionId) {
 				try {
 					const collectionQuery = query(
 						collectionGroup(db, "collections"),
@@ -117,7 +131,13 @@ export const collectionsApi = createApi({
 			providesTags: ["Collection"]
 		}),
 		addCollection: builder.mutation({
-			async queryFn({ data, userId, owner, ownerId, collectionId }) {
+			async queryFn({
+				data,
+				userId,
+				owner,
+				ownerId,
+				collectionId
+			}: AddCollection) {
 				try {
 					const docRef = doc(db, "users", userId as string)
 					const docSnap = await getDoc(docRef)
@@ -151,7 +171,13 @@ export const collectionsApi = createApi({
 			invalidatesTags: ["Collection"]
 		}),
 		deleteCollection: builder.mutation({
-			async queryFn({ userId, collectionId }) {
+			async queryFn({
+				userId,
+				collectionId
+			}: {
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const collectionDocRef = doc(
 						db,
@@ -169,7 +195,15 @@ export const collectionsApi = createApi({
 			invalidatesTags: ["Collection"]
 		}),
 		addGameToCollection: builder.mutation({
-			async queryFn({ data, userId, collectionId }) {
+			async queryFn({
+				data,
+				userId,
+				collectionId
+			}: {
+				data: GameT
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const collectionDocRef = doc(
 						db,
@@ -189,7 +223,15 @@ export const collectionsApi = createApi({
 			invalidatesTags: ["Collection"]
 		}),
 		removeGameFromCollection: builder.mutation({
-			async queryFn({ data, userId, collectionId }) {
+			async queryFn({
+				data,
+				userId,
+				collectionId
+			}: {
+				data: GameT
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const collectionDocRef = doc(
 						db,
@@ -209,7 +251,15 @@ export const collectionsApi = createApi({
 			invalidatesTags: ["Collection"]
 		}),
 		editCollection: builder.mutation({
-			async queryFn({ data, userId, collectionId }) {
+			async queryFn({
+				data,
+				userId,
+				collectionId
+			}: {
+				data: AddCollectionData
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const collectionDocRef = doc(
 						db,
@@ -231,7 +281,15 @@ export const collectionsApi = createApi({
 			invalidatesTags: ["Collection"]
 		}),
 		updateCollectionBg: builder.mutation({
-			async queryFn({ data, userId, collectionId }) {
+			async queryFn({
+				data,
+				userId,
+				collectionId
+			}: {
+				data: string
+				userId: string
+				collectionId: string
+			}) {
 				try {
 					const collectionDocRef = doc(
 						db,

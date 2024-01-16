@@ -9,7 +9,7 @@ export default function Series({ gameData }: { gameData: GameT }) {
 		isLoading,
 		isFetching,
 		isError
-	} = useGetGameSeriesQuery({ id: gameData.id })
+	} = useGetGameSeriesQuery(gameData.id as string)
 
 	return (
 		gameSeries &&

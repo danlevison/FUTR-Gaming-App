@@ -19,10 +19,10 @@ export default function Collections({ gameData }: { gameData: GameT }) {
 		try {
 			await addGameToWishlist({
 				data: gameData,
-				userId: user?.uid,
-				owner: user?.displayName,
-				ownerId: user?.uid,
-				wishlistId: user?.uid
+				userId: user?.uid as string,
+				owner: user?.displayName as string,
+				ownerId: user?.uid as string,
+				wishlistId: user?.uid as string
 			})
 			toast({
 				variant: "default",

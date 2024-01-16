@@ -40,10 +40,10 @@ export default function GameCardPopover({
 		try {
 			await addGameToWishlist({
 				data: gameData,
-				userId: user?.uid,
-				owner: user?.displayName,
-				ownerId: user?.uid,
-				wishlistId: user?.uid
+				userId: user?.uid as string,
+				owner: user?.displayName as string,
+				ownerId: user?.uid as string,
+				wishlistId: user?.uid as string
 			})
 			toast({
 				variant: "default",
@@ -65,8 +65,8 @@ export default function GameCardPopover({
 		try {
 			await removeGameFromWishlist({
 				data: gameData,
-				userId: user?.uid,
-				wishlistId: wishlist_id
+				userId: user?.uid as string,
+				wishlistId: wishlist_id as string
 			})
 			toast({
 				variant: "default",
@@ -86,8 +86,8 @@ export default function GameCardPopover({
 		try {
 			await updateCollectionBg({
 				data: gameBgImage,
-				userId: user?.uid,
-				collectionId: collectionId
+				userId: user?.uid as string,
+				collectionId: collectionId as string
 			})
 		} catch (error) {
 			console.error(error)

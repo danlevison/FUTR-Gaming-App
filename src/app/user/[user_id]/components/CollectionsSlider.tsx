@@ -22,7 +22,7 @@ export default function CollectionsSlider() {
 		isLoading,
 		isFetching,
 		isError
-	} = useFetchCollectionsQuery({ userId: user_id as string })
+	} = useFetchCollectionsQuery(user_id as string)
 
 	const publicCollections = () => {
 		// if the user is not the current user then only show public collections

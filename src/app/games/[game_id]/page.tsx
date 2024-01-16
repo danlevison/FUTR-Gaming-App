@@ -18,7 +18,7 @@ export default function GameDetails() {
 		isLoading,
 		isFetching,
 		isError
-	} = useGetGameQuery({ id: game_id as string })
+	} = useGetGameQuery(game_id as string)
 
 	return (
 		<main className="flex flex-col min-h-screen w-full px-5 pt-20 pb-10 md:pt-2">

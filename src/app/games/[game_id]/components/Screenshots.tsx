@@ -18,9 +18,7 @@ export default function Screenshots({ gameData }: { gameData: GameT }) {
 		isFetching,
 		isLoading,
 		isError
-	} = useGetGameScreenshotsQuery({
-		id: gameData.id as string
-	})
+	} = useGetGameScreenshotsQuery(gameData.id as string)
 
 	return (
 		<section className="w-full mt-5">

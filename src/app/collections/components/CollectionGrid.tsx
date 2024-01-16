@@ -11,7 +11,7 @@ export default function CollectionGrid({ user }: { user: UserT }) {
 		isLoading,
 		isFetching,
 		isError
-	} = useFetchCollectionsQuery({ userId: user?.uid as string })
+	} = useFetchCollectionsQuery(user?.uid as string)
 
 	return (
 		<div>

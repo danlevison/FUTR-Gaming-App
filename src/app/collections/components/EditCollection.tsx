@@ -72,7 +72,7 @@ function EditCollectionForm({
 			setMessage("")
 			await editCollection({
 				data: formData,
-				userId: user?.uid,
+				userId: user?.uid as string,
 				collectionId: collectionId
 			})
 			setOpen(false)

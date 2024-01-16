@@ -23,7 +23,7 @@ export default function Tag() {
 		isLoading: istagDataLoading,
 		isFetching: istagDataFetching,
 		isError: istagDataError
-	} = useGetTagQuery({ id: tag_id as string })
+	} = useGetTagQuery(tag_id as string)
 
 	const {
 		data: tagGamesData,

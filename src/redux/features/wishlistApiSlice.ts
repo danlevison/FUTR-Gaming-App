@@ -22,14 +22,22 @@ type WishlistData = {
 	games: GameT[]
 }
 
+type AddGameToWishlist = {
+	data: GameT
+	userId: string
+	owner: string
+	ownerId: string
+	wishlistId: string
+}
+
 export const wishlistApi = createApi({
 	reducerPath: "wishlistApi",
 	baseQuery: fakeBaseQuery(),
 	// to allow automatic re-fetching when there is a mutation e.g. add/delete game from wishlist
 	tagTypes: ["Wishlist"],
 	endpoints: (builder) => ({
-		fetchWishlist: builder.query({
-			async queryFn(wishlistId: string) {
+		fetchWishlist: builder.query<WishlistData, string>({
+			async queryFn(wishlistId) {
 				try {
 					const wishlistQuery = query(
 						collectionGroup(db, "wishlist"),
@@ -51,7 +59,13 @@ export const wishlistApi = createApi({
 			providesTags: ["Wishlist"]
 		}),
 		addGameToWishlist: builder.mutation({
-			async queryFn({ data, userId, owner, ownerId, wishlistId }) {
+			async queryFn({
+				data,
+				userId,
+				owner,
+				ownerId,
+				wishlistId
+			}: AddGameToWishlist) {
 				try {
 					const docRef = doc(db, "users", userId as string)
 					const docSnap = await getDoc(docRef)
@@ -69,7 +83,7 @@ export const wishlistApi = createApi({
 								id: wishlistId,
 								owner: owner,
 								ownerId: ownerId,
-								games: []
+								games: [] as GameT[]
 							})
 						}
 						await updateDoc(wishlistDocRef, {
@@ -87,7 +101,15 @@ export const wishlistApi = createApi({
 			invalidatesTags: ["Wishlist"]
 		}),
 		removeGameFromWishlist: builder.mutation({
-			async queryFn({ data, userId, wishlistId }) {
+			async queryFn({
+				data,
+				userId,
+				wishlistId
+			}: {
+				data: GameT
+				userId: string
+				wishlistId: string
+			}) {
 				try {
 					const wishlistDocRef = doc(
 						db,

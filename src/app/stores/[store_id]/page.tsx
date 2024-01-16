@@ -23,7 +23,7 @@ export default function Store() {
 		isLoading: isStoreDataLoading,
 		isFetching: isStoreDataFetching,
 		isError: isStoreDataError
-	} = useGetStoreQuery({ id: store_id as string })
+	} = useGetStoreQuery(store_id as string)
 
 	const {
 		data: storeGamesData,

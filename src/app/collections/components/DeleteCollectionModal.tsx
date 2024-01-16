@@ -26,7 +26,10 @@ export default function DeleteCollectionModal({
 
 	const handleDeleteCollection = async (collectionId: string) => {
 		try {
-			await deleteCollection({ userId: user?.uid, collectionId: collectionId })
+			await deleteCollection({
+				userId: user?.uid as string,
+				collectionId: collectionId
+			})
 			toast({
 				variant: "default",
 				description: "Your collection has been successfully deleted."

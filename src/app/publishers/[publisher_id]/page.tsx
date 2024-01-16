@@ -23,7 +23,7 @@ export default function Publisher() {
 		isLoading: isPublisherDataLoading,
 		isFetching: isPublisherDataFetching,
 		isError: isPublisherDataError
-	} = useGetPublisherQuery({ id: publisher_id as string })
+	} = useGetPublisherQuery(publisher_id as string)
 
 	const {
 		data: publisherGamesData,

@@ -23,7 +23,7 @@ export default function Genre() {
 		isLoading: isGenreDataLoading,
 		isFetching: isGenreDataFetching,
 		isError: isGenreDataError
-	} = useGetGenreQuery({ id: genre_id as string })
+	} = useGetGenreQuery(genre_id as string)
 	const {
 		data: genreGamesData,
 		isLoading,

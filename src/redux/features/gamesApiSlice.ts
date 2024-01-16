@@ -27,25 +27,25 @@ export const gamesApi = createApi({
 				page: number
 			}) => `${urlEndpoint}&ordering=-${option}&page=${page}&key=${rawgApiKey}`
 		}),
-		getGame: builder.query<GameT, { id: string }>({
-			query: ({ id }: { id: string }) => `games/${id}?key=${rawgApiKey}`
+		getGame: builder.query<GameT, string>({
+			query: (id) => `games/${id}?key=${rawgApiKey}`
 		}),
 		getSearchedGame: builder.query<GamesApiResponse, string>({
 			query: (searchInput: string) =>
 				`games?key=${rawgApiKey}&search=${searchInput}&ordering=-added`
 		}),
-		getGameScreenshots: builder.query<ScreenshotsT, { id: string }>({
-			query: ({ id }) => `games/${id}/screenshots?key=${rawgApiKey}`
+		getGameScreenshots: builder.query<ScreenshotsT, string>({
+			query: (id) => `games/${id}/screenshots?key=${rawgApiKey}`
 		}),
-		getGameSeries: builder.query({
-			query: ({ id }) => `games/${id}/game-series?key=${rawgApiKey}`
+		getGameSeries: builder.query<GamesApiResponse, string>({
+			query: (id) => `games/${id}/game-series?key=${rawgApiKey}`
 		}),
 
 		getAllGenres: builder.query<GeneralApiResponse, {}>({
 			query: () => `genres?key=${rawgApiKey}`
 		}),
-		getGenre: builder.query<PageItemT, { id: string }>({
-			query: ({ id }) => `genres/${id}?key=${rawgApiKey}`
+		getGenre: builder.query<PageItemT, string>({
+			query: (id) => `genres/${id}?key=${rawgApiKey}`
 		}),
 		getAllGenreGames: builder.query<
 			GamesApiResponse,
@@ -58,8 +58,8 @@ export const gamesApi = createApi({
 		getAllTags: builder.query<GeneralApiResponse, {}>({
 			query: () => `tags?key=${rawgApiKey}`
 		}),
-		getTag: builder.query<PageItemT, { id: string }>({
-			query: ({ id }) => `tags/${id}?key=${rawgApiKey}`
+		getTag: builder.query<PageItemT, string>({
+			query: (id) => `tags/${id}?key=${rawgApiKey}`
 		}),
 		getAllTagGames: builder.query<
 			GamesApiResponse,
@@ -72,8 +72,8 @@ export const gamesApi = createApi({
 		getAllStores: builder.query<GeneralApiResponse, {}>({
 			query: () => `stores?key=${rawgApiKey}`
 		}),
-		getStore: builder.query<PageItemT, { id: string }>({
-			query: ({ id }) => `stores/${id}?key=${rawgApiKey}`
+		getStore: builder.query<PageItemT, string>({
+			query: (id) => `stores/${id}?key=${rawgApiKey}`
 		}),
 		getAllStoreGames: builder.query<
 			GamesApiResponse,
@@ -83,12 +83,11 @@ export const gamesApi = createApi({
 				`games?key=${rawgApiKey}&ordering=popularity&page_size=40&page=${page}&stores=${id}`
 		}),
 
-		getAllPublishers: builder.query<GeneralApiResponse, { page: number }>({
-			query: ({ page }: { page: number }) =>
-				`publishers?page_size=40&page=${page}&key=${rawgApiKey}`
+		getAllPublishers: builder.query<GeneralApiResponse, number>({
+			query: (page) => `publishers?page_size=40&page=${page}&key=${rawgApiKey}`
 		}),
-		getPublisher: builder.query<PageItemT, { id: string }>({
-			query: ({ id }) => `publishers/${id}?key=${rawgApiKey}`
+		getPublisher: builder.query<PageItemT, string>({
+			query: (id) => `publishers/${id}?key=${rawgApiKey}`
 		}),
 		getAllPublisherGames: builder.query<
 			GamesApiResponse,
