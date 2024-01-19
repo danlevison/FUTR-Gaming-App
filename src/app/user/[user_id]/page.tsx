@@ -11,6 +11,7 @@ import Following from "./components/Following"
 import Followers from "./components/Followers"
 import WishlistLink from "./components/WishlistLink"
 import PageHeading from "@/components/PageHeading"
+import MessageBtn from "./components/MessageBtn"
 
 export default function User() {
 	const user = useSelector(currentUser)
@@ -39,11 +40,18 @@ export default function User() {
 						/>
 					)}
 				</div>
-
-				<FollowBtn
-					user={user}
-					userParamId={user_id}
-				/>
+				<div className="flex items-center gap-4">
+					<FollowBtn
+						user={user}
+						userParamId={user_id}
+					/>
+					<MessageBtn
+						user={user}
+						userParamId={user_id}
+						displayName={displayName}
+						avatar={avatar}
+					/>
+				</div>
 			</div>
 			<WishlistLink userParamId={user_id} />
 			<CollectionsSlider />

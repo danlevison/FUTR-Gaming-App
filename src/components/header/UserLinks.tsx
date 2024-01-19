@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { userRoutes } from "@/routes/routes"
 import type { UserT } from "@/types"
 
@@ -13,8 +14,9 @@ export default function UserLinks({
 	nav?: boolean
 	handleNav?: () => void
 }) {
+	const pathname = usePathname()
 	return (
-		<ul className="flex flex-col gap-5 md:gap-7 mt-5 md:mt-8">
+		<ul className="flex flex-col gap-5 mt-5 md:mt-8">
 			{userRoutes.map(({ name, path, icon }) => (
 				<li
 					key={name}
@@ -31,7 +33,13 @@ export default function UserLinks({
 						className="flex items-center gap-2"
 						onClick={handleNav}
 					>
-						<span className="text-gray-400 group-hover:text-primaryText duration-300">
+						<span
+							className={`${
+								pathname.includes(path)
+									? "text-white"
+									: "text-gray-400 group-hover:text-primaryText duration-300"
+							}`}
+						>
 							{icon}
 						</span>
 

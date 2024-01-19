@@ -7,6 +7,7 @@ import collectionsApiReducer, {
 } from "./features/collectionsApiSlice"
 import wishlistApiReducer, { wishlistApi } from "./features/wishlistApiSlice"
 import friendsApiReducer, { friendsApi } from "./features/friendsApiSlice"
+import messagesApiReducer, { messagesApi } from "./features/messagesApiSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
 		collectionsApi: collectionsApiReducer,
 		wishlistApi: wishlistApiReducer,
 		friendsApi: friendsApiReducer,
+		messagesApi: messagesApiReducer,
 		data: rootReducer
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -23,7 +25,8 @@ export const store = configureStore({
 			usersApi.middleware,
 			collectionsApi.middleware,
 			wishlistApi.middleware,
-			friendsApi.middleware
+			friendsApi.middleware,
+			messagesApi.middleware
 		])
 })
 

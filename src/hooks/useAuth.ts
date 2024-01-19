@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth, db } from "@/config/firebase"
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore"
+import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore"
 import { useDispatch } from "react-redux"
 import { googleLogin, googleLogout } from "@/redux/features/authSlice"
 import { AppDispatch } from "@/redux/store"
@@ -30,7 +30,7 @@ export default function useAuth() {
 				email: result.user.email,
 				displayName: result.user.displayName,
 				avatar: result.user.photoURL,
-				createdAt: serverTimestamp()
+				createdAt: new Date(Timestamp.now().seconds * 1000).toString()
 			})
 		} catch (error) {
 			console.error(error)

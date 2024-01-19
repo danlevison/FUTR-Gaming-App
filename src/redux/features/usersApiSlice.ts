@@ -24,7 +24,7 @@ export const usersApi = createApi({
 					})
 					return { data: users }
 				} catch (error) {
-					return { error: "Failed to fetch collections" }
+					return { error: "Failed to fetch users" }
 				}
 			},
 			providesTags: ["User"]

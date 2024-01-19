@@ -113,3 +113,21 @@ export type UserCollectionT = {
 	isPublic: boolean
 	games: GameT[] | null
 }
+
+export type ChatsDataT = {
+	chatId: string
+	date: string
+	userInfo: {
+		displayName: string
+		avatar: string
+		userId: string
+	}
+	latestMessage: string
+}
+
+export type SelectedUserT = {
+	chatId: string
+	displayName: string
+	avatar: string
+	userId: string
+}
