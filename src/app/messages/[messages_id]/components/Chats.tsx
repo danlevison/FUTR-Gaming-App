@@ -7,7 +7,7 @@ import { useFetchChatsQuery } from "@/redux/features/messagesApiSlice"
 import { useSearchUsersQuery } from "@/redux/features/messagesApiSlice"
 import { onSnapshot, doc } from "firebase/firestore"
 import { db } from "@/config/firebase"
-import type { ChatsDataT, SelectedUserT, UserT } from "@/types"
+import type { SelectedUserT, UserT } from "@/types"
 
 type ChatsProps = {
 	user: UserT
@@ -101,7 +101,6 @@ export default function Chats({
 
 			{/* chats */}
 			<ul className="flex flex-col justify-center">
-				{(isLoading || isFetching) && <p>Loading...</p>}
 				{chatsData
 					?.toSorted(
 						(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
