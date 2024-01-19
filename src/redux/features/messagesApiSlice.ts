@@ -9,12 +9,11 @@ import {
 	updateDoc,
 	arrayUnion,
 	where,
-	query,
-	deleteDoc
+	query
 } from "firebase/firestore"
 import { db } from "@/config/firebase"
 import { v4 as uuid } from "uuid"
-import type { ChatsDataT } from "@/types"
+import type { ChatsDataT, MessageT } from "@/types"
 
 type AddUserToChat = {
 	userId: string
@@ -29,13 +28,6 @@ type SendMessage = {
 	messagedUserId: string
 	displayName: string
 	avatar: string
-	text: string
-}
-
-type Message = {
-	id: string
-	date: string
-	senderId: string
 	text: string
 }
 
@@ -64,12 +56,13 @@ export const messagesApi = createApi({
 			},
 			providesTags: ["Messages"]
 		}),
-		fetchMessages: builder.query<Message[], string>({
+		fetchMessages: builder.query<MessageT[], string>({
 			async queryFn(chatId) {
 				try {
 					const chatDocRef = doc(db, "chats", chatId)
 					const chatDocSnap = await getDoc(chatDocRef)
-					const data = chatDocSnap.data()?.messages as Message[]
+					const data = chatDocSnap.data()?.messages as MessageT[]
+
 					return { data }
 				} catch (error) {
 					return { error: "Failed to retrieve messages." }

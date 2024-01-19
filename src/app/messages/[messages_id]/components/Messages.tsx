@@ -1,9 +1,12 @@
 "use client"
 
+import { useEffect } from "react"
 import { useFetchMessagesQuery } from "@/redux/features/messagesApiSlice"
 import Message from "./Message"
 import MessageInput from "./MessageInput"
-import type { UserT, SelectedUserT } from "@/types"
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from "@/config/firebase"
+import type { UserT, SelectedUserT, MessageT } from "@/types"
 
 type MessagesProps = {
 	user: UserT
@@ -15,10 +18,31 @@ export default function Messages({ user, selectedUser }: MessagesProps) {
 		data: messageData,
 		isLoading,
 		isFetching,
-		isError
+		isError,
+		refetch
 	} = useFetchMessagesQuery(selectedUser.chatId, {
 		skip: Boolean(!selectedUser.chatId)
 	})
+
+	useEffect(() => {
+		let unsubscribe: () => void
+
+		if (selectedUser.chatId) {
+			unsubscribe = onSnapshot(doc(db, "chats", selectedUser.chatId), (doc) => {
+				// check if data has changed and trigger a refetch
+				const newData: MessageT[] = doc.data()?.messages
+				if (newData !== messageData) {
+					refetch()
+				}
+			})
+		}
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe()
+			}
+		}
+	}, [selectedUser.chatId, messageData, refetch])
 
 	return (
 		<div className="flex flex-col justify-between bg-foreground w-full h-full rounded-b-md">

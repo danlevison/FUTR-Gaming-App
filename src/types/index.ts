@@ -131,3 +131,10 @@ export type SelectedUserT = {
 	avatar: string
 	userId: string
 }
+
+export type MessageT = {
+	id: string
+	date: string
+	senderId: string
+	text: string
+}

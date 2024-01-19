@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import SearchUser from "./SearchUser"
 import { useFetchChatsQuery } from "@/redux/features/messagesApiSlice"
 import { useSearchUsersQuery } from "@/redux/features/messagesApiSlice"
-import type { SelectedUserT, UserT } from "@/types"
+import { onSnapshot, doc } from "firebase/firestore"
+import { db } from "@/config/firebase"
+import type { ChatsDataT, SelectedUserT, UserT } from "@/types"
 
 type ChatsProps = {
 	user: UserT
@@ -29,12 +31,36 @@ export default function Chats({
 		data: chatsData,
 		isLoading,
 		isFetching,
-		isError
+		isError,
+		refetch
 	} = useFetchChatsQuery(user?.uid as string)
 	const { data: userSearchData } = useSearchUsersQuery({
 		userId: user?.uid as string,
 		username: username
 	})
+
+	useEffect(() => {
+		let unsubscribe: () => void
+
+		if (user?.uid && selectedUserChatId) {
+			unsubscribe = onSnapshot(
+				doc(db, "users", user.uid, "userChats", selectedUserChatId),
+				(doc) => {
+					// check if data has changed and trigger a refetch
+					const newData: string | string[] = doc.data()?.latestMessage
+					if (newData !== chatsData?.map((data) => data.latestMessage)) {
+						refetch()
+					}
+				}
+			)
+		}
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe()
+			}
+		}
+	}, [user?.uid, chatsData, refetch, selectedUserChatId])
 
 	const handleLoadMessages = (chatId: string, userInfo: UserInfoT) => {
 		setSelectedUser({ chatId, ...userInfo })
