@@ -8,6 +8,7 @@ import { useFetchWishlistQuery } from "@/redux/features/wishlistApiSlice"
 import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import GamesList from "@/components/GamesList"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function WishListGames() {
 	const user = useSelector(currentUser)
@@ -55,7 +56,7 @@ export default function WishListGames() {
 					</>
 				)}
 
-				{isError && <p className="text-3xl font-bold">Wishlist is empty.</p>}
+				{isError && <ErrorDisplay errorMessage="Wishlist is empty." />}
 			</div>
 		</>
 	)

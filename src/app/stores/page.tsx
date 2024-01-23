@@ -4,6 +4,7 @@ import { useGetAllStoresQuery } from "@/redux/features/gamesApiSlice"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 import PageHeading from "@/components/PageHeading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Stores() {
 	const {
@@ -24,9 +25,7 @@ export default function Stores() {
 				<PageItemList data={allStoresData.results} />
 			)}
 
-			{isError && (
-				<p className="text-3xl font-bold text-center">Unable to load stores.</p>
-			)}
+			{isError && <ErrorDisplay errorMessage="Unable to load stores." />}
 		</main>
 	)
 }

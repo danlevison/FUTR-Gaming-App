@@ -12,6 +12,7 @@ import {
 } from "next-usequerystate"
 import OrderByMenu from "./components/OrderByMenu"
 import PageHeading from "@/components/PageHeading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Games() {
 	const endPoints = [
@@ -109,11 +110,7 @@ export default function Games() {
 					</>
 				)}
 
-				{isError && (
-					<p className="text-3xl font-bold text-center">
-						Unable to load games.
-					</p>
-				)}
+				{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 			</div>
 		</main>
 	)

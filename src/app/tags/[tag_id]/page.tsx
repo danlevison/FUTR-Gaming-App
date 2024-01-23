@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagnination"
 import LoadingGames from "@/components/loading/LoadingGames"
 import SkeletonBanner from "@/components/skeletons/SkeletonBanner"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Tag() {
 	const { tag_id } = useParams()
@@ -20,9 +21,9 @@ export default function Tag() {
 	)
 	const {
 		data: tagData,
-		isLoading: istagDataLoading,
-		isFetching: istagDataFetching,
-		isError: istagDataError
+		isLoading: isTagDataLoading,
+		isFetching: isTagDataFetching,
+		isError: isTagDataError
 	} = useGetTagQuery(tag_id as string)
 
 	const {
@@ -46,10 +47,10 @@ export default function Tag() {
 
 	return (
 		<main className="flex flex-col w-full px-5 pt-20 pb-10 md:pt-2">
-			{(istagDataLoading || istagDataFetching) && <SkeletonBanner />}
+			{(isTagDataLoading || isTagDataFetching) && <SkeletonBanner />}
 			{tagData && <Banner data={tagData} />}
-			{istagDataError && (
-				<p className="text-3xl font-bold">An error occurred</p>
+			{isTagDataError && (
+				<ErrorDisplay errorMessage="Sorry, something went wrong." />
 			)}
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
@@ -65,11 +66,7 @@ export default function Tag() {
 						/>
 					</div>
 				)}
-				{isError && (
-					<p className="text-3xl font-bold text-center">
-						Unable to load games.
-					</p>
-				)}
+				{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 			</div>
 		</main>
 	)

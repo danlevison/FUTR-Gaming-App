@@ -1,6 +1,7 @@
 "use client"
 
-import CollectionCard from "@/components/CollectionCard"
+import { useParams } from "next/navigation"
+import ErrorDisplay from "@/components/ErrorDisplay"
 import GameCard from "@/components/gameCard/GameCard"
 import Spinner from "@/components/loading/Spinner"
 import {
@@ -10,13 +11,9 @@ import {
 	CarouselNext,
 	CarouselPrevious
 } from "@/components/ui/carousel"
-import { currentUser } from "@/redux/features/authSlice"
 import { useFetchWishlistQuery } from "@/redux/features/wishlistApiSlice"
-import { useParams } from "next/navigation"
-import { useSelector } from "react-redux"
 
 export default function CollectionsSlider() {
-	const user = useSelector(currentUser)
 	const { user_id } = useParams()
 	const {
 		data: wishlistData,
@@ -54,8 +51,10 @@ export default function CollectionsSlider() {
 										<GameCard game={game} />
 									</CarouselItem>
 								))}
-								{/* TODO: Check styling */}
-								{isError && <p>Unable to load wishlist.</p>}
+
+								{isError && (
+									<ErrorDisplay errorMessage="Unable to load wishlist." />
+								)}
 							</CarouselContent>
 							<CarouselPrevious />
 							<CarouselNext />

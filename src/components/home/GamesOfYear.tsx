@@ -5,6 +5,7 @@ import { useGetAllGamesQuery } from "@/redux/features/gamesApiSlice"
 import Heading from "@/components/home/Heading"
 import GamesList from "../GamesList"
 import LoadingGames from "../loading/LoadingGames"
+import ErrorDisplay from "../ErrorDisplay"
 
 export default function GamesOfYear() {
 	const {
@@ -34,7 +35,7 @@ export default function GamesOfYear() {
 						</Link>
 					</div>
 				)}
-				{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+				{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 			</div>
 		</section>
 	)

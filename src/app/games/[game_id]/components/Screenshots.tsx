@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/carousel"
 import SkeletonGameScreenshots from "@/components/skeletons/SkeletonGameScreenshots"
 import type { GameT } from "@/types"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Screenshots({ gameData }: { gameData: GameT }) {
 	const {
@@ -54,7 +55,7 @@ export default function Screenshots({ gameData }: { gameData: GameT }) {
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
-			{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+			{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 		</section>
 	)
 }

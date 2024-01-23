@@ -17,8 +17,10 @@ export default function UserInfo({
 	handleNav?: () => void
 }) {
 	const user = useSelector(currentUser)
-	const { data: followersData } = useFetchFollowersQuery(user?.uid as string)
-	const { data: followingData } = useFetchFollowingQuery(user?.uid as string)
+	const { data: followersData, isError: isFollowersDataError } =
+		useFetchFollowersQuery(user?.uid as string)
+	const { data: followingData, isError: isFollowingDataError } =
+		useFetchFollowingQuery(user?.uid as string)
 
 	return (
 		<div className="flex items-center gap-4 md:flex-col md:gap-0">
@@ -41,16 +43,22 @@ export default function UserInfo({
 				<div className="flex flex-col justify-center items-center mt-2 whitespace-nowrap">
 					<p className="text-sm">{user?.email}</p>
 					<div className="flex items-center gap-4 text-sm">
-						<p>
-							{followersData?.length}
-							<span className="ml-1 text-gray-400">
-								{followersData?.length === 1 ? "Follower" : "Followers"}
-							</span>
-						</p>
-						<p>
-							{followingData?.length}
-							<span className="ml-1 text-gray-400">Following</span>
-						</p>
+						{isFollowersDataError || isFollowingDataError ? (
+							<p className="text-xs">Sorry, something went wrong.</p>
+						) : (
+							<>
+								<p>
+									{followersData?.length}
+									<span className="ml-1 text-gray-400">
+										{followersData?.length === 1 ? "Follower" : "Followers"}
+									</span>
+								</p>
+								<p>
+									{followingData?.length}
+									<span className="ml-1 text-gray-400">Following</span>
+								</p>
+							</>
+						)}
 					</div>
 					<Link
 						href={`/user/${user?.uid}`}

@@ -10,7 +10,6 @@ import NavLinks from "../NavLinks"
 import CollapseSidebarBtn from "./CollapseSidebarBtn"
 import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
-import Searchbar from "@/components/searchbar/Searchbar"
 import UserInfo from "../UserInfo"
 import PortfolioLink from "../PortfolioLink"
 

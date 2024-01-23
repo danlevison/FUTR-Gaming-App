@@ -13,6 +13,7 @@ import {
 	isLoading as isUserLoading
 } from "@/redux/features/authSlice"
 import Spinner from "@/components/loading/Spinner"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 function Collection() {
 	const { collection_id } = useParams()
@@ -25,7 +26,10 @@ function Collection() {
 	} = useFetchCollectionQuery(collection_id as string)
 
 	// prevent private collections be shown to users that are not the collection owner
-	if (!collectionData?.isPublic && collectionData?.ownerId !== user?.uid) {
+	if (
+		!collectionData?.isPublic &&
+		collectionData?.ownerId !== (user?.uid as string)
+	) {
 		return (
 			<main className="flex flex-col justify-center items-center min-h-screen w-full text-center px-5">
 				<h1 className="text-5xl sm:text-7xl md:text-9xl font-bold">404</h1>
@@ -98,7 +102,7 @@ function Collection() {
 							)}
 
 							{isError && (
-								<p className="text-3xl font-bold">Unable to load collection.</p>
+								<ErrorDisplay errorMessage="Unable to load collection." />
 							)}
 						</div>
 					</div>

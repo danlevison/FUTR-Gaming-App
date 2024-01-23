@@ -6,6 +6,7 @@ import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 import Pagination from "@/components/Pagnination"
 import PageHeading from "@/components/PageHeading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Publishers() {
 	const [pageQuery, setPageQuery] = useQueryState(
@@ -50,11 +51,7 @@ export default function Publishers() {
 				</>
 			)}
 
-			{isError && (
-				<p className="text-3xl font-bold text-center">
-					Unable to load publishers.
-				</p>
-			)}
+			{isError && <ErrorDisplay errorMessage="Unable to load publishers." />}
 		</main>
 	)
 }

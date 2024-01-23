@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagnination"
 import LoadingGames from "@/components/loading/LoadingGames"
 import SkeletonBanner from "@/components/skeletons/SkeletonBanner"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Store() {
 	const { store_id } = useParams()
@@ -49,7 +50,7 @@ export default function Store() {
 			{(isStoreDataLoading || isStoreDataFetching) && <SkeletonBanner />}
 			{storeData && <Banner data={storeData} />}
 			{isStoreDataError && (
-				<p className="text-3xl font-bold">An error occurred</p>
+				<ErrorDisplay errorMessage="Sorry, something went wrong." />
 			)}
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
@@ -65,11 +66,7 @@ export default function Store() {
 						/>
 					</div>
 				)}
-				{isError && (
-					<p className="text-3xl font-bold text-center">
-						Unable to load games.
-					</p>
-				)}
+				{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 			</div>
 		</main>
 	)

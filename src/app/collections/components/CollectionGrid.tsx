@@ -4,6 +4,7 @@ import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 import Spinner from "@/components/loading/Spinner"
 import CollectionCard from "@/components/CollectionCard"
 import type { UserT } from "@/types"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function CollectionGrid({ user }: { user: UserT }) {
 	const {
@@ -37,8 +38,9 @@ export default function CollectionGrid({ user }: { user: UserT }) {
 							</li>
 						)
 					)}
-					{/* TODO: Check styling */}
-					{isError && <p>Unable to load collections.</p>}
+					{isError && (
+						<ErrorDisplay errorMessage="Unable to load collections." />
+					)}
 				</ul>
 			)}
 		</div>

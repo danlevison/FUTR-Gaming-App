@@ -100,7 +100,7 @@ export const collectionsApi = createApi({
 					})
 					return { data: publicCollections }
 				} catch (error) {
-					return { error: error }
+					return { error: "Failed to fetch collections." }
 				}
 			},
 			providesTags: ["Collection"]

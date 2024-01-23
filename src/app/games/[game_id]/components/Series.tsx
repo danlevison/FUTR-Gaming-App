@@ -2,6 +2,7 @@ import GamesList from "@/components/GamesList"
 import { useGetGameSeriesQuery } from "@/redux/features/gamesApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import { GameT } from "@/types"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Series({ gameData }: { gameData: GameT }) {
 	const {
@@ -19,9 +20,7 @@ export default function Series({ gameData }: { gameData: GameT }) {
 				<>
 					{(isLoading || isFetching) && <LoadingGames />}
 					<GamesList games={gameSeries?.results} />
-					{isError && (
-						<p className="text-3xl font-bold">Unable to load games.</p>
-					)}
+					{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 				</>
 			</section>
 		)

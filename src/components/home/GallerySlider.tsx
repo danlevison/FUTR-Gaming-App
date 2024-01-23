@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/carousel"
 import SkeletonGameScreenshots from "../skeletons/SkeletonGameScreenshots"
 import Heading from "./Heading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function GallerySlider() {
 	const {
@@ -65,7 +66,7 @@ export default function GallerySlider() {
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
-			{isError && <p className="text-3xl font-bold">Unable to load games.</p>}
+			{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 		</section>
 	)
 }

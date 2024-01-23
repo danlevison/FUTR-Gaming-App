@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import Spinner from "../loading/Spinner"
 import SearchForm from "./SearchForm"
 import { useFetchPublicCollectionsQuery } from "@/redux/features/collectionsApiSlice"
+import ErrorDisplay from "../ErrorDisplay"
 
 export default function Searchbar() {
 	const [searchInput, setSearchInput] = useState("")
@@ -17,12 +18,13 @@ export default function Searchbar() {
 	const [showResults, setShowResults] = useState(false)
 	const {
 		data: searchedGameData,
-		isLoading,
-		isFetching,
-		isError
+		isLoading: isGameDataLoading,
+		isFetching: isGameDataFetching,
+		isError: isGameDataError
 	} = useGetSearchedGameQuery(searchInput)
-	const { data: publicCollectionsData } = useFetchPublicCollectionsQuery({})
-	const { data: userData } = useFetchUsersQuery({})
+	const { data: publicCollectionsData, isError: isCollectionDataError } =
+		useFetchPublicCollectionsQuery({})
+	const { data: userData, isError: isUserDataError } = useFetchUsersQuery({})
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchInput(e.target.value)
@@ -64,7 +66,7 @@ export default function Searchbar() {
 							/>
 						</DialogHeader>
 						<div className="flex justify-center items-center">
-							{(isLoading || isFetching) && <Spinner />}
+							{(isGameDataLoading || isGameDataFetching) && <Spinner />}
 						</div>
 						<div className="mt-5 border-b-2 pb-5">
 							<h3 className="font-bold text-2xl">Games</h3>
@@ -103,6 +105,9 @@ export default function Searchbar() {
 
 						<div className="mt-5 border-b-[0.5px] pb-5">
 							<h3 className="font-bold text-2xl">Users</h3>
+							{isUserDataError && (
+								<ErrorDisplay errorMessage="Unable to load users." />
+							)}
 							{userData && filteredUsers?.length === 0 ? (
 								<p>No users found!</p>
 							) : (
@@ -138,6 +143,9 @@ export default function Searchbar() {
 
 						<div className="mt-5 border-b-[0.5px] pb-5">
 							<h3 className="font-bold text-2xl">Collections</h3>
+							{isCollectionDataError && (
+								<ErrorDisplay errorMessage="Unable to load collections." />
+							)}
 							{filteredCollections && filteredCollections.length === 0 ? (
 								<p>No collections found!</p>
 							) : (
@@ -171,10 +179,8 @@ export default function Searchbar() {
 							)}
 						</div>
 
-						{isError && (
-							<p className="text-3xl font-bold text-center">
-								Unable to load games.
-							</p>
+						{isGameDataError && (
+							<ErrorDisplay errorMessage="Unable to load games." />
 						)}
 					</DialogContent>
 				</Dialog>

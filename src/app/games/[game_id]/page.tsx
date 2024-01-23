@@ -9,6 +9,7 @@ import Series from "./components/Series"
 import RatingBar from "./components/RatingBar"
 import SkeletonGameDetailsPage from "@/components/skeletons/SkeletonGameDetailsPage"
 import Collections from "./components/Collections"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function GameDetails() {
 	const { game_id } = useParams()
@@ -25,7 +26,7 @@ export default function GameDetails() {
 			{isLoading || isFetching ? (
 				<SkeletonGameDetailsPage />
 			) : isError ? (
-				<p>Error loading data</p>
+				<ErrorDisplay errorMessage="Unable to load game data." />
 			) : (
 				isSuccess && (
 					<>

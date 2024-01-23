@@ -12,11 +12,12 @@ import Followers from "./components/Followers"
 import WishlistLink from "./components/WishlistLink"
 import PageHeading from "@/components/PageHeading"
 import MessageBtn from "./components/MessageBtn"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function User() {
 	const user = useSelector(currentUser)
 	const { user_id } = useParams()
-	const { data: userData } = useFetchUsersQuery({})
+	const { data: userData, isError } = useFetchUsersQuery({})
 
 	const userDetails = () => {
 		return userData?.find((user) => user?.uid === user_id)
@@ -26,6 +27,7 @@ export default function User() {
 
 	return (
 		<main className="w-full px-5 pt-20 pb-10 md:pt-2">
+			{isError && <ErrorDisplay errorMessage="Unable to display user info." />}
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col items-center xs:flex-row gap-2 mb-3">
 					<PageHeading headingText={displayName} />

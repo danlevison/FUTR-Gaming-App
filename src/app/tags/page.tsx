@@ -4,6 +4,7 @@ import { useGetAllTagsQuery } from "@/redux/features/gamesApiSlice"
 import PageItemList from "@/components/PageItemList"
 import LoadingItems from "@/components/loading/LoadingItems"
 import PageHeading from "@/components/PageHeading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Tags() {
 	const {
@@ -24,9 +25,7 @@ export default function Tags() {
 				<PageItemList data={allTagsData.results} />
 			)}
 
-			{isError && (
-				<p className="text-3xl font-bold text-center">Unable to load tags.</p>
-			)}
+			{isError && <ErrorDisplay errorMessage="Unable to load tags." />}
 		</main>
 	)
 }

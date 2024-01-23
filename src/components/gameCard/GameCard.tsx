@@ -79,7 +79,7 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 					</Link>
 				</h4>
 				<div className="text-gray-400 text-sm">
-					<div className="mt-5">
+					<div className="mt-3">
 						<div className="flex items-center">
 							<p className="font-bold">Release Date: &nbsp;</p>
 							<p className="details-item-value">{game?.released} </p>
@@ -100,7 +100,7 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 				</div>
 			</CardContent>
 
-			{pathname.includes("collections") ? null : (
+			{!pathname.includes("collections") && (
 				<CardFooter className="flex flex-col p-0 m-0">
 					<button
 						onClick={() => setShowCollections(!showCollections)}

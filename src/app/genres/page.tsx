@@ -4,6 +4,7 @@ import { useGetAllGenresQuery } from "@/redux/features/gamesApiSlice"
 import LoadingItems from "@/components/loading/LoadingItems"
 import PageItemList from "@/components/PageItemList"
 import PageHeading from "@/components/PageHeading"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Genres() {
 	const {
@@ -24,9 +25,7 @@ export default function Genres() {
 				<PageItemList data={allGenresData.results} />
 			)}
 
-			{isError && (
-				<p className="text-3xl font-bold text-center">Unable to load genres.</p>
-			)}
+			{isError && <ErrorDisplay errorMessage="Unable to load genres." />}
 		</main>
 	)
 }

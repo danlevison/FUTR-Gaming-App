@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagnination"
 import LoadingGames from "@/components/loading/LoadingGames"
 import { useQueryState, parseAsInteger } from "next-usequerystate"
 import SkeletonBanner from "@/components/skeletons/SkeletonBanner"
+import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function Genre() {
 	const { genre_id } = useParams()
@@ -48,7 +49,7 @@ export default function Genre() {
 			{(isGenreDataLoading || isGenreDataFetching) && <SkeletonBanner />}
 			{genreData && <Banner data={genreData} />}
 			{isGenreDataError && (
-				<p className="text-3xl font-bold">An error occurred</p>
+				<ErrorDisplay errorMessage="Sorry, something went wrong." />
 			)}
 			<div className="mt-7 w-full">
 				{(isLoading || isFetching) && <LoadingGames />}
@@ -64,11 +65,7 @@ export default function Genre() {
 						/>
 					</div>
 				)}
-				{isError && (
-					<p className="text-3xl font-bold text-center">
-						Unable to load games.
-					</p>
-				)}
+				{isError && <ErrorDisplay errorMessage="Unable to load games." />}
 			</div>
 		</main>
 	)
