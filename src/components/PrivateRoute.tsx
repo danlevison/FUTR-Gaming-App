@@ -1,11 +1,10 @@
 import { useEffect } from "react"
 import { redirect } from "next/navigation"
-import { currentUser } from "@/redux/features/authSlice"
-import { useSelector } from "react-redux"
+import useUser from "@/hooks/useUser"
 
 export default function PrivateRoute(Component: any) {
 	return function PrivaveRoute(props: any) {
-		const user = useSelector(currentUser)
+		const user = useUser()
 		useEffect(() => {
 			if (!user) {
 				redirect("/")

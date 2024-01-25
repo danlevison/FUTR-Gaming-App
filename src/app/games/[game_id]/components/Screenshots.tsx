@@ -10,8 +10,8 @@ import {
 	CarouselPrevious
 } from "@/components/ui/carousel"
 import SkeletonGameScreenshots from "@/components/skeletons/SkeletonGameScreenshots"
-import type { GameT } from "@/types"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import type { GameT } from "@/types"
 
 export default function Screenshots({ gameData }: { gameData: GameT }) {
 	const {

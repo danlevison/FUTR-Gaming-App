@@ -5,17 +5,17 @@ import {
 } from "@/redux/features/collectionsApiSlice"
 import { useToast } from "./ui/use-toast"
 import { FaFolderPlus } from "react-icons/fa"
-import type { UserT, GameT } from "@/types"
+import useUser from "@/hooks/useUser"
+import type { GameT } from "@/types"
 
 export default function CollectionsDropdown({
 	showCollections,
-	user,
 	game
 }: {
 	showCollections: boolean
-	user: UserT
 	game: GameT
 }) {
+	const user = useUser()
 	const {
 		data: collectionsData,
 		isError,

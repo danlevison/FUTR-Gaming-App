@@ -21,25 +21,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { useAddCollectionMutation } from "@/redux/features/collectionsApiSlice"
-
-type NewCollectionFormProps = {
-	user: {
-		uid: string
-		displayName: string
-		email: string
-	}
-}
+import useUser from "@/hooks/useUser"
 
 type FormProps = {
-	user: {
-		uid: string
-		displayName: string
-		email: string
-	}
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function AddNewCollectionForm({ user, setOpen }: FormProps) {
+function AddNewCollectionForm({ setOpen }: FormProps) {
+	const user = useUser()
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
@@ -181,7 +170,7 @@ function AddNewCollectionForm({ user, setOpen }: FormProps) {
 	)
 }
 
-export default function AddNewCollection({ user }: NewCollectionFormProps) {
+export default function AddNewCollection() {
 	const [open, setOpen] = useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -200,10 +189,7 @@ export default function AddNewCollection({ user }: NewCollectionFormProps) {
 							Start a new collection
 						</DialogTitle>
 					</DialogHeader>
-					<AddNewCollectionForm
-						user={user}
-						setOpen={setOpen}
-					/>
+					<AddNewCollectionForm setOpen={setOpen} />
 				</DialogContent>
 			</Dialog>
 		)
@@ -234,10 +220,7 @@ export default function AddNewCollection({ user }: NewCollectionFormProps) {
 						<MdClose size={25} />
 					</Button>
 				</DrawerHeader>
-				<AddNewCollectionForm
-					user={user}
-					setOpen={setOpen}
-				/>
+				<AddNewCollectionForm setOpen={setOpen} />
 			</DrawerContent>
 		</Drawer>
 	)

@@ -12,15 +12,14 @@ import {
 import { useToast } from "@/components/ui/use-toast"
 import { useDeleteCollectionMutation } from "@/redux/features/collectionsApiSlice"
 import { FaRegTrashAlt } from "react-icons/fa"
-import type { UserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 export default function DeleteCollectionModal({
-	id: collectionId,
-	user
+	id: collectionId
 }: {
 	id: string
-	user: UserT
 }) {
+	const user = useUser()
 	const [deleteCollection] = useDeleteCollectionMutation()
 	const { toast } = useToast()
 
@@ -35,6 +34,10 @@ export default function DeleteCollectionModal({
 				description: "Your collection has been successfully deleted."
 			})
 		} catch (error) {
+			toast({
+				variant: "destructive",
+				description: "Unable to delete your collection, please try again."
+			})
 			console.error(error)
 		}
 	}

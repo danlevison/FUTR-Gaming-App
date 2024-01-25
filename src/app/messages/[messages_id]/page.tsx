@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import Chats from "./components/Chats"
 import Messages from "./components/Messages"
 import Link from "next/link"
 import Image from "next/image"
+import useUser from "@/hooks/useUser"
 
 export default function UserMessages() {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const [selectedUser, setSelectedUser] = useState({
 		chatId: "",
 		displayName: "",
@@ -46,13 +45,9 @@ export default function UserMessages() {
 					)}
 				</div>
 
-				<Messages
-					user={user}
-					selectedUser={selectedUser}
-				/>
+				<Messages selectedUser={selectedUser} />
 			</div>
 			<Chats
-				user={user}
 				selectedUserChatId={selectedUser.chatId}
 				setSelectedUser={setSelectedUser}
 			/>

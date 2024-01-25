@@ -13,21 +13,21 @@ import {
 	useRemoveGameFromWishlistMutation
 } from "@/redux/features/wishlistApiSlice"
 import { useUpdateCollectionBgMutation } from "@/redux/features/collectionsApiSlice"
-import type { GameT, UserT } from "@/types"
+import useUser from "@/hooks/useUser"
+import type { GameT } from "@/types"
 
 type GameCardPopoverProps = {
-	user: UserT
 	game: GameT
 	ownerId?: string
 	collectionId: string | string[]
 }
 
 export default function GameCardPopover({
-	user,
 	game,
 	ownerId,
 	collectionId
 }: GameCardPopoverProps) {
+	const user = useUser()
 	const [open, setOpen] = useState(false)
 	const [addGameToWishlist] = useAddGameToWishlistMutation()
 	const [removeGameFromWishlist] = useRemoveGameFromWishlistMutation()

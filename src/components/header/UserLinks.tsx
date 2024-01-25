@@ -1,19 +1,18 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { userRoutes } from "@/routes/routes"
-import type { UserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 export default function UserLinks({
-	user,
 	sidebarStatus,
 	nav,
 	handleNav
 }: {
-	user: UserT
 	sidebarStatus?: boolean
 	nav?: boolean
 	handleNav?: () => void
 }) {
+	const user = useUser()
 	const pathname = usePathname()
 	return (
 		<ul className="flex flex-col gap-5 mt-5 md:mt-8">
@@ -27,7 +26,7 @@ export default function UserLinks({
 							path === "/wishlist" && !user
 								? "/wishlist"
 								: path === "/wishlist" && user
-								? `/wishlist/${user?.uid}`
+								? `/wishlist/${user.uid}`
 								: path
 						}
 						className="flex items-center gap-2"

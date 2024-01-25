@@ -7,10 +7,10 @@ import { useFetchChatsQuery } from "@/redux/features/messagesApiSlice"
 import { useSearchUsersQuery } from "@/redux/features/messagesApiSlice"
 import { onSnapshot, doc } from "firebase/firestore"
 import { db } from "@/config/firebase"
-import type { SelectedUserT, UserT } from "@/types"
+import useUser from "@/hooks/useUser"
+import type { SelectedUserT } from "@/types"
 
 type ChatsProps = {
-	user: UserT
 	selectedUserChatId: string
 	setSelectedUser: React.Dispatch<React.SetStateAction<SelectedUserT>>
 }
@@ -22,10 +22,10 @@ type UserInfoT = {
 }
 
 export default function Chats({
-	user,
 	selectedUserChatId,
 	setSelectedUser
 }: ChatsProps) {
+	const user = useUser()
 	const [username, setUsername] = useState("")
 	const {
 		data: chatsData,
@@ -44,7 +44,7 @@ export default function Chats({
 
 		if (user?.uid && selectedUserChatId) {
 			unsubscribe = onSnapshot(
-				doc(db, "users", user.uid, "userChats", selectedUserChatId),
+				doc(db, "users", user?.uid, "userChats", selectedUserChatId),
 				(doc) => {
 					// check if data has changed and trigger a refetch
 					const newData: string | string[] = doc.data()?.latestMessage

@@ -1,8 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { motion } from "framer-motion"
 import Logo from "../Logo"
 import UserLinks from "../UserLinks"
@@ -12,9 +10,10 @@ import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
 import UserInfo from "../UserInfo"
 import PortfolioLink from "../PortfolioLink"
+import useUser from "@/hooks/useUser"
 
 export default function Sidebar() {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const [sidebar, setSidebar] = useState(false)
 	const sidebarAnimation = {
 		open: {
@@ -46,10 +45,7 @@ export default function Sidebar() {
 		>
 			<Logo sidebarStatus={sidebar} />
 			{user && <UserInfo sidebarStatus={sidebar} />}
-			<UserLinks
-				sidebarStatus={sidebar}
-				user={user}
-			/>
+			<UserLinks sidebarStatus={sidebar} />
 			<NavLinks sidebarStatus={sidebar} />
 			<CollapseSidebarBtn
 				sidebarStatus={sidebar}

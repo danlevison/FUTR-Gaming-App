@@ -1,11 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-import { currentUser } from "@/redux/features/authSlice"
-import { useSelector } from "react-redux"
 import {
 	useFetchFollowersQuery,
 	useFetchFollowingQuery
 } from "@/redux/features/friendsApiSlice"
+import useUser from "@/hooks/useUser"
 
 export default function UserInfo({
 	sidebarStatus,
@@ -16,7 +15,7 @@ export default function UserInfo({
 	nav?: boolean
 	handleNav?: () => void
 }) {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const { data: followersData, isError: isFollowersDataError } =
 		useFetchFollowersQuery(user?.uid as string)
 	const { data: followingData, isError: isFollowingDataError } =
@@ -31,7 +30,7 @@ export default function UserInfo({
 					className="rounded-full p-[0.15rem] hover:bg-white duration-300"
 				>
 					<Image
-						src={user?.avatar!}
+						src={user?.avatar as string}
 						alt={user?.displayName || "user avatar"}
 						width={53}
 						height={53}

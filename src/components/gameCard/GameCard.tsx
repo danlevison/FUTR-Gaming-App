@@ -2,8 +2,6 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useParams, usePathname } from "next/navigation"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import placeholder from "@/../public/assets/placeholder.png"
 import { BsStar } from "react-icons/bs"
@@ -13,6 +11,7 @@ import CollectionsDropdown from "../CollectionsDropdown"
 import GameCardPopover from "./GameCardPopover"
 import RemoveGameCardBtn from "./RemoveGameCardBtn"
 import type { GameT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 type GameCardProps = {
 	game: GameT
@@ -20,7 +19,7 @@ type GameCardProps = {
 }
 
 export default function GameCard({ game, ownerId }: GameCardProps) {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const [showCollections, setShowCollections] = useState(false)
 	const pathname = usePathname()
 	const { collection_id } = useParams()
@@ -55,15 +54,13 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 				{user && (
 					<div className="absolute top-1 right-1 flex items-center">
 						<GameCardPopover
-							user={user}
 							game={game}
 							ownerId={ownerId}
 							collectionId={collection_id}
 						/>
-						{pathname.includes("collections") && user?.uid === ownerId && (
+						{pathname.includes("collections") && user.uid === ownerId && (
 							<RemoveGameCardBtn
 								game={game}
-								user={user}
 								collectionId={collection_id}
 							/>
 						)}
@@ -112,7 +109,6 @@ export default function GameCard({ game, ownerId }: GameCardProps) {
 					</button>
 					<CollectionsDropdown
 						showCollections={showCollections}
-						user={user}
 						game={game}
 					/>
 				</CardFooter>

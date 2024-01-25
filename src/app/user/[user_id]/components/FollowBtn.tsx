@@ -7,14 +7,14 @@ import { FcCheckmark } from "react-icons/fc"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2 } from "lucide-react"
-import type { UserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 type FollowBtnProps = {
-	user: UserT
 	userParamId: string | string[]
 }
 
-export default function FollowBtn({ user, userParamId }: FollowBtnProps) {
+export default function FollowBtn({ userParamId }: FollowBtnProps) {
+	const user = useUser()
 	const [followUser] = useFollowUserMutation()
 	const [unfollowUser] = useUnfollowUserMutation()
 	const { data: followingData, isFetching } = useFetchFollowingQuery(

@@ -13,14 +13,13 @@ import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { MdEdit } from "react-icons/md"
 import { useEditCollectionMutation } from "@/redux/features/collectionsApiSlice"
-import type { UserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 type FormProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type EditCollectionProps = {
-	user: UserT
 	id: string
 	title: string
 	description: string
@@ -30,13 +29,13 @@ type EditCollectionProps = {
 type CombinedProps = FormProps & EditCollectionProps
 
 function EditCollectionForm({
-	user,
 	setOpen,
 	id: collectionId,
 	title: collectionTitle,
 	description: collectionDescription,
 	isPublic: collectionIsPublic
 }: CombinedProps) {
+	const user = useUser()
 	const [formData, setFormData] = useState({
 		title: collectionTitle,
 		description: collectionDescription,
@@ -169,7 +168,6 @@ function EditCollectionForm({
 }
 
 export default function EditCollection({
-	user,
 	id,
 	title,
 	description,
@@ -194,7 +192,6 @@ export default function EditCollection({
 					</DialogTitle>
 				</DialogHeader>
 				<EditCollectionForm
-					user={user}
 					setOpen={setOpen}
 					id={id}
 					title={title}

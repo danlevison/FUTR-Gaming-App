@@ -9,13 +9,12 @@ import {
 	CarouselNext,
 	CarouselPrevious
 } from "@/components/ui/carousel"
-import { currentUser } from "@/redux/features/authSlice"
+import useUser from "@/hooks/useUser"
 import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 import { useParams } from "next/navigation"
-import { useSelector } from "react-redux"
 
 export default function CollectionsSlider() {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const { user_id } = useParams()
 	const {
 		data: collectionsData,
@@ -77,7 +76,6 @@ export default function CollectionsSlider() {
 												games={games}
 												owner={owner}
 												ownerId={ownerId}
-												user={user!}
 											/>
 										</CarouselItem>
 									)

@@ -2,19 +2,19 @@ import { Button } from "../ui/button"
 import { useToast } from "../ui/use-toast"
 import { useRemoveGameFromCollectionMutation } from "@/redux/features/collectionsApiSlice"
 import { FaRegTrashAlt } from "react-icons/fa"
-import type { GameT, UserT } from "@/types"
+import useUser from "@/hooks/useUser"
+import type { GameT } from "@/types"
 
 type RemoveGameCardBtnProps = {
 	game: GameT
-	user: UserT
 	collectionId: string | string[]
 }
 
 export default function RemoveGameCardBtn({
 	game,
-	user,
 	collectionId
 }: RemoveGameCardBtnProps) {
+	const user = useUser()
 	const [removeGameFromCollection] = useRemoveGameFromCollectionMutation()
 	const { toast } = useToast()
 
@@ -47,7 +47,7 @@ export default function RemoveGameCardBtn({
 			onClick={() =>
 				handleRemoveGameFromCollection(
 					{ ...game },
-					user?.uid!,
+					user?.uid as string,
 					collectionId as string
 				)
 			}

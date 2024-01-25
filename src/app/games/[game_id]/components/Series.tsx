@@ -1,8 +1,8 @@
 import GamesList from "@/components/GamesList"
 import { useGetGameSeriesQuery } from "@/redux/features/gamesApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
-import { GameT } from "@/types"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import { GameT } from "@/types"
 
 export default function Series({ gameData }: { gameData: GameT }) {
 	const {

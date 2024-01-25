@@ -1,16 +1,15 @@
 "use client"
 
-import { currentUser } from "@/redux/features/authSlice"
-import { useSelector } from "react-redux"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import AddNewCollection from "./components/AddNewCollection"
 import CollectionGrid from "./components/CollectionGrid"
 import { useToast } from "@/components/ui/use-toast"
 import PageHeading from "@/components/PageHeading"
+import useUser from "@/hooks/useUser"
 
 export default function Collections() {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const { handleLogin } = useAuth()
 	const { toast } = useToast()
 
@@ -32,7 +31,7 @@ export default function Collections() {
 
 			<div className="mt-10">
 				<h2 className="text-2xl sm:text-3xl mb-2">Your Collections</h2>
-				{user && <AddNewCollection user={user} />}
+				{user && <AddNewCollection />}
 				{!user ? (
 					<div className="flex flex-col justify-center items-center bg-foreground w-full h-32 rounded-md">
 						<p className="font-bold text-lg">Sign in to create collections</p>
@@ -46,7 +45,7 @@ export default function Collections() {
 						</div>
 					</div>
 				) : (
-					<CollectionGrid user={user} />
+					<CollectionGrid />
 				)}
 			</div>
 		</main>

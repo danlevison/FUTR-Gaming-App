@@ -7,17 +7,13 @@ import { useFetchCollectionQuery } from "@/redux/features/collectionsApiSlice"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import GamesList from "@/components/GamesList"
 import PageHeading from "@/components/PageHeading"
-import { useSelector } from "react-redux"
-import {
-	currentUser,
-	isLoading as isUserLoading
-} from "@/redux/features/authSlice"
 import Spinner from "@/components/loading/Spinner"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import useUser from "@/hooks/useUser"
 
 function Collection() {
 	const { collection_id } = useParams()
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const {
 		data: collectionData,
 		isLoading,
@@ -26,10 +22,7 @@ function Collection() {
 	} = useFetchCollectionQuery(collection_id as string)
 
 	// prevent private collections be shown to users that are not the collection owner
-	if (
-		!collectionData?.isPublic &&
-		collectionData?.ownerId !== (user?.uid as string)
-	) {
+	if (!collectionData?.isPublic && collectionData?.ownerId !== user?.uid) {
 		return (
 			<main className="flex flex-col justify-center items-center min-h-screen w-full text-center px-5">
 				<h1 className="text-5xl sm:text-7xl md:text-9xl font-bold">404</h1>

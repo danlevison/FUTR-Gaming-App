@@ -2,10 +2,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { useSendMessageMutation } from "@/redux/features/messagesApiSlice"
-import type { UserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 type MessageInputProps = {
-	user: UserT
 	selectedUser: {
 		chatId: string
 		displayName: string
@@ -14,10 +13,8 @@ type MessageInputProps = {
 	}
 }
 
-export default function MessageInput({
-	user,
-	selectedUser
-}: MessageInputProps) {
+export default function MessageInput({ selectedUser }: MessageInputProps) {
+	const user = useUser()
 	const [text, setText] = useState("")
 	const { toast } = useToast()
 	const [sendMessage] = useSendMessageMutation()

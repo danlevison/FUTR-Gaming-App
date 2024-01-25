@@ -4,10 +4,9 @@ import NavLinks from "../NavLinks"
 import UserLinks from "../UserLinks"
 import LoginBtn from "../LoginBtn"
 import LogoutBtn from "../LogoutBtn"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import UserInfo from "../UserInfo"
 import PortfolioLink from "../PortfolioLink"
+import useUser from "@/hooks/useUser"
 
 type MobileNavMenuProps = {
 	nav: boolean
@@ -15,7 +14,7 @@ type MobileNavMenuProps = {
 }
 
 export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const navAnimation = {
 		open: {
 			x: 0,
@@ -68,7 +67,6 @@ export default function MobileNavMenu({ nav, handleNav }: MobileNavMenuProps) {
 
 				<div>
 					<UserLinks
-						user={user}
 						nav={nav}
 						handleNav={handleNav}
 					/>

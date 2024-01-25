@@ -1,16 +1,15 @@
 import { useState } from "react"
 import Link from "next/link"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { useAddGameToWishlistMutation } from "@/redux/features/wishlistApiSlice"
 import { Button } from "@/components/ui/button"
 import { BiChevronDown } from "react-icons/bi"
 import CollectionsDropdown from "@/components/CollectionsDropdown"
 import { useToast } from "@/components/ui/use-toast"
+import useUser from "@/hooks/useUser"
 import type { GameT } from "@/types"
 
 export default function Collections({ gameData }: { gameData: GameT }) {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const [showCollections, setShowCollections] = useState(false)
 	const [addGameToWishlist] = useAddGameToWishlistMutation()
 	const { toast } = useToast()
@@ -73,7 +72,6 @@ export default function Collections({ gameData }: { gameData: GameT }) {
 			</div>
 			<CollectionsDropdown
 				showCollections={showCollections}
-				user={user}
 				game={gameData}
 			/>
 		</div>

@@ -4,8 +4,6 @@ import Image from "next/image"
 import CollectionsSlider from "./components/CollectionsSlider"
 import { useParams } from "next/navigation"
 import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import FollowBtn from "./components/FollowBtn"
 import Following from "./components/Following"
 import Followers from "./components/Followers"
@@ -15,12 +13,11 @@ import MessageBtn from "./components/MessageBtn"
 import ErrorDisplay from "@/components/ErrorDisplay"
 
 export default function User() {
-	const user = useSelector(currentUser)
 	const { user_id } = useParams()
 	const { data: userData, isError } = useFetchUsersQuery({})
 
 	const userDetails = () => {
-		return userData?.find((user) => user?.uid === user_id)
+		return userData?.find((fetchedUser) => fetchedUser?.uid === user_id)
 	}
 
 	const { displayName, avatar } = userDetails() || {}
@@ -43,12 +40,8 @@ export default function User() {
 					)}
 				</div>
 				<div className="flex items-center gap-4">
-					<FollowBtn
-						user={user}
-						userParamId={user_id}
-					/>
+					<FollowBtn userParamId={user_id} />
 					<MessageBtn
-						user={user}
 						userParamId={user_id}
 						displayName={displayName}
 						avatar={avatar}

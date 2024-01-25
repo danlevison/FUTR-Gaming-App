@@ -2,16 +2,15 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { useFetchWishlistQuery } from "@/redux/features/wishlistApiSlice"
 import { useFetchUsersQuery } from "@/redux/features/usersApiSlice"
 import LoadingGames from "@/components/loading/LoadingGames"
 import GamesList from "@/components/GamesList"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import useUser from "@/hooks/useUser"
 
 export default function WishListGames() {
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const { wishlist_id } = useParams()
 	const {
 		data: wishlistData,
@@ -22,7 +21,7 @@ export default function WishListGames() {
 	const { data: userData } = useFetchUsersQuery({})
 
 	const userDetails = () => {
-		return userData?.find((user) => user?.uid === wishlist_id)
+		return userData?.find((fetchedUser) => fetchedUser?.uid === wishlist_id)
 	}
 
 	const { displayName } = userDetails() || {}

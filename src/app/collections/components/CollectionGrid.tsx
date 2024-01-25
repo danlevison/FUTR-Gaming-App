@@ -3,10 +3,11 @@
 import { useFetchCollectionsQuery } from "@/redux/features/collectionsApiSlice"
 import Spinner from "@/components/loading/Spinner"
 import CollectionCard from "@/components/CollectionCard"
-import type { UserT } from "@/types"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import useUser from "@/hooks/useUser"
 
-export default function CollectionGrid({ user }: { user: UserT }) {
+export default function CollectionGrid() {
+	const user = useUser()
 	const {
 		data: collectionsData,
 		isLoading,
@@ -33,7 +34,6 @@ export default function CollectionGrid({ user }: { user: UserT }) {
 									games={games}
 									owner={owner}
 									ownerId={ownerId}
-									user={user!}
 								/>
 							</li>
 						)

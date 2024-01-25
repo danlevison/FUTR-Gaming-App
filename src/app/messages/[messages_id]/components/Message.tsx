@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react"
 import Image from "next/image"
-import type { UserT, SelectedUserT } from "@/types"
+import type { SelectedUserT } from "@/types"
+import useUser from "@/hooks/useUser"
 
 type MessageProps = {
-	user: UserT
 	selectedUser: SelectedUserT
 	message: {
 		id: string
@@ -13,7 +13,8 @@ type MessageProps = {
 	}
 }
 
-export default function Message({ user, selectedUser, message }: MessageProps) {
+export default function Message({ selectedUser, message }: MessageProps) {
+	const user = useUser()
 	const ref = useRef<HTMLDivElement | null>(null)
 
 	const getMessageSendTime = () => {

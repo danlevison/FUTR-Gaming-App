@@ -4,14 +4,13 @@ import { useRouter } from "next/navigation"
 import useAuth from "@/hooks/useAuth"
 import { FcGoogle } from "react-icons/fc"
 import { useToast } from "@/components/ui/use-toast"
-import { useSelector } from "react-redux"
-import { currentUser } from "@/redux/features/authSlice"
 import { useEffect } from "react"
 import PageHeading from "@/components/PageHeading"
+import useUser from "@/hooks/useUser"
 
 export default function WishListPage() {
 	const { handleLogin } = useAuth()
-	const user = useSelector(currentUser)
+	const user = useUser()
 	const { toast } = useToast()
 	const { push } = useRouter()
 

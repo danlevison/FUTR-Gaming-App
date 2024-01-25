@@ -6,14 +6,13 @@ import Message from "./Message"
 import MessageInput from "./MessageInput"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from "@/config/firebase"
-import type { UserT, SelectedUserT, MessageT } from "@/types"
+import type { SelectedUserT, MessageT } from "@/types"
 
 type MessagesProps = {
-	user: UserT
 	selectedUser: SelectedUserT
 }
 
-export default function Messages({ user, selectedUser }: MessagesProps) {
+export default function Messages({ selectedUser }: MessagesProps) {
 	const {
 		data: messageData,
 		isLoading,
@@ -62,7 +61,6 @@ export default function Messages({ user, selectedUser }: MessagesProps) {
 				{messageData?.map((message) => (
 					<Message
 						key={message.id}
-						user={user}
 						selectedUser={selectedUser}
 						message={message}
 					/>
@@ -73,12 +71,7 @@ export default function Messages({ user, selectedUser }: MessagesProps) {
 					</p>
 				)}
 			</div>
-			{selectedUser.chatId && (
-				<MessageInput
-					user={user}
-					selectedUser={selectedUser}
-				/>
-			)}
+			{selectedUser.chatId && <MessageInput selectedUser={selectedUser} />}
 		</div>
 	)
 }

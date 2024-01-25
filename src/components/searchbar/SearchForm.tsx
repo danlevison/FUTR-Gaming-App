@@ -22,7 +22,10 @@ export default function SearchForm({
 					htmlFor="search"
 					className="bg-transparent"
 				>
-					<AiOutlineSearch size={30} />
+					<AiOutlineSearch
+						size={30}
+						aria-hidden={true}
+					/>
 					<span className="sr-only">Search games</span>
 				</Label>
 				<div className="flex items-center w-full border-input md:border-gray-600 border-2 rounded-md p-2">

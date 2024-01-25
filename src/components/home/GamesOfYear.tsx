@@ -30,6 +30,7 @@ export default function GamesOfYear() {
 						<Link
 							href={"/games"}
 							className="w-full max-w-[170px] bg-transparent text-center uppercase border-accentPrimary border-2 rounded-md p-2"
+							aria-label="See more games"
 						>
 							See more
 						</Link>

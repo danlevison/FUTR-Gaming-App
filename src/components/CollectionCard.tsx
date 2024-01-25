@@ -12,7 +12,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import DeleteCollectionModal from "../app/collections/components/DeleteCollectionModal"
 import EditCollection from "../app/collections/components/EditCollection"
 import { usePathname } from "next/navigation"
-import type { GameT, UserT } from "@/types"
+import type { GameT } from "@/types"
 
 type CollectionCardProps = {
 	id: string
@@ -22,7 +22,6 @@ type CollectionCardProps = {
 	games: GameT[]
 	owner: string
 	ownerId: string
-	user: UserT
 }
 
 export default function CollectionCard({
@@ -32,8 +31,7 @@ export default function CollectionCard({
 	isPublic,
 	games,
 	owner,
-	ownerId,
-	user
+	ownerId
 }: CollectionCardProps) {
 	const pathname = usePathname()
 
@@ -63,16 +61,12 @@ export default function CollectionCard({
 						{!pathname.includes("user") && (
 							<div className="flex items-center gap-4">
 								<EditCollection
-									user={user}
 									id={id}
 									title={title}
 									description={description}
 									isPublic={isPublic}
 								/>
-								<DeleteCollectionModal
-									id={id}
-									user={user}
-								/>
+								<DeleteCollectionModal id={id} />
 							</div>
 						)}
 					</div>
