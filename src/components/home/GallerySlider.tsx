@@ -13,6 +13,7 @@ import {
 import SkeletonGameScreenshots from "../skeletons/SkeletonGameScreenshots"
 import Heading from "./Heading"
 import ErrorDisplay from "@/components/ErrorDisplay"
+import placeholder from "@/../public/assets/placeholder.png"
 
 export default function GallerySlider() {
 	const {
@@ -44,7 +45,7 @@ export default function GallerySlider() {
 								className="sm:basis-1/2 md:basis-1/2 xl:basis-1/3"
 							>
 								<Image
-									src={game?.background_image}
+									src={game?.background_image || placeholder}
 									alt={game?.name}
 									width={400}
 									height={300}
