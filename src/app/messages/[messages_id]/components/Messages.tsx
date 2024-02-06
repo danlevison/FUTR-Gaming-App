@@ -1,18 +1,20 @@
 "use client"
 
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { useFetchMessagesQuery } from "@/redux/features/messagesApiSlice"
 import Message from "./Message"
 import MessageInput from "./MessageInput"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from "@/config/firebase"
 import type { SelectedUserT, MessageT } from "@/types"
+import MessageHeader from "./MessageHeader"
 
 type MessagesProps = {
 	selectedUser: SelectedUserT
+	setShowChat: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Messages({ selectedUser }: MessagesProps) {
+export default function Messages({ selectedUser, setShowChat }: MessagesProps) {
 	const {
 		data: messageData,
 		isLoading,
@@ -44,7 +46,14 @@ export default function Messages({ selectedUser }: MessagesProps) {
 	}, [selectedUser.chatId, messageData, refetch])
 
 	return (
-		<div className="flex flex-col justify-between bg-foreground w-full h-full rounded-b-md">
+		<div className="flex flex-col justify-between bg-foreground w-full h-full md:rounded-md mt-16 md:mt-0">
+			<div className="fixed w-full md:static">
+				<MessageHeader
+					selectedUser={selectedUser}
+					setShowChat={setShowChat}
+				/>
+			</div>
+
 			{!selectedUser.chatId && (
 				<p className="flex justify-center items-center h-full text-lg">
 					Select user to start chatting!
@@ -56,7 +65,7 @@ export default function Messages({ selectedUser }: MessagesProps) {
 				</p>
 			)}
 
-			<div className="overflow-auto max-h-[700px] mt-5">
+			<div className="overflow-auto max-h-[700px] mt-16 md:mt-0">
 				{(isLoading || isFetching) && <p className="text-center">Loading...</p>}
 				{messageData?.map((message) => (
 					<Message

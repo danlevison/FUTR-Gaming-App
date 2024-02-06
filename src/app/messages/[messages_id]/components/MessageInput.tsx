@@ -46,13 +46,13 @@ export default function MessageInput({ selectedUser }: MessageInputProps) {
 				value={text}
 				type="text"
 				placeholder="Type something..."
-				className="w-full h-14 rounded-bl-md border-none outline-none p-3 bg-blue-950"
+				className="w-full h-14 md:rounded-bl-md border-none outline-none p-3 bg-blue-950"
 			/>
 			<Button
 				onClick={handleSendMessage}
 				variant={"outline"}
 				disabled={!text}
-				className="h-14 rounded-none rounded-br-md border-none"
+				className="h-14 rounded-none md:rounded-br-md border-none"
 			>
 				Send
 			</Button>

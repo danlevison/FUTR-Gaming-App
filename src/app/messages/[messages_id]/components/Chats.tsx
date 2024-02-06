@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import SearchUser from "./SearchUser"
 import { useFetchChatsQuery } from "@/redux/features/messagesApiSlice"
@@ -8,9 +8,11 @@ import { useSearchUsersQuery } from "@/redux/features/messagesApiSlice"
 import { onSnapshot, doc } from "firebase/firestore"
 import { db } from "@/config/firebase"
 import useUser from "@/hooks/useUser"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 import type { SelectedUserT } from "@/types"
 
 type ChatsProps = {
+	setShowChat: React.Dispatch<React.SetStateAction<boolean>>
 	selectedUserChatId: string
 	setSelectedUser: React.Dispatch<React.SetStateAction<SelectedUserT>>
 }
@@ -22,10 +24,12 @@ type UserInfoT = {
 }
 
 export default function Chats({
+	setShowChat,
 	selectedUserChatId,
 	setSelectedUser
 }: ChatsProps) {
 	const user = useUser()
+	const isMobile = useMediaQuery("(max-width: 768px)")
 	const [username, setUsername] = useState("")
 	const {
 		data: chatsData,
@@ -38,6 +42,8 @@ export default function Chats({
 		userId: user?.uid as string,
 		username: username
 	})
+
+	// TODO: Could fetch all users from chats and then filter using debounce for better UX.
 
 	useEffect(() => {
 		let unsubscribe: () => void
@@ -63,11 +69,12 @@ export default function Chats({
 	}, [user?.uid, chatsData, refetch, selectedUserChatId])
 
 	const handleLoadMessages = (chatId: string, userInfo: UserInfoT) => {
+		isMobile && setShowChat(true)
 		setSelectedUser({ chatId, ...userInfo })
 	}
 
 	return (
-		<aside className="bg-foreground w-full md:max-w-[250px] lg:max-w-[400px] rounded-md overflow-auto">
+		<aside className="ml-auto bg-foreground w-full md:max-w-[250px] lg:max-w-[400px] md:rounded-md overflow-auto mt-16 md:mt-0">
 			<SearchUser
 				username={username}
 				setUsername={setUsername}
@@ -110,9 +117,9 @@ export default function Chats({
 							key={chatId}
 							className={`${
 								chatId === selectedUserChatId
-									? "bg-background"
+									? "bg-slate-800"
 									: "bg-transparent"
-							} hover:bg-background duration-300`}
+							} hover:bg-slate-800 duration-300`}
 						>
 							<button
 								onClick={() => handleLoadMessages(chatId, userInfo)}
