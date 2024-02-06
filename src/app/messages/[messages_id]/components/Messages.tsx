@@ -46,7 +46,7 @@ export default function Messages({ selectedUser, setShowChat }: MessagesProps) {
 	}, [selectedUser.chatId, messageData, refetch])
 
 	return (
-		<div className="flex flex-col justify-between bg-foreground w-full h-full md:rounded-md mt-16 md:mt-0">
+		<div className="flex flex-col bg-foreground w-full h-full md:rounded-md mt-16 md:mt-0">
 			<div className="fixed w-full md:static">
 				<MessageHeader
 					selectedUser={selectedUser}
@@ -65,7 +65,7 @@ export default function Messages({ selectedUser, setShowChat }: MessagesProps) {
 				</p>
 			)}
 
-			<div className="overflow-auto max-h-[700px] mt-16 md:mt-0">
+			<div className="flex-1 overflow-auto max-h-[731px] mt-16 md:mt-0">
 				{(isLoading || isFetching) && <p className="text-center">Loading...</p>}
 				{messageData?.map((message) => (
 					<Message
