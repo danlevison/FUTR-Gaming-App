@@ -1,140 +1,152 @@
 export type GamesApiResponse = {
-	count: number
-	description: string
-	filters: {
-		years: Array<number>
-	}
-	next: string | null
-	nofollow: boolean
-	nofollow_collections: string[]
-	noindex: boolean
-	previous: string | null
-	results: GameT[]
-	seo_description: string
-	seo_h1: string
-	seo_keywords: string
-	seo_title: string
+  count: number
+  description: string
+  filters: {
+    years: Array<number>
+  }
+  next: string | null
+  nofollow: boolean
+  nofollow_collections: string[]
+  noindex: boolean
+  previous: string | null
+  results: GameT[]
+  seo_description: string
+  seo_h1: string
+  seo_keywords: string
+  seo_title: string
 }
 
 export type GameT = {
-	id?: string
-	slug: string
-	name: string
-	released?: string
-	background_image: string
-	description?: string
-	developers?: DeveloperT[]
-	genres?: PageItemT[]
-	website?: string
-	redditurl?: string
-	ratings?: Ratings
-	rating?: string
-	rating_top?: string
-	ratings_count?: string
-	updated?: string
-	metacritic?: number
-	parent_platforms?: ParentPlatform
-	playtime?: number
-	tags?: Tags
+  id?: string
+  slug: string
+  name: string
+  released?: string
+  background_image: string
+  description?: string
+  developers?: DeveloperT[]
+  genres?: PageItemT[]
+  website?: string
+  redditurl?: string
+  ratings?: Ratings
+  rating?: string
+  rating_top?: string
+  ratings_count?: string
+  updated?: string
+  metacritic?: number
+  parent_platforms?: ParentPlatform
+  playtime?: number
+  tags?: Tags
 }
 
 // types for genres/stores/publishers
 export type GeneralApiResponse = {
-	count: number
-	next: string | null
-	previous: string | null
-	results: PageItemT[]
+  count: number
+  next: string | null
+  previous: string | null
+  results: PageItemT[]
 }
 
 // types for a genre/store
 export type PageItemT = {
-	id: string
-	image_background?: string
-	name: string
-	slug: string
-	games_count?: number
-	description?: string
-	domain?: string
+  id: string
+  image_background?: string
+  name: string
+  slug: string
+  games_count?: number
+  description?: string
+  domain?: string
 }
 
 export type Ratings = {
-	id: number
-	title: string
-	percent: number
+  id: number
+  title: string
+  percent: number
 }[]
 
 export type ParentPlatform = {
-	platform: {
-		name: string
-		id: number
-	}
+  platform: {
+    name: string
+    id: number
+  }
 }[]
 
 export type DeveloperT = {
-	games_count: number
-	id: number
-	image_background: string
-	name: string
-	slug: string
+  games_count: number
+  id: number
+  image_background: string
+  name: string
+  slug: string
 }
 
 export type Tags = {
-	id: number
-	slug: string
-	name: string
+  id: number
+  slug: string
+  name: string
 }[]
 
 export type ScreenshotsT = {
-	count: number
-	next: string | null
-	previous: string | null
-	results: ScreenshotT[]
+  count: number
+  next: string | null
+  previous: string | null
+  results: ScreenshotT[]
 }
 
 export type ScreenshotT = {
-	height: number
-	id: number
-	image: string
-	is_deleted: boolean
-	width: number
+  height: number
+  id: number
+  image: string
+  is_deleted: boolean
+  width: number
 }
 
 export type UserT = {
-	uid: string
-	displayName: string
-	email: string
-	avatar: string
+  uid: string
+  displayName: string
+  email: string
+  avatar: string
 } | null
 
 export type UserCollectionT = {
-	id: string
-	title: string
-	description: string
-	isPublic: boolean
-	games: GameT[] | null
+  id: string
+  title: string
+  description: string
+  isPublic: boolean
+  games: GameT[] | null
 }
 
 export type ChatsDataT = {
-	chatId: string
-	date: string
-	userInfo: {
-		displayName: string
-		avatar: string
-		userId: string
-	}
-	latestMessage: string
+  chatId: string
+  date: string
+  userInfo: {
+    displayName: string
+    avatar: string
+    userId: string
+  }
+  latestMessage: string
 }
 
 export type SelectedUserT = {
-	chatId: string
-	displayName: string
-	avatar: string
-	userId: string
+  chatId: string
+  displayName: string
+  avatar: string
+  userId: string
 }
 
 export type MessageT = {
-	id: string
-	date: string
-	senderId: string
-	text: string
+  id: string
+  date: string
+  senderId: string
+  text: string
+}
+
+export type CollectionsData = {
+  id: string
+  title: string
+  description: string
+  owner: string
+  ownerId: string
+  isPublic: boolean
+  followers: number
+  games: GameT[]
+  collectionBg: string
 }
