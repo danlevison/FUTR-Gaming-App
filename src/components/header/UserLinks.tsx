@@ -19,14 +19,13 @@ export default function UserLinks({
       {userRoutes.map(({ name, path, icon }) => (
         <li key={name} className="group w-fit">
           <Link
-            href={"/games"}
-            // href={
-            // 	path === "/wishlist" && !user
-            // 		? "/wishlist"
-            // 		: path === "/wishlist" && user
-            // 		? `/wishlist/${user.uid}`
-            // 		: path
-            // }
+            href={
+              path === "/wishlist" && !user
+                ? "/wishlist"
+                : path === "/wishlist" && user
+                ? `/wishlist/${user.uid}`
+                : path
+            }
             className="flex items-center gap-2"
             onClick={handleNav}
           >
