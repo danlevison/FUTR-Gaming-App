@@ -19,7 +19,7 @@ export default function UserLinks({
       {userRoutes.map(({ name, path, icon }) => (
         <li key={name} className="group w-fit">
           <Link
-            href={`${path}`}
+            href={"/games"}
             // href={
             // 	path === "/wishlist" && !user
             // 		? "/wishlist"
