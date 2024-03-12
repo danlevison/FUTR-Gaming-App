@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { pageRoutes } from "@/routes/routes"
 
@@ -17,7 +18,7 @@ export default function NavLinks({
     <ul className="flex flex-col justify-between gap-5 mt-5 md:mt-8">
       {pageRoutes.map(({ name, path, icon }) => (
         <li key={path} className="group w-fit">
-          <a
+          <Link
             href={path}
             className="flex items-center gap-2"
             onClick={handleNav}
@@ -41,7 +42,7 @@ export default function NavLinks({
                 {name}
               </span>
             )}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
