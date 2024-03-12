@@ -5,49 +5,46 @@ import { usePathname } from "next/navigation"
 import { pageRoutes } from "@/routes/routes"
 
 export default function NavLinks({
-	sidebarStatus,
-	nav,
-	handleNav
+  sidebarStatus,
+  nav,
+  handleNav,
 }: {
-	sidebarStatus?: boolean
-	nav?: boolean
-	handleNav?: () => void
+  sidebarStatus?: boolean
+  nav?: boolean
+  handleNav?: () => void
 }) {
-	const pathname = usePathname()
-	return (
-		<ul className="flex flex-col justify-between gap-5 mt-5 md:mt-8">
-			{pageRoutes.map(({ name, path, icon }) => (
-				<li
-					key={path}
-					className="group w-fit"
-				>
-					<Link
-						href={path}
-						className="flex items-center gap-2"
-						onClick={handleNav}
-					>
-						<span
-							className={`${
-								pathname === path
-									? "text-white"
-									: "text-gray-400 group-hover:text-primaryText duration-300"
-							}`}
-						>
-							{icon}
-						</span>
+  const pathname = usePathname()
+  return (
+    <ul className="flex flex-col justify-between gap-5 mt-5 md:mt-8">
+      {pageRoutes.map(({ name, path, icon }) => (
+        <li key={path} className="group w-fit">
+          <Link
+            href={path}
+            className="flex items-center gap-2"
+            // onClick={handleNav}
+          >
+            <span
+              className={`${
+                pathname === path
+                  ? "text-white"
+                  : "text-gray-400 group-hover:text-primaryText duration-300"
+              }`}
+            >
+              {icon}
+            </span>
 
-						{(sidebarStatus || nav) && (
-							<span
-								className={`font-bold text-gray-400 md:text-lg transition-all group-hover:text-primaryText duration-300 ${
-									pathname === path && "text-white"
-								} ${sidebarStatus || nav ? "block" : "hidden"} `}
-							>
-								{name}
-							</span>
-						)}
-					</Link>
-				</li>
-			))}
-		</ul>
-	)
+            {(sidebarStatus || nav) && (
+              <span
+                className={`font-bold text-gray-400 md:text-lg transition-all group-hover:text-primaryText duration-300 ${
+                  pathname === path && "text-white"
+                } ${sidebarStatus || nav ? "block" : "hidden"} `}
+              >
+                {name}
+              </span>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )
 }
