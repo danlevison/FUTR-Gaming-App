@@ -21,7 +21,8 @@ export default function NavLinks({
           <Link
             href={path}
             className="flex items-center gap-2"
-            // onClick={handleNav}
+            onClick={handleNav}
+            prefetch={false}
           >
             <span
               className={`${
